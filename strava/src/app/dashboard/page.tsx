@@ -4,11 +4,13 @@ import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../lib/store";
 import {
-  useLogoutMutation,
+
   useGetUserQuery,
   useGetLatestQuery,
 } from "@/lib/activitySlice";
+import { intervalToDuration } from "date-fns";
 import { useRouter } from "next/navigation";
+import Header from "../ui/header"
 
 export default function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);
@@ -31,29 +33,55 @@ export default function Page() {
 
   console.log(res2);
 
-  console.log(result1, "THIS IS GET ATHLETE", auth, "THIS IS AUTH");
+  const getKm = () => {
+    if (result1) {
+      return (
+        result1?.user?.activities.slice(-5).reduce((acc, activities) => {
+          return acc + activities.distance;
+        }, 0) / 1000
+      );
+    }
+  };
+
+  const getCalories = () => {
+    if (result1) {
+      return result1?.user?.activities.slice(-5).reduce((acc, activities) => {
+        return acc + activities.kilojoules;
+      }, 0);
+    }
+  };
+  const getTime = () => {
+    if (result1) {
+      const seconds = result1?.user?.activities
+        .slice(-5)
+        .reduce((acc, activities) => {
+          return acc + activities.elapsed_time;
+        }, 0);
+      const time = intervalToDuration({ start: 0, end: seconds * 1000 });
+      return time;
+    }
+  };
+  const formatDuration = (duration: any) => {
+    if (result1) {
+    const hours = String(duration.hours).padStart(2, "0");
+    const minutes = String(duration.minutes).padStart(2, "0");
+    const seconds = String(duration.seconds).padStart(2, "0");
+
+    return `${hours}:${minutes}:${seconds}`;
+    }
+    
+  };
+
+  const formattedTime = formatDuration(getTime());
 
   return (
     <div className="flex flex-col  w-full px-24">
-      <div className="flex flex-col items-end">
-        {isSuccess && (
-          <Image
-            src={result1?.profile?.profile}
-            alt=""
-            width="40"
-            height="40"
-            style={{ width: "80px", height: "80px" }} // optional
-          />
-        )}
-        <p> {isSuccess && `logged in as ${result1.profile?.firstname}`}</p>
-      </div>
+     <Header/>
 
-      <p> {isSuccess && ` ${result1.user?.activities[0].type}`}</p>
-      <p> {isSuccess && ` ${result1.user?.activities[0].type}`}</p>
-      <p> {isSuccess && ` ${result1.user?.activities[0].type}`}</p>
-      <p> {isSuccess && ` ${result1.user?.activities[0].type}`}</p>
-      <p> {isSuccess && ` ${result1.user?.activities[0].type}`}</p>
-      <p> {isSuccess && ` ${result1.user?.activities[0].type}`}</p>
+      <p> {getKm()}</p>
+      <p> {getCalories()}</p>
+      <p> {getCalories()}</p>
+      <p>{formattedTime}</p>
     </div>
   );
 }
