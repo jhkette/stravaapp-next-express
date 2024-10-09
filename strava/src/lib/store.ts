@@ -1,5 +1,4 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { counterSlice } from './slice';
 import { authSlice } from './authSlice';
 import { apiSlice } from './apiSlice';
 
@@ -8,7 +7,7 @@ import { apiSlice } from './apiSlice';
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      counter: counterSlice.reducer,
+     
       authorisation: authSlice.reducer,
       [apiSlice.reducerPath]: apiSlice.reducer
       

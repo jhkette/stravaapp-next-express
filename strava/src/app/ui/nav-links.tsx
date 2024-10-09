@@ -40,7 +40,7 @@ export default function NavLinks() {
     { name: "Home", href: "/dashboard", icon: HomeIcon },
     {
       name: "Cycling analytics",
-      href: "/dashboard/cyling",
+      href: "/dashboard/cycling",
       icon: PresentationChartBarIcon,
     },
     {
@@ -48,7 +48,7 @@ export default function NavLinks() {
       href: "/dashboard/running",
       icon: PresentationChartLineIcon,
     },
-    { name: "Calender icons", href: "/dashboard/calender", icon: CalendarIcon },
+    { name: "Calender icons", href: "/calender", icon: CalendarIcon },
     {
       name: "logout",
       href: "/",
