@@ -26,7 +26,9 @@ export default function Dashboardlayout({
     <div className="flex flex-col">
       <div className="flex flex-row justify-between">
         <SideNav />
+        <div className="w-full">
         {children}
+        </div>
       </div>
     </div>
   );

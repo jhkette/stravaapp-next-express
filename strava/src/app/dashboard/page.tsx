@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../lib/store";
 import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
-import { useRouter } from "next/navigation";
 import Header from "../ui/header";
 
 export default function Page() {
@@ -69,13 +67,16 @@ export default function Page() {
   return (
     <div className="flex flex-col  w-full px-24">
       <Header />
+      {isSuccess &&
+      <>
       <h2 className="text-xl">Last 5 activities</h2>
-
+      
       <div className="flex flex-row gap-5">
-        <p className="bg-green-200 p-4 rounded-md w-48"> {getKm()}</p>
-        <p className="bg-orange-200 p-4 rounded-md w-48">{getCalories()}</p>
-        <p className="bg-blue-200 p-4 rounded-md w-48">{formattedTime}</p>
+        <p className="bg-green-200 p-4 rounded-md w-48">Km travelled {getKm()}</p>
+        <p className="bg-orange-200 p-4 rounded-md w-48">Calories burnt {getCalories()}</p>
+        <p className="bg-blue-200 p-4 rounded-md w-48"> Time spent{formattedTime}</p>
       </div>
+      </> }
     </div>
   );
 }
