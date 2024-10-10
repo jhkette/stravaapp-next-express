@@ -10,10 +10,9 @@ import {
 import Cookies from "js-cookie";
 import { MouseEventHandler } from "react";
 import Link from "next/link";
-import { authorise, deauthorise } from "../../lib/authSlice";
-import styles from "./page.module.css";
-import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
+import {  deauthorise } from "../../lib/authSlice";
+
+import { useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";import {
   useLogoutMutation,

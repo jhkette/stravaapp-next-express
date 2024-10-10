@@ -1,21 +1,17 @@
 "use client";
 import Cookies from "js-cookie";
-import { Children, useEffect, useState } from "react";
+import {  useEffect,} from "react";
 import SideNav from "../ui/sidenav";
 import { authorise, deauthorise } from "../../lib/authSlice";
 import { useDispatch } from "react-redux";
-import {
-  useLogoutMutation
-} from "@/lib/activitySlice";
-import { useRouter } from "next/navigation";
+
 
 export default function Dashboardlayout({
     children,
   }: Readonly<{
     children: React.ReactNode;
   }>) {
-  const [logout, { error }] = useLogoutMutation();
-  const router = useRouter();
+
 
   const dispatch = useDispatch();
 
@@ -24,7 +20,7 @@ export default function Dashboardlayout({
     if (token) {
       dispatch(authorise());
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col">

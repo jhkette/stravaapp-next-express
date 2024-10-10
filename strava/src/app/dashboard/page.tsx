@@ -3,14 +3,10 @@
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../../lib/store";
-import {
-
-  useGetUserQuery,
-  useGetLatestQuery,
-} from "@/lib/activitySlice";
+import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
 import { useRouter } from "next/navigation";
-import Header from "../ui/header"
+import Header from "../ui/header";
 
 export default function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);
@@ -30,8 +26,6 @@ export default function Page() {
     ) / 1000,
     { skip: !result1?.user }
   );
-
-  console.log(res2);
 
   const getKm = () => {
     if (result1) {
@@ -63,25 +57,25 @@ export default function Page() {
   };
   const formatDuration = (duration: any) => {
     if (result1) {
-    const hours = String(duration.hours).padStart(2, "0");
-    const minutes = String(duration.minutes).padStart(2, "0");
-    const seconds = String(duration.seconds).padStart(2, "0");
-
-    return `${hours}:${minutes}:${seconds}`;
+      const hours = String(duration.hours).padStart(2, "0");
+      const minutes = String(duration.minutes).padStart(2, "0");
+      const seconds = String(duration.seconds).padStart(2, "0");
+      return `${hours}:${minutes}:${seconds}`;
     }
-    
   };
 
   const formattedTime = formatDuration(getTime());
 
   return (
     <div className="flex flex-col  w-full px-24">
-     <Header/>
+      <Header />
+      <h2 className="text-xl">Last 5 activities</h2>
 
-      <p> {getKm()}</p>
-      <p> {getCalories()}</p>
-      <p> {getCalories()}</p>
-      <p>{formattedTime}</p>
+      <div className="flex flex-row gap-5">
+        <p className="bg-green-200 p-4 rounded-md w-48"> {getKm()}</p>
+        <p className="bg-orange-200 p-4 rounded-md w-48">{getCalories()}</p>
+        <p className="bg-blue-200 p-4 rounded-md w-48">{formattedTime}</p>
+      </div>
     </div>
   );
 }
