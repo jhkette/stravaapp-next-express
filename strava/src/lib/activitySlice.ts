@@ -7,10 +7,8 @@ function getToken() {
   if (token) {
     return token;
   }
-  return null
+  return null;
 }
-
-
 
 interface UserProfile {
   id: number;
@@ -31,8 +29,8 @@ interface UserProfile {
   weight: number;
   profile_medium: string;
   profile: string;
-  friend: any; // Adjust this based on what type 'friend' should be
-  follower: any; // Adjust this based on what type 'follower' should be
+  friend: any;
+  follower: any;
 }
 
 interface HrZones {
@@ -81,21 +79,44 @@ interface RunningPbs {
 }
 
 interface AthleteData {
-  activities: Activity[];        // Array of activity objects
-  athlete_id: number;            // ID of the athlete
-  bikeHrZones: HrZones;          // Heart rate zones for cycling
-  cyclingFTP: number;            // Functional Threshold Power for cycling
-  cyclingMaxHr: number;          // Maximum heart rate for cycling
-  cyclingpbs: CyclingPbs;        // Personal best power values for cycling
-  runHrZones: HrZones;           // Heart rate zones for running
-  runningMaxHr: number;          // Maximum heart rate for running
-  runningpbs: RunningPbs;        // Personal best times for running
+  activities: Activity[]; // Array of activity objects
+  athlete_id: number; // ID of the athlete
+  bikeHrZones: HrZones; // Heart rate zones for cycling
+  cyclingFTP: number; // Functional Threshold Power for cycling
+  cyclingMaxHr: number; // Maximum heart rate for cycling
+  cyclingpbs: CyclingPbs; // Personal best power values for cycling
+  runHrZones: HrZones; // Heart rate zones for running
+  runningMaxHr: number; // Maximum heart rate for running
+  runningpbs: RunningPbs; // Personal best times for running
 }
 
-
 interface Athlete {
-  profile: UserProfile
-  user: AthleteData
+  profile: UserProfile;
+  user: AthleteData;
+}
+
+interface Coords {
+  x: number;
+  y: number;
+}
+
+interface Datasets {
+  half: {
+    name: string;
+    dataset: [Coords];
+  };
+  hardknott: {
+    name: string;
+    dataset: [Coords];
+  };
+  marathon: {
+    name: string;
+    dataset: [Coords];
+  };
+  scotland: {
+    name: string;
+    dataset: [Coords];
+  };
 }
 
 // https://stackoverflow.com/questions/68561750/how-to-add-headers-to-endpoints-in-rtk-query-plugin
@@ -115,10 +136,16 @@ export const userApiSlice = apiSlice.injectEndpoints({
         headers: { Authorization: `Bearer ${getToken()}` },
       }),
     }),
+    getDatasets: builder.query<Datasets, void>({
+      query: () => ({
+        url: "/data/datasets",
+        method: "GET",
+
+        headers: { Authorization: `Bearer ${getToken()}` },
+      }),
+    }),
     getLatest: builder.query({
-      
       query: (data) => ({
-       
         url: `/user/activities/${data}`,
         method: "GET",
         headers: { Authorization: `Bearer ${getToken()}` },
@@ -127,4 +154,9 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetLatestQuery, useGetUserQuery, useLogoutMutation } = userApiSlice;
+export const {
+  useGetLatestQuery,
+  useGetUserQuery,
+  useGetDatasetsQuery,
+  useLogoutMutation,
+} = userApiSlice;
