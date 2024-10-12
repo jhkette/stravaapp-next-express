@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression, { DataPoint, Result } from "regression";
 import { intervalToDuration, Duration } from "date-fns";
-
+import {CyclingPbs} from "../../lib/activitySlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 interface RideChartRegressionProps {
   regdata: Array<{ name: string; dataset: Array<{ x: string; y: number }> }>;
- cyclingpbs: Record<string, number> ;
+ cyclingpbs: CyclingPbs;
   weight: number;
   ftp: number;
 }
@@ -20,7 +20,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
   ftp,
 }) => {
 
-  console.log(regdata, cyclingpbs, weight, ftp)
+
   let predWkg: number | undefined;
   let pbLevel: string | undefined;
 
@@ -73,8 +73,8 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
 
   if (regdata.length > 0) {
     regData = regdata[0]["dataset"].map(({ x, y }) => [
-      parseFloat(x),
-      parseInt(y),
+      Number(x),
+      Number(y)
     ]);
 
     finalScatter = regData.map((item) => ({ x: item[0], y: item[1] }));
@@ -83,7 +83,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
 
     if (predWkg !== undefined) {
       prediction = Math.round(expRegression.predict(predWkg)[1]);
-      sorted = expRegression.points.sort((a, b) => a[0] - b[0]);
+      sorted = [...expRegression.points].sort((a, b) => a[0] - b[0]);
       formattedPred = intervalToDuration({ start: 0, end: prediction * 1000 });
     }
   }
@@ -98,15 +98,15 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
     const myChartRef = chartRef.current.getContext("2d");
     if (!myChartRef) return;
 
-    chartInstance.current = new Chart(myChartRef, {
+    chartInstance.current = new Chart<"line" | "scatter", { x: number, y: number }[]>(myChartRef, {
       type: "scatter",
       data: {
-        labels: sorted.map((data) => data[0]),
+        labels: sorted.map((data) => data[0]), // x-values for the line dataset
         datasets: [
           {
             type: "line",
             label: "Polynomial regression",
-            data: sorted.map((data) => data[1]),
+            data: sorted.map((data) => ({ x: data[0], y: data[1] })), // Provide both x and y values as objects for the line
             borderColor: "#00897b",
             backgroundColor: "#00897b88",
             showLine: true,
@@ -114,7 +114,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
           {
             type: "scatter",
             label: `${regdata[0]["name"]} dataset`,
-            data: finalScatter,
+            data: finalScatter, // This should be an array of {x, y} points
             fill: false,
             borderColor: "rgb(54, 162, 235)",
             showLine: false,
@@ -183,9 +183,10 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
                 size: 12,
               },
               callback: (val) => {
-                if (val < 60) return `${val} seconds`;
-                const remainder = val % 60;
-                const minutes = Math.floor(val / 60);
+                const numVal = Number(val); // Coerce val to a number
+                if (numVal < 60) return `${numVal} seconds`;
+                const remainder = numVal % 60;
+                const minutes = Math.floor(numVal / 60);
                 const hours = Math.floor(minutes / 60);
                 const formattedMinutes = minutes % 60;
                 return hours > 0
@@ -203,7 +204,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
         chartInstance.current.destroy();
       }
     };
-  }, [regdata, sorted, prediction, predWkg]);
+  });
 
   return regdata.length ? (
     <div className="w-11/12 bg-white p-8">
@@ -212,7 +213,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
         <p className="border-b-2 my-4 border-green-800 text-lg inline-block text-l font-bold">
           Your predicted time is:{" "}
           {formattedPred.hours ? formattedPred.hours : ""}{" "}
-          {formattedPred.minutes}:{formattedPred.seconds < 10
+          {formattedPred.minutes}:{formattedPred.seconds && formattedPred.seconds < 10
             ? "0" + formattedPred.seconds
             : formattedPred.seconds}
         </p>

@@ -36,21 +36,21 @@ export default function RunchartRegression({
   event,
   regdata,
 }: RunchartRegressionProps) {
-
-  console.log(runningpbs, event, regdata , "JHNKJANSDKJ")
-
-
+  console.log(runningpbs, event, regdata, "JHNKJANSDKJ");
 
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
-  const regData = regdata.map(({ x, y }) => [parseInt(x.toString()), parseInt(y.toString())]);
+  const regData = regdata.map(({ x, y }) => [
+    parseInt(x.toString()),
+    parseInt(y.toString()),
+  ]);
 
   let my_regression: RegressionResult | null = null;
   let prediction: number | undefined;
 
   if (runningpbs["5000"]) {
-    my_regression = regression.linear(regData);
+    my_regression = regression.linear(regData as [number, number][]);
     prediction = my_regression.predict(runningpbs["5000"])[1];
   }
 
@@ -152,17 +152,21 @@ export default function RunchartRegression({
                 size: 14,
                 family: "lato",
               },
-              callback: (val: number) => {
-                if (val < 60) {
-                  return `${val} seconds`;
+              callback: (val) => {
+                const numVal = Number(val); // Coerce val to a number
+                if (numVal < 60) {
+                  return `${numVal} seconds`;
                 }
-                const remainder = val % 60;
-                const minutes = (val - remainder) / 60;
-                let hoursRemainder = minutes % 60;
-                const hours = (minutes - hoursRemainder) / 60;
+
+                const remainder: number = numVal % 60;
+                const minutes: number = Math.floor(numVal / 60);
+                let hoursRemainder: number | string = minutes % 60;
+                const hours: number = Math.floor(minutes / 60);
+
                 if (hoursRemainder < 10) {
                   hoursRemainder = `0${hoursRemainder}`;
                 }
+
                 return `${hours}:${hoursRemainder}`;
               },
             },
@@ -182,8 +186,14 @@ export default function RunchartRegression({
     const times = intervalToDuration({ start: 0, end: time * 1000 });
     return {
       ...times,
-      minutes: times.minutes && times.minutes < 10 ? `0${times.minutes}` : times.minutes,
-      seconds: times.seconds && times.seconds < 10 ? `0${times.seconds}` : times.seconds,
+      minutes:
+        times.minutes && times.minutes < 10
+          ? `${times.minutes}`
+          : times.minutes,
+      seconds:
+        times.seconds && times.seconds < 10
+          ? `0${times.seconds}`
+          : times.seconds,
     };
   }
 
@@ -204,7 +214,7 @@ export default function RunchartRegression({
   let predFormat: Duration | null = null;
   let recPace: Duration[] | null = null;
 
-  if (prediction && runningpbs) {
+  if (prediction && runningpbs["5000"]) {
     predFormat = humanDuration(prediction);
     fivekFormat = humanDuration(runningpbs["5000"]);
     recPace = getPace(prediction, event);
@@ -214,16 +224,19 @@ export default function RunchartRegression({
     <div className="bg-white m-auto p-8">
       <canvas ref={chartRef} style={{ width: "300px", height: "200px" }} />
       <article className="flex flex-col">
-        <h3 className="border-b-2 border-rose-500 text-xl mb-4">Predictions and pacing</h3>
+        <h3 className="border-b-2 border-rose-500 text-xl mb-4">
+          Predictions and pacing
+        </h3>
         <p className="text-lg ">
-          Your five km personal best: {fivekFormat?.minutes}:{fivekFormat?.seconds}
+          Your five km personal best: {fivekFormat?.minutes}:
+          {fivekFormat?.seconds}
         </p>
         <p className="text-lg ">
           {event} prediction: {predFormat?.hours}:{predFormat?.minutes}
         </p>
         <p className="text-lg">
-          Recommended pace: {recPace?.[0].minutes}:{recPace?.[0].seconds} per/mile
-          or {recPace?.[1].minutes}:{recPace?.[1].seconds} per/km
+          Recommended pace: {recPace?.[0].minutes}:{recPace?.[0].seconds}{" "}
+          per/mile or {recPace?.[1].minutes}:{recPace?.[1].seconds} per/km
         </p>
       </article>
     </div>

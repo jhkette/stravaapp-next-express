@@ -41,31 +41,31 @@ interface HrZones {
   zone5: [number, number];
 }
 
-interface CyclingPbs {
-  15: string;
-  30: string;
-  60: string;
-  90: string;
-  120: string;
-  150: string;
-  180: string;
-  210: string;
-  240: string;
-  270: string;
-  300: string;
-  330: string;
-  360: string;
-  390: string;
-  410: string;
-  440: string;
-  480: string;
-  600: string;
-  720: string;
-  900: string;
-  1200: string;
-  1800: string;
-  2700: string;
-  3600: string;
+export interface CyclingPbs {
+  "15": number;
+  "30": number;
+  "60": number;
+  "90": number;
+  "120": number;
+  "150": number;
+  "180": number;
+  "210": number;
+  "240": number;
+  "270": number;
+  "300": number;
+  "330": number;
+  "360": number;
+  "390": number;
+  "410": number;
+  "440": number;
+  "480": number;
+  "600": number;
+  "720": number;
+  "900": number;
+  "1200": number;
+  "1800": number;
+  "2700": number;
+  "3600": number;
 }
 
 export interface RunningPbs {
