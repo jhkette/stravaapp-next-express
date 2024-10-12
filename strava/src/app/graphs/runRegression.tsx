@@ -6,10 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 // Define types for props
-interface Record {
-  runningpbs: {
-    [key: string]: number;
-  };
+interface RunningPbs {
+  400: number | null;
+  800: number | null;
+  1000: number | null;
+  2414: number | null;
+  3000: number | null;
+  5000: number | null;
+  10000?: number | null;
 }
 
 interface DatasetItem {
@@ -22,7 +26,7 @@ interface RegressionData {
 }
 
 interface RunchartRegressionProps {
-  userRecords: Record;
+  runningpbs: RunningPbs;
   event: string;
   regdata: RegressionData[];
 }
