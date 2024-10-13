@@ -11,9 +11,7 @@ export default function Page() {
     isLoading: loading,
     isSuccess: success2,
   } = useGetDatasetsQuery();
-  console.log(result1);
 
-  console.log(result2?.hardknott);
 
   return (
     <div>
@@ -31,7 +29,7 @@ export default function Page() {
             <RidechartRegression
               cyclingpbs={result1?.user.cyclingpbs}
               ftp={result1?.user.cyclingFTP}
-              event={"Hardknott pass"}
+            
               weight={result1?.profile.weight}
               regdata={result2?.hardknott}
             />

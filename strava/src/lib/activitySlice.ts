@@ -89,6 +89,36 @@ export interface Route {
   __v: number;
 }
 
+export interface RideChartRegressionProps {
+  regdata: Route[]
+ cyclingpbs: CyclingPbs;
+  weight: number;
+  ftp: number;
+}
+
+// Define props interface for power data
+export interface PowerData {
+  cyclingpbs: CyclingPbs; // Assuming cyclingpbs is an object with time (as string) and power values
+    cyclingFTP: number; // Functional threshold power
+  }
+  
+  // Define props interface for the component
+  export interface LineChartProps {
+    power: PowerData;
+  }
+
+  // export interface RunningPbs {
+  //   400: number | null;
+  //   800: number | null;
+  //   1000: number | null;
+  //   2414: number | null;
+  //   3000: number | null;
+  //   5000: number | null;
+  //   10000?: number | null;
+  // }
+
+
+  
 
 interface AthleteData {
   activities: Activity[]; // Array of activity objects

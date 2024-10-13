@@ -2,16 +2,11 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression, { DataPoint, Result } from "regression";
 import { intervalToDuration, Duration } from "date-fns";
-import {CyclingPbs} from "../../lib/activitySlice"
+import {RideChartRegressionProps} from "../../lib/activitySlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-interface RideChartRegressionProps {
-  regdata: Array<{ name: string; dataset: Array<{ x: string; y: number }> }>;
- cyclingpbs: CyclingPbs;
-  weight: number;
-  ftp: number;
-}
+
 
 const RidechartRegression: React.FC<RideChartRegressionProps> = ({
   regdata,

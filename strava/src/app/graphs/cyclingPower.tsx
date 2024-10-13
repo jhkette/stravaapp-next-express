@@ -14,7 +14,7 @@ import {
   Plugin
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import {CyclingPbs} from "../../lib/activitySlice"
+import {LineChartProps } from "../../lib/activitySlice"
 
 // Register necessary elements for ChartJS
 ChartJS.register(
@@ -31,21 +31,9 @@ ChartJS.register(
 
 
 
-// Define props interface for power data
-interface PowerData {
-cyclingpbs: CyclingPbs; // Assuming cyclingpbs is an object with time (as string) and power values
-  cyclingFTP: number; // Functional threshold power
-}
-
-// Define props interface for the component
-interface LineChartProps {
-  power: PowerData;
-}
 
 // Create the LineChart component
 const LineChart: React.FC<LineChartProps> = ({ power }) => {
-    console.log(power, "this is power")
-
     if(!power.cyclingpbs){ // if no data show spinner
         return(
           <p>Loading</p>
