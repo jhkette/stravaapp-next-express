@@ -1,6 +1,6 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import type { RootState } from "../../lib/store";
 import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";

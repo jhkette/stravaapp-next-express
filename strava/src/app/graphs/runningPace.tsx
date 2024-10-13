@@ -33,55 +33,52 @@ ChartJS.register(
 
 // Define interface for `props`
 interface RunningPbs {
-    400: number | null;
-    800: number | null;
-    1000: number | null;
-    2414: number | null;
-    3000: number | null;
-    5000: number | null;
-    10000?: number | null;
-  }
+  400: number | null;
+  800: number | null;
+  1000: number | null;
+  2414: number | null;
+  3000: number | null;
+  5000: number | null;
+  10000?: number | null;
+}
 interface LineChartProps {
- 
-    runningpbs: RunningPbs;
-  
+  runningpbs: RunningPbs;
 }
 
 const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
   if (!runningpbs) {
     return (
       <div>
-        <p>
-        loading
-        </p>
+        <p>loading</p>
       </div>
     );
   }
   if (!runningpbs["10000"]) {
     return (
       <div>
-        <p>
-       Please add a 10km run
-        </p>
+        <p>Please add a 10km run</p>
       </div>
     );
   }
 
   const finaldata: number[] = [];
-   console.log(runningpbs)
+  console.log(runningpbs);
   // Define floatingLabels plugin with correct typing
   const floatingLabels: Plugin<"line"> = {
     id: "floatingLabels",
     afterDatasetDraw(chart) {
-      if(runningpbs[10000]){
-      const { ctx, scales: { x, y } } = chart;
-      ctx.save();
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#0d5f96";
-      ctx.font = "1rem Lato";
-      const finalx = x.getPixelForValue(5000);
-      const finaly = y.getPixelForValue(runningpbs[10000] / 10 + 5);
-      ctx.fillText("Critical pace estimate", finalx, finaly);
+      if (runningpbs[10000]) {
+        const {
+          ctx,
+          scales: { x, y },
+        } = chart;
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#0d5f96";
+        ctx.font = "1rem Lato";
+        const finalx = x.getPixelForValue(5000);
+        const finaly = y.getPixelForValue(runningpbs[10000] / 10 + 5);
+        ctx.fillText("Critical pace estimate", finalx, finaly);
       }
     },
   };
@@ -89,8 +86,8 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
   // Compute pace per km for each distance in `runningpbs`
   const timeObj = runningpbs;
   for (const key in timeObj) {
-      //@ts-ignore
-    const mins = timeObj[parseInt(key)] 
+    //@ts-ignore
+    const mins = timeObj[parseInt(key)];
     const distance = Number(key) / 1000;
     const speed = distance / mins;
     const perKm = 1 / speed;
@@ -108,7 +105,6 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
       },
       annotation: {
         annotations: {
-        
           line1: {
             type: "line",
             yMin: runningpbs[10000] / 10,
@@ -127,9 +123,9 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
               end: tooltipItem.formattedValue * 1000,
             });
 
-            let perKmPaceSeconds: string = duration.seconds?.toString() || '0';
+            let perKmPaceSeconds: string = duration.seconds?.toString() || "0";
             if (duration.seconds === undefined || duration.seconds < 10) {
-              perKmPaceSeconds = `0${duration.seconds || '0'}`;
+              perKmPaceSeconds = `0${duration.seconds || "0"}`;
             }
 
             return `${duration.minutes}:${perKmPaceSeconds} per/km`;
@@ -206,8 +202,16 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
       },
     ],
   };
-  //@ts-ignore
-  return <Line options={options} data={chartData} plugins={[floatingLabels]} className="bg-white p-4" />;
+  
+  return (
+    <Line
+      //@ts-ignore
+      options={options}
+      data={chartData}
+      plugins={[floatingLabels]}
+      className="bg-white p-4"
+    />
+  );
 };
 
 export default LineChart;

@@ -5,7 +5,6 @@ import {
   PresentationChartLineIcon,
   CalendarIcon,
   ArrowLeftEndOnRectangleIcon,
-
 } from "@heroicons/react/24/outline";
 import Cookies from "js-cookie";
 import { MouseEventHandler } from "react";
@@ -14,10 +13,9 @@ import {  deauthorise } from "../../lib/authSlice";
 
 import { useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";import {
-  useLogoutMutation,
-  useGetUserQuery,
-  useGetLatestQuery,
+import clsx from "clsx";
+import {
+  useLogoutMutation
 } from "@/lib/activitySlice";
 import { useRouter } from "next/navigation";
 

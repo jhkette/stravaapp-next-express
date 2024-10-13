@@ -12,7 +12,6 @@ export default function Page() {
     isSuccess: success2,
   } = useGetDatasetsQuery();
 
-
   return (
     <div>
       {isSuccess && (
@@ -29,7 +28,6 @@ export default function Page() {
             <RidechartRegression
               cyclingpbs={result1?.user.cyclingpbs}
               ftp={result1?.user.cyclingFTP}
-            
               weight={result1?.profile.weight}
               regdata={result2?.hardknott}
             />

@@ -17,7 +17,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-
+import { RunningPbs } from "@/lib/activitySlice";
 // Register chart components
 ChartJS.register(
   CategoryScale,
@@ -31,16 +31,7 @@ ChartJS.register(
   Legend
 );
 
-// Define interface for `props`
-interface RunningPbs {
-    400: number | null;
-    800: number | null;
-    1000: number | null;
-    2414: number | null;
-    3000: number | null;
-    5000: number | null;
-    10000?: number | null;
-  }
+
 interface LineChartProps {
  
     runningpbs: RunningPbs;
@@ -80,14 +71,16 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
   // Compute pace per km for each distance in `runningpbs`
   const timeObj = runningpbs;
   for (const key in timeObj) {
+    // Ensure that 'key' is treated as a key of RunningPbs
     //@ts-ignore
-    const mins = timeObj[parseInt(key)] 
+    const mins = timeObj[key as keyof RunningPbs];
+  
+    // Parse 'key' as a number for distance calculation
     const distance = Number(key) / 1000;
-    const speed = distance / mins;
+    const speed = distance / mins!;
     const perKm = 1 / speed;
     finaldata.push(perKm);
   }
-
   const labels = Object.keys(runningpbs);
 
   const options = {
@@ -185,7 +178,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
       },
     ],
   };
-  //@ts-ignore
+ 
   return <Line options={options} data={chartData} plugins={[floatingLabels]} className="bg-white p-4" />;
 };
 
