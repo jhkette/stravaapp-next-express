@@ -77,7 +77,6 @@ export interface RunningPbs {
   5000: number | null;
   10000?: number | null;
 }
-
 export interface DataPoint {
   x: number;
   y: number;

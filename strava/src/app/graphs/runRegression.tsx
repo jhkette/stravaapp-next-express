@@ -2,28 +2,18 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression, { Result as RegressionResult } from "regression";
 import { intervalToDuration, Duration } from "date-fns";
-import {DataPoint} from "../../lib/activitySlice"
+import {DataPoint, RunningPbs} from "../../lib/activitySlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-// Define types for props
-interface RunningPbs {
-  400: number | null;
-  800: number | null;
-  1000: number | null;
-  2414: number | null;
-  3000: number | null;
-  5000: number | null;
-  10000?: number | null;
-}
 
-interface DatasetItem {
-  x: number;
-  y: number;
-}
-
-interface RegressionData {
-  dataset: DatasetItem[];
+interface HumanReadableDuration {
+  years?: number;
+  months?: number;
+  days?: number;
+  hours?: number;
+  minutes?: string | number;
+  seconds?: string | number;
 }
 
 interface RunchartRegressionProps {
@@ -37,8 +27,6 @@ export default function RunchartRegression({
   event,
   regdata,
 }: RunchartRegressionProps) {
-  console.log(runningpbs, event, regdata, "JHNKJANSDKJ");
-
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -183,16 +171,17 @@ export default function RunchartRegression({
     };
   }, [runningpbs, prediction, regData, my_regression, event, regdata]);
 
-  function humanDuration(time: number): Duration {
+  function humanDuration(time: number): HumanReadableDuration {
     const times = intervalToDuration({ start: 0, end: time * 1000 });
+  
     return {
       ...times,
       minutes:
-        times.minutes && times.minutes < 10
-          ? `${times.minutes}`
+        times.minutes !== undefined && times.minutes < 10
+          ? `0${times.minutes}`
           : times.minutes,
       seconds:
-        times.seconds && times.seconds < 10
+        times.seconds !== undefined && times.seconds < 10
           ? `0${times.seconds}`
           : times.seconds,
     };
@@ -211,9 +200,9 @@ export default function RunchartRegression({
     return [humanDuration(pace), humanDuration(pace2)];
   }
 
-  let fivekFormat: Duration | null = null;
-  let predFormat: Duration | null = null;
-  let recPace: Duration[] | null = null;
+  let fivekFormat:  HumanReadableDuration | null = null;
+  let predFormat:  HumanReadableDuration | null = null;
+  let recPace:  HumanReadableDuration[] | null = null;
 
   if (prediction && runningpbs["5000"]) {
     predFormat = humanDuration(prediction);

@@ -29,32 +29,7 @@ ChartJS.register(
   Legend
 );
 
-// interface CyclingPbs {
-//     15: string;
-//     30: string;
-//     60: string;
-//     90: string;
-//     120: string;
-//     150: string;
-//     180: string;
-//     210: string;
-//     240: string;
-//     270: string;
-//     300: string;
-//     330: string;
-//     360: string;
-//     390: string;
-//     410: string;
-//     440: string;
-//     480: string;
-//     600: string;
-//     720: string;
-//     900: string;
-//     1200: string;
-//     1800: string;
-//     2700: string;
-//     3600: string;
-//   }
+
 
 // Define props interface for power data
 interface PowerData {
@@ -124,10 +99,6 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           label: (tooltipItem) => `${tooltipItem.formattedValue} watts`,
           title: (tooltipItems) => {
             const tooltipItem = tooltipItems[0];
-           
-            // if (parseInt(tooltipItem.label) <= 60) {
-            //   return `${tooltipItem.label} seconds`;
-            // }
             console.log(tooltipItem)
             const commaStrippedLabel = tooltipItem.label.replace(/,/g, '')
             console.log(commaStrippedLabel)

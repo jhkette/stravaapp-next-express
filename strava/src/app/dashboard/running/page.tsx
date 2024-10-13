@@ -17,8 +17,6 @@ export default function Page() {
     isSuccess: success2,
   } = useGetDatasetsQuery();
 
-  console.log(result2, "THIS IS A RESULT");
-
   return (
     <div>
       {result1?.user.runningpbs["10000"] && (
