@@ -78,6 +78,19 @@ export interface RunningPbs {
   10000?: number | null;
 }
 
+export interface DataPoint {
+  x: number;
+  y: number;
+}
+
+export interface Route {
+  _id: string;
+  name: string;
+  dataset: DataPoint[];
+  __v: number;
+}
+
+
 interface AthleteData {
   activities: Activity[]; // Array of activity objects
   athlete_id: number; // ID of the athlete
@@ -95,28 +108,13 @@ interface Athlete {
   user: AthleteData;
 }
 
-export interface Coords {
-  x: number;
-  y: number;
-}
+
 
 interface Datasets {
-  half: [{
-    name: string;
-    dataset: [Coords];
-  }];
-  hardknott: [{
-    name: string;
-    dataset: [Coords];
-  }];
-  marathon: [{
-    name: string;
-    dataset: [Coords];
-  }];
-  scotland: [{
-    name: string;
-    dataset: [Coords];
-  }];
+  half: [Route];
+  hardknott: [Route];
+  marathon: [Route];
+  scotland: [Route];
 }
 
 // https://stackoverflow.com/questions/68561750/how-to-add-headers-to-endpoints-in-rtk-query-plugin

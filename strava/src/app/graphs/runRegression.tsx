@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression, { Result as RegressionResult } from "regression";
 import { intervalToDuration, Duration } from "date-fns";
+import {DataPoint} from "../../lib/activitySlice"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -28,7 +29,7 @@ interface RegressionData {
 interface RunchartRegressionProps {
   runningpbs: RunningPbs;
   event: string;
-  regdata: RegressionData[];
+  regdata: DataPoint[];
 }
 
 export default function RunchartRegression({
