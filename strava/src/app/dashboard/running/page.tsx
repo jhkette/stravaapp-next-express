@@ -1,20 +1,20 @@
 "use client";
 import {
   useGetUserQuery,
-  useGetLatestQuery,
   useGetDatasetsQuery,
 } from "@/lib/activitySlice";
 import LineChart from "@/app/graphs/runningPace";
 import RunningFive from "@/app/graphs/runningPaceFive";
 import RunchartRegression from "@/app/graphs/runRegression";
+import IsAuth from "./../../IsAuth";
 
-export default function Page() {
+function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
   const {
     data: result2,
     isError: isError2,
     isLoading: loading,
-    isSuccess: success2,
+    isSuccess: datasetSuccess,
   } = useGetDatasetsQuery();
 
   return (
@@ -22,10 +22,10 @@ export default function Page() {
       {result1?.user.runningpbs["10000"] && (
         <LineChart runningpbs={result1?.user.runningpbs} />
       )}
-      {result1?.user.runningpbs && result1?.user.runningpbs["5000"] && !result1?.user.runningpbs["10000"] && (
+      {result1?.user.runningpbs["5000"] && !result1?.user.runningpbs["10000"] && (
         <RunningFive runningpbs={result1?.user.runningpbs} />
       )}
-      {result1?.user.runningpbs["5000"] && result2 && (
+      {result1?.user.runningpbs["5000"] && datasetSuccess && (
         <>
           <div className="w-8/12 py-4">
             <RunchartRegression
@@ -54,3 +54,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default IsAuth(Page)

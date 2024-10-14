@@ -2,8 +2,9 @@
 import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
 import LineChart from "@/app/graphs/cyclingPower";
 import RidechartRegression from "@/app/graphs/rideRegression";
+import IsAuth from "./../../IsAuth";
 
-export default function Page() {
+function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
   const {
     data: result2,
@@ -14,7 +15,7 @@ export default function Page() {
 
   return (
     <div>
-      {result1?.user.cyclingpbs["1200"] && <p>Please upload upload </p>}
+      {isSuccess && !result1?.user.cyclingpbs["1200"] && <p>Please upload upload </p>}
       {isSuccess && (
         <LineChart
           power={{
@@ -46,3 +47,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default IsAuth(Page)

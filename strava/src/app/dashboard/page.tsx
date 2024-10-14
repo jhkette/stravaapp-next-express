@@ -1,17 +1,14 @@
 "use client";
-
 import { useSelector } from "react-redux";
 import type { RootState } from "../../lib/store";
 import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
 import Header from "../ui/header";
-
-export default function Page() {
+import IsAuth from "../IsAuth";
+ function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
-
-  console.log(result1)
 
   const {
     data: res2,
@@ -69,21 +66,41 @@ export default function Page() {
   return (
     <div className="flex flex-col  w-full px-24">
       <Header />
-      {isSuccess &&
-      <>
-      <h2 className="text-xl">Last 5 activities</h2>
-      
-      <div className="flex flex-row gap-5">
-        <p className="bg-green-200 p-4 rounded-md w-48">Km travelled {getKm()}</p>
-        <p className="bg-orange-200 p-4 rounded-md w-48">Calories burnt {getCalories()}</p>
-        <p className="bg-blue-200 p-4 rounded-md w-48"> Time spent{formattedTime}</p>
-      </div>
-      <div className="flex flex-col gap-5 w-96 mt-28 p-8 bg-red-200 rounded-md">
-            <p className="">Run total distance: {(Math.floor(result1.stats.all_run_totals.distance/1609.3))}</p>
-            <p className="">Ride total distance: {(Math.floor(result1.stats.all_ride_totals.distance/1609.3))}</p>
-            <p className="">Biggest ride distance: {(Math.floor(result1.stats.biggest_ride_distance/1609.3))}</p>
+      {isSuccess && (
+        <>
+          <h2 className="text-xl">Last 5 activities</h2>
+
+          <div className="flex flex-row gap-5">
+            <p className="bg-green-200 p-4 rounded-md w-48">
+              Km travelled {getKm()}
+            </p>
+            <p className="bg-orange-200 p-4 rounded-md w-48">
+              Calories burnt {getCalories()}
+            </p>
+            <p className="bg-blue-200 p-4 rounded-md w-48">
+              {" "}
+              Time spent{formattedTime}
+            </p>
           </div>
-      </> }
+          <div className="flex flex-col gap-5 w-96 mt-28 p-8 bg-red-200 rounded-md">
+            <p className="">
+              Run total distance:{" "}
+              {Math.floor(result1.stats.all_run_totals.distance / 1609.3)}
+            </p>
+            <p className="">
+              Ride total distance:{" "}
+              {Math.floor(result1.stats.all_ride_totals.distance / 1609.3)}
+            </p>
+            <p className="">
+              Biggest ride distance:{" "}
+              {Math.floor(result1.stats.biggest_ride_distance / 1609.3)}
+            </p>
+          </div>
+        </>
+      )}
     </div>
   );
 }
+
+
+export default IsAuth(Page)
