@@ -1,6 +1,5 @@
 import React from "react";
 import annotationPlugin from "chartjs-plugin-annotation";
-
 import { intervalToDuration } from "date-fns";
 import {
   Chart as ChartJS,
@@ -13,10 +12,10 @@ import {
   Legend,
   TimeScale,
   Plugin,
+  ChartOptions
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 
 // Register chart components
 ChartJS.register(
@@ -96,7 +95,7 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
 
   const labels = Object.keys(runningpbs);
 
-  const options = {
+  const options: ChartOptions<'line'>  = {
     responsive: true,
     plugins: {
       title: {
@@ -205,7 +204,6 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
   
   return (
     <Line
-      //@ts-ignore
       options={options}
       data={chartData}
       plugins={[floatingLabels]}

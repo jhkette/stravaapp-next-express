@@ -29,9 +29,6 @@ ChartJS.register(
   Legend
 );
 
-
-
-
 // Create the LineChart component
 const LineChart: React.FC<LineChartProps> = ({ power }) => {
     if(!power.cyclingpbs){ // if no data show spinner

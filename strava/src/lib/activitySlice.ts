@@ -1,6 +1,6 @@
 import { apiSlice } from "./apiSlice";
 import Cookies from "js-cookie";
-import { Activity } from "./types";
+import { Activity, Stats } from "./types";
 function getToken() {
   const token = Cookies.get("token");
   console.log(token);
@@ -135,6 +135,7 @@ interface AthleteData {
 interface Athlete {
   profile: UserProfile;
   user: AthleteData;
+  stats: Stats
 }
 
 

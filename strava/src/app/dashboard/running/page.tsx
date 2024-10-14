@@ -22,10 +22,10 @@ export default function Page() {
       {result1?.user.runningpbs["10000"] && (
         <LineChart runningpbs={result1?.user.runningpbs} />
       )}
-      {result1?.user.runningpbs && !result1?.user.runningpbs["10000"] && (
+      {result1?.user.runningpbs && result1?.user.runningpbs["5000"] && !result1?.user.runningpbs["10000"] && (
         <RunningFive runningpbs={result1?.user.runningpbs} />
       )}
-      {result1 && result2 && (
+      {result1?.user.runningpbs["5000"] && result2 && (
         <>
           <div className="w-8/12 py-4">
             <RunchartRegression
@@ -42,7 +42,14 @@ export default function Page() {
               regdata={result2?.marathon[0].dataset}
             />
           </div>
+        
         </>
+      )}
+      { !result1?.user.runningpbs["5000"] && (
+         <div className="w-8/12 py-4 mx-auto mt-48">
+        <p>Please load running data... </p>
+        </div>
+
       )}
     </div>
   );

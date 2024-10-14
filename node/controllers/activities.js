@@ -32,20 +32,30 @@ exports.getAthlete = async (req, res) => {
     const response = await axios.get(`https://www.strava.com/api/v3/athlete`, {
       headers: { Authorization: token },
     });
+    // https://www.strava.com/api/v3/athletes/{id}/stats
+
+    const finalid = parseInt(response.data.id)
+  
+    const athleteStats = await axios.get(`https://www.strava.com/api/v3/athletes/${finalid}/stats`, {
+      headers: { Authorization: token },
+    });
+   
+    console.log(athleteStats)
 
     const foundUserActs = await UserActivities.findOne({
       athlete_id: response.data.id,
     });
 
     if (foundUserActs) {
-      return res.send({ profile: response.data, user: foundUserActs });
+
+      return res.send({ profile: response.data, user: foundUserActs, stats: athleteStats.data });
     }
 
     const id = parseInt(response.data.id);
     const newUser = new UserActivities({ athlete_id: id });
     const userToSave = await newUser.save();
 
-    return res.json({ profile: response.data, user: userToSave });
+    return res.json({ profile: response.data, user: userToSave, stats: athleteStats.data});
   } catch (err) {
     console.log(err);
   }
@@ -73,7 +83,7 @@ exports.getLatestActivities = async (req, res) => {
       `https://www.strava.com/api/v3/athlete/activities`,
       {
         headers: { Authorization: token },
-        params: { after: after },
+        params: { after: after, page: 2 },
       }
     );
 

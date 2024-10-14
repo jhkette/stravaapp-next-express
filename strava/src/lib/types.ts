@@ -61,3 +61,28 @@ export interface Activity {
     has_kudoed: boolean;
     tss?: number;
   }
+
+
+
+export interface ActivityTotals {
+    count: number;
+    distance: number;       // in meters
+    moving_time: number;    // in seconds
+    elapsed_time: number;   // in seconds
+    elevation_gain: number; // in meters
+    achievement_count?: number; // optional, only for recent activities
+}
+
+export interface Stats {
+    biggest_ride_distance: number;  // in meters
+    biggest_climb_elevation_gain: number; // in meters
+    recent_ride_totals: ActivityTotals;
+    all_ride_totals: ActivityTotals;
+    recent_run_totals: ActivityTotals;
+    all_run_totals: ActivityTotals;
+    recent_swim_totals: ActivityTotals;
+    all_swim_totals: ActivityTotals;
+    ytd_ride_totals: ActivityTotals;
+    ytd_run_totals: ActivityTotals;
+    ytd_swim_totals: ActivityTotals;
+}

@@ -9,11 +9,12 @@ export default function Page() {
     data: result2,
     isError: isError2,
     isLoading: loading,
-    isSuccess: success2,
+    isSuccess: dataSuccess,
   } = useGetDatasetsQuery();
 
   return (
     <div>
+      {result1?.user.cyclingpbs["1200"] && <p>Please upload upload </p>}
       {isSuccess && (
         <LineChart
           power={{
@@ -22,7 +23,7 @@ export default function Page() {
           }}
         />
       )}
-      {isSuccess && success2 && (
+      {isSuccess && dataSuccess && (
         <>
           <div className="w-8/12 py-4">
             <RidechartRegression
