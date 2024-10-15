@@ -6,6 +6,7 @@ import {
 import LineChart from "@/app/graphs/runningPace";
 import RunningFive from "@/app/graphs/runningPaceFive";
 import RunchartRegression from "@/app/graphs/runRegression";
+import HeartRate from "@/app/graphs/heartRate";
 import IsAuth from "./../../IsAuth";
 
 function Page() {
@@ -40,6 +41,11 @@ function Page() {
               runningpbs={result1?.user.runningpbs}
               event={"Marathon"}
               regdata={result2?.marathon[0].dataset}
+            />
+          </div>
+          <div className="w-8/12 py-4">
+            <HeartRate 
+             hr={result1?.user.runHrZones}
             />
           </div>
         

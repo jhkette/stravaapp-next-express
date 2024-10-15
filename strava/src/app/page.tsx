@@ -38,8 +38,10 @@ export default function Home() {
   return (
     <div className="flex bg-hero bg-no-repeat bg-cover bg-bottom">
       <main className="flex min-h-screen flex-row items-center justify-center p-24 w-full">
-        <div className="w-[550px] mt-36">
-   
+        <div className="w-[550px] mt-48">
+          <p className="text-white font-bold text-xl leading-relaxed">
+            Please login by pressing the connect button to analyse your strava{" "}
+          </p>
           <a href={link && link} className="">
             <Image
               src={"/images/strava.png"}
@@ -49,9 +51,7 @@ export default function Home() {
               style={{ width: 255, height: 63.66 }}
               className="hover:opacity-50"
             />
-            
           </a>
-          <p className="text-white font-bold text-3xl leading-relaxed">Please login by pressing the connect button to analyse your strava </p>
         </div>
       </main>
     </div>

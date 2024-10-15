@@ -3,6 +3,7 @@ import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
 import LineChart from "@/app/graphs/cyclingPower";
 import RidechartRegression from "@/app/graphs/rideRegression";
 import IsAuth from "./../../IsAuth";
+import HeartRate from "@/app/graphs/heartRate";
 
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
@@ -40,6 +41,11 @@ function Page() {
               cyclingpbs={result1?.user.cyclingpbs}
               weight={result1?.profile.weight}
               ftp={result1?.user.cyclingFTP}
+            />
+          </div>
+          <div className="w-8/12 py-4">
+            <HeartRate
+               hr={result1?.user.bikeHrZones}
             />
           </div>
         </>
