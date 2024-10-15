@@ -15,7 +15,7 @@ function Page() {
 
   return (
     <div>
-      {isSuccess && !result1?.user.cyclingpbs["1200"] && <p>Please upload upload </p>}
+      {isSuccess && !result1?.user.cyclingpbs["1200"] && <p>Please upload cycling data </p>}
       {isSuccess && (
         <LineChart
           power={{

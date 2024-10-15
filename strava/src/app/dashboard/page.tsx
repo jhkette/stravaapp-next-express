@@ -5,7 +5,7 @@ import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
 import Header from "../ui/header";
 import IsAuth from "../IsAuth";
- function Page() {
+function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
@@ -96,11 +96,21 @@ import IsAuth from "../IsAuth";
               {Math.floor(result1.stats.biggest_ride_distance / 1609.3)}
             </p>
           </div>
+          <div className="flex flex-col gap-5 w-96 mt-28 p-8 bg-red-200 rounded-md">
+            <p className="">15 seconds{result1.user.cyclingpbs["15"]}</p>
+            <p className="">30 seconds{result1.user.cyclingpbs["30"]}</p>
+            <p className="">1 minute{result1.user.cyclingpbs["60"]}</p>
+            <p className="">2 minute {result1.user.cyclingpbs["120"]}</p>
+            <p className="">3 minute {result1.user.cyclingpbs["180"]}</p>
+            <p className="">5 minute {result1.user.cyclingpbs["300"]}</p>
+            <p className="">10 minutes{result1.user.cyclingpbs["600"]}</p>
+            <p className="">20 minutes{result1.user.cyclingpbs["1200"]}</p>
+            <p className="">30 minutes {result1.user.cyclingpbs["1800"]}</p>
+          </div>
         </>
       )}
     </div>
   );
 }
 
-
-export default IsAuth(Page)
+export default IsAuth(Page);

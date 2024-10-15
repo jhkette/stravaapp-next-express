@@ -25,7 +25,7 @@ function Page() {
       {result1?.user.runningpbs["5000"] && !result1?.user.runningpbs["10000"] && (
         <RunningFive runningpbs={result1?.user.runningpbs} />
       )}
-      {result1?.user.runningpbs["5000"] && datasetSuccess && (
+      {(result1?.user.runningpbs["5000"] && datasetSuccess) && (
         <>
           <div className="w-8/12 py-4">
             <RunchartRegression
@@ -47,7 +47,7 @@ function Page() {
       )}
       { !result1?.user.runningpbs["5000"] && (
          <div className="w-8/12 py-4 mx-auto mt-48">
-        <p>Please load running data... </p>
+        <p>Please add running data </p>
         </div>
 
       )}

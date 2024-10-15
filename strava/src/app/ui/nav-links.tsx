@@ -26,7 +26,6 @@ export default function NavLinks() {
 
   const dispatch = useDispatch()
   const logoutButton = async (e: MouseEventHandler<HTMLAnchorElement> | undefined) => {
-    console.log("HELLO LGOIUT")
     Cookies.remove("token")
     const res = await logout();
     dispatch(deauthorise())
