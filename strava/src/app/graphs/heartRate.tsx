@@ -1,41 +1,38 @@
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import ChartDataLabels, {Context} from "chartjs-plugin-datalabels";
+import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  
-  faSpinner
-} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { HeartRateZones } from "@/lib/types";
 
-
+interface HeartRateProps {
+  hr: HeartRateZones | null;
+}
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 /**
  * This returns a doughnut chart of heart rate monitors
  */
-export default function HeartRate({hr}) {
+export default function HeartRate({ hr }: HeartRateProps) {
   if (!hr) {
-    return <FontAwesomeIcon icon={faSpinner} spinPulse />
+    return <FontAwesomeIcon icon={faSpinner} spinPulse />;
   }
-  // const hr = props.hr;
-  console.log(hr)
+
   const nums = [hr.zone1, hr.zone2, hr.zone3, hr.zone4, hr.zone5];
   const options = {
     plugins: {
-
       legend: {
         labels: {
-            // This more specific font property overrides the global property
-            font: {
-                size: 16,
-                color: "rgb(26, 26, 26)"
-            }
-        }
-    },
+          // This more specific font property overrides the global property
+          font: {
+            size: 16,
+            color: "rgb(26, 26, 26)",
+          },
+        },
+      },
       datalabels: {
         formatter: function (value: any, context: Context) {
-          console.log(context.dataIndex, "this is context")
           return `${nums[context.dataIndex][0]} - ${
             nums[context.dataIndex][1]
           } bpm`;
@@ -45,14 +42,14 @@ export default function HeartRate({hr}) {
             font: {
               family: "lato",
               size: 16,
-              fontColor: "rgb(26, 26, 26)"
-            }
+              fontColor: "rgb(26, 26, 26)",
+            },
           },
-        }
+        },
       },
       tooltip: {
         callbacks: {
-          label: (tooltipItem) => {
+          label: (tooltipItem: any) => {
             return `${nums[tooltipItem.dataIndex][0]} - ${
               nums[tooltipItem.dataIndex][1]
             } bpm`;
@@ -93,6 +90,13 @@ export default function HeartRate({hr}) {
       },
     ],
   };
-
-  return <Doughnut data={data} plugins={[ChartDataLabels]} options={options} className="bg-white p-4" />;
+  return (
+    <Doughnut
+      data={data}
+       //@ts-ignore
+      plugins={[ChartDataLabels]}
+      options={options}
+      className="bg-white p-4"
+    />
+  );
 }

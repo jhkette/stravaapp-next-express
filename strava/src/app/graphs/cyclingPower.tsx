@@ -14,7 +14,7 @@ import {
   Plugin
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import {LineChartProps } from "../../lib/activitySlice"
+import {LineChartProps } from "../../lib/types"
 
 // Register necessary elements for ChartJS
 ChartJS.register(

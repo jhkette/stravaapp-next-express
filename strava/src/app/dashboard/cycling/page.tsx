@@ -4,6 +4,7 @@ import LineChart from "@/app/graphs/cyclingPower";
 import RidechartRegression from "@/app/graphs/rideRegression";
 import IsAuth from "./../../IsAuth";
 import HeartRate from "@/app/graphs/heartRate";
+import FtpChart from "@/app/graphs/ftp";
 
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
@@ -46,6 +47,11 @@ function Page() {
           <div className="w-8/12 py-4">
             <HeartRate
                hr={result1?.user.bikeHrZones}
+            />
+          </div>
+          <div className="w-8/12 py-4">
+            <FtpChart
+               ftp={result1?.user.cyclingFTP}
             />
           </div>
         </>
