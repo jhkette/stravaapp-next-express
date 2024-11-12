@@ -68,44 +68,136 @@ function Page() {
       <Header />
       {isSuccess && (
         <>
-          <h2 className="text-xl">Last 5 activities</h2>
+          <h2 className="text-xl py-8 font-bold">Last 5 activities</h2>
 
-          <div className="flex flex-row gap-5">
-            <p className="bg-green-200 p-4 rounded-md w-48">
-              Km travelled {getKm()}
-            </p>
-            <p className="bg-orange-200 p-4 rounded-md w-48">
-              Calories burnt {getCalories()}
-            </p>
-            <p className="bg-blue-200 p-4 rounded-md w-48">
-              {" "}
-              Time spent{formattedTime}
-            </p>
-          </div>
-          <div className="flex flex-col gap-5 w-96 mt-28 p-8 bg-red-200 rounded-md">
-            <p className="">
-              Run total distance:{" "}
-              {Math.floor(result1.stats.all_run_totals.distance / 1609.3)}
-            </p>
-            <p className="">
-              Ride total distance:{" "}
-              {Math.floor(result1.stats.all_ride_totals.distance / 1609.3)}
-            </p>
-            <p className="">
-              Biggest ride distance:{" "}
-              {Math.floor(result1.stats.biggest_ride_distance / 1609.3)}
-            </p>
-          </div>
-          <div className="flex flex-col gap-5 w-96 mt-28 p-8 bg-red-200 rounded-md">
-            <p className="">15 seconds{result1.user.cyclingpbs["15"]}</p>
-            <p className="">30 seconds{result1.user.cyclingpbs["30"]}</p>
-            <p className="">1 minute{result1.user.cyclingpbs["60"]}</p>
-            <p className="">2 minute {result1.user.cyclingpbs["120"]}</p>
-            <p className="">3 minute {result1.user.cyclingpbs["180"]}</p>
-            <p className="">5 minute {result1.user.cyclingpbs["300"]}</p>
-            <p className="">10 minutes{result1.user.cyclingpbs["600"]}</p>
-            <p className="">20 minutes{result1.user.cyclingpbs["1200"]}</p>
-            <p className="">30 minutes {result1.user.cyclingpbs["1800"]}</p>
+          <table className="w-[650px]  p-8 bg-blue-100 rounded-sm border-collapse">
+            <thead>
+              <tr>
+                <th className="border-b py-2 px-4 text-left">Metric</th>
+                <th className="border-b py-2 px-4 text-left">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-gray-50">
+                <td className="py-2 px-4">Km travelled</td>
+                <td className="py-2 px-4">{getKm()}</td>
+              </tr>
+              <tr>
+                <td className="py-2 px-4">Calories burnt</td>
+                <td className="py-2 px-4">{getCalories()}</td>
+              </tr>
+              <tr className="bg-gray-50">
+                <td className="py-2 px-4 text-left">Time spent</td>
+                <td className="py-2 px-4 text-left">{formattedTime}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="flex flex-row justify-start gap-10">
+            <div>
+              <h2 className="text-xl py-8 font-bold">Total distances ran/cycled</h2>
+              <table className="w-72 bg-blue-100 rounded-sm border-collapse">
+                <thead>
+                  <tr>
+                    <th className="border-b py-2 px-4 text-left">Metric</th>
+                    <th className="border-b py-2 px-4 text-left">
+                      Value (miles)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">Run total distance</td>
+                    <td className="py-2 px-4">
+                      {Math.floor(
+                        result1.stats.all_run_totals.distance / 1609.3
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4">Ride total distance</td>
+                    <td className="py-2 px-4">
+                      {Math.floor(
+                        result1.stats.all_ride_totals.distance / 1609.3
+                      )}
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">Biggest ride distance</td>
+                    <td className="py-2 px-4">
+                      {Math.floor(result1.stats.biggest_ride_distance / 1609.3)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <h2 className="text-xl py-8 font-bold">Cycling power PBs</h2>
+              <table className="w-72 p-8 bg-blue-100 rounded-sm border-collapse">
+                <thead>
+                  <tr>
+                    <th className="border-b py-2 px-4 text-left">Time</th>
+                    <th className="border-b py-2 px-4 text-left">Cycling PB</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">15 seconds</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["15"]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4">30 seconds</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["30"]}
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">1 minute</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["60"]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4">2 minutes</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["120"]}
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">3 minutes</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["180"]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4">5 minutes</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["300"]}
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">10 minutes</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["600"]}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-4">20 minutes</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["1200"]}
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="py-2 px-4">30 minutes</td>
+                    <td className="py-2 px-4">
+                      {result1.user.cyclingpbs["1800"]}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </>
       )}

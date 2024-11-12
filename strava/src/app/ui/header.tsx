@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <div className="flex flex-col items-end">
       {isSuccess && (
-        <div className="w-48 bg-blue-100 rounded-md mt-4 p-2 flex flex-col justify-end items-end">
+        <div className="w-48 bg-gray-100 rounded-sm mt-4 p-4 flex flex-col justify-end items-end">
           <Image
             src={result1?.profile?.profile}
             alt=""
