@@ -23,13 +23,13 @@ export default function Dashboardlayout({
   }, [dispatch]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row justify-between">
+   
+      <div className="h-full flex flex-row justify-between ">
         <SideNav />
-        <div className="w-full">
+        <div className="w-full h-full">
         {children}
         </div>
       </div>
-    </div>
+ 
   );
 }
