@@ -37,10 +37,12 @@ function Page() {
   const getCalories = () => {
     if (result1) {
       return result1?.user?.activities.slice(-5).reduce((acc, activities) => {
-        return acc + activities.kilojoules;
-      }, 0);
+        const kj = activities.kilojoules ? activities.kilojoules : 0
+        return acc + kj;
+      }, 0)}
+  
     }
-  };
+
   const getTime = () => {
     if (result1) {
       const seconds = result1?.user?.activities

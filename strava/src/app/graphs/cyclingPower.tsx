@@ -48,7 +48,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
       ctx.save();
       ctx.textAlign = "center";
       ctx.fillStyle = "#0d5f96";
-      ctx.font = ".95rem Lato";
+      ctx.font = ".95rem __Inter_Fallback_1deade";
       const finalX = x.getPixelForValue(940);
       const finalY = y.getPixelForValue(power.cyclingFTP - 60);
       ctx.fillText(
@@ -108,7 +108,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           color: "#1a1a1a",
           font: {
             size: 14,
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
           },
           callback: (val: string | number) => {
             const numVal = Number(val); // Convert 'val' to a number
@@ -122,7 +122,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           display: true,
           text: "Time",
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 22,
           },
         },
@@ -132,13 +132,13 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           display: true,
           text: "Power in watts",
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 22,
           },
         },
         ticks: {
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 14,
           },
         },

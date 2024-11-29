@@ -32,16 +32,15 @@ function Page() {
       )}
       {isSuccess && dataSuccess && (
         <>
-         <div className="w-full flex flex-row flex-wrap">
-          <div className="w-7/12 pl-12 my-12">
+         <div className="w-full flex flex-col flex-wrap px-12">
+          <div className="w-10/12  my-12">
             <RidechartRegression
               cyclingpbs={result1?.user.cyclingpbs}
               ftp={result1?.user.cyclingFTP}
               weight={result1?.profile.weight}
               regdata={result2?.hardknott}
             />
-          </div>
-          <Image
+             <Image
               src={"/images/hardknott.jpeg"}
               width={341}
               height={227}
@@ -53,16 +52,20 @@ function Page() {
              
               className="hover:shadow-2xl shadow-inner block"
             />
+          </div>
+         
             </div>
-          <div className="w-full flex flex-row">
-          <div className="w-7/12 pl-12 my-12">
+          <div className="w-full flex flex-col px-12">
+          <div className="w-10/12  my-12">
             <RidechartRegression
               regdata={result2?.scotland}
               cyclingpbs={result1?.user.cyclingpbs}
               weight={result1?.profile.weight}
               ftp={result1?.user.cyclingFTP}
             />
-             <Image
+            
+          </div>
+          <Image
               src={"/images/balach.jpg"}
               width={460}
               height={306}
@@ -71,16 +74,19 @@ function Page() {
               className="hover:shadow-2xl shadow-inner"
             />
           </div>
-          </div>
-          <div className="w-8/12 pl-12 my-12">
+          <div className="flex flex-row flex-wrap justify-around">
+          <div className="w-5/12  my-12">
             <HeartRate
                hr={result1?.user.bikeHrZones}
             />
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
           </div>
-          <div className="w-8/12 pl-12 my-12">
+          <div className="w-5/12 my-12">
             <FtpChart
                ftp={result1?.user.cyclingFTP}
             />
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
+          </div>
           </div>
         </>
       )}

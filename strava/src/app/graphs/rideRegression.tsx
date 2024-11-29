@@ -146,7 +146,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
               display: true,
               text: "Watts/kg of bodyweight",
               font: {
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
                 size: 18,
               },
             },
@@ -155,7 +155,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
             ticks: {
               color: "#1a1a1a",
               font: {
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
                 size: 12,
               },
             },
@@ -165,7 +165,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
               display: true,
               text: `${regdata[0]["name"]} time (hh:mm)`,
               font: {
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
                 size: 18,
               },
             },
@@ -174,7 +174,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
               stepSize: 10,
               color: "#1a1a1a",
               font: {
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
                 size: 12,
               },
               callback: (val) => {
