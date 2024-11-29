@@ -65,6 +65,7 @@ function Page() {
             />
             
           </div>
+          <div className="flex flex-row py-8">
           <Image
               src={"/images/balach.jpg"}
               width={460}
@@ -73,19 +74,21 @@ function Page() {
              
               className="hover:shadow-2xl shadow-inner"
             />
+            <p className="pl-8 text-lg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab quisquam unde, repellendus atque quibusdam expedita sint repudiandae quia dolore distinctio. Placeat dicta ipsam at similique sapiente itaque quam repellendus laudantium!</p>
+            </div>
           </div>
           <div className="flex flex-row flex-wrap justify-around">
           <div className="w-5/12  my-12">
             <HeartRate
                hr={result1?.user.bikeHrZones}
             />
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
+            <p className="py-8 text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
           </div>
           <div className="w-5/12 my-12">
             <FtpChart
                ftp={result1?.user.cyclingFTP}
             />
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
+            <p className="py-8 text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
           </div>
           </div>
         </>

@@ -1,7 +1,6 @@
 "use client";
 import {
   useGetUserQuery,
-  useGetDatasetsQuery,
 } from "@/lib/activitySlice";
 import EventsCalender from "../../graphs/calender"
 
@@ -9,12 +8,12 @@ import IsAuth from "./../../IsAuth";
 
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
-  const {
-    data: result2,
-    isError: isError2,
-    isLoading: loading,
-    isSuccess: datasetSuccess,
-  } = useGetDatasetsQuery();
+  // const {
+  //   data: result2,
+  //   isError: isError2,
+  //   isLoading: loading,
+  //   isSuccess: datasetSuccess,
+  // } = useGetDatasetsQuery();
 
   return (
     <div className="px-24">

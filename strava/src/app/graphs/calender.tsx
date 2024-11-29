@@ -1,5 +1,4 @@
 import { subMonths, eachDayOfInterval, format } from "date-fns";
-import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -103,13 +102,13 @@ export default function EventsCalender({
   // Create the HTML for the main calendar
   const finalHtml = allDates.map((date) => {
     let classes = classNames({
-      "bg-blue-300 rounded-3xl h-12 w-12": date.tss <= 25,
-      "bg-yellow-200 rounded-3xl h-12 w-12": date.tss > 25 && date.tss <= 50,
-      "bg-yellow-1200 rounded-3xl h-12  w-12": date.tss > 50 && date.tss <= 70,
-      "bg-orange-300 rounded-3xl h-12 w-12": date.tss > 70 && date.tss <= 100,
-      "bg-orange-500 rounded-3xl h-12 w-12": date.tss > 100 && date.tss <= 130,
-      "bg-red-400 rounded-3xl h-12 w-12": date.tss > 130 && date.tss <= 200,
-      "bg-red-600 rounded-3xl h-12  w-12": date.tss > 200,
+      "bg-blue-300 rounded-3xl my-2 h-12 w-12": date.tss <= 25,
+      "bg-yellow-200 rounded-3xl my-2 h-12 w-12": date.tss > 25 && date.tss <= 50,
+      "bg-yellow-700 rounded-3xl my-2 h-12  w-12": date.tss > 50 && date.tss <= 70,
+      "bg-orange-300 rounded-3xl my-2 h-12 w-12": date.tss > 70 && date.tss <= 100,
+      "bg-orange-500 rounded-3xl my-2 h-12 w-12": date.tss > 100 && date.tss <= 130,
+      "bg-red-400 rounded-3xl my-2 h-12 w-12": date.tss > 130 && date.tss <= 200,
+      "bg-red-600 rounded-3xl my-2 h-12  w-12": date.tss > 200,
     });
 
     const sports = ["VirtualRide", "Ride", "Run", "WeightTraining"];
