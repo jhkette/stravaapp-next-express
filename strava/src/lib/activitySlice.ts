@@ -1,15 +1,6 @@
 import { apiSlice } from "./apiSlice";
-import Cookies from "js-cookie";
+import { getToken } from "../../util/getToken";
 import { Route, Datasets, Athlete, CyclingPbs } from "./types";
-
-function getToken() {
-  const token = Cookies.get("token");
-  console.log(token);
-  if (token) {
-    return token;
-  }
-  return null;
-}
 
 
 

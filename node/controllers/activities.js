@@ -172,6 +172,7 @@ exports.getLatestActivities = async (req, res) => {
       { athlete_id: id },
       { $push: { activities: { $each: data_set } } }
     );
+    console.log(data_set)
     return res.send(data_set);
   } catch (err) {
     console.log(err);

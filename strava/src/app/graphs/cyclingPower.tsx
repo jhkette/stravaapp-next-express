@@ -48,9 +48,9 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
       ctx.save();
       ctx.textAlign = "center";
       ctx.fillStyle = "#0d5f96";
-      ctx.font = ".95rem __Inter_Fallback_1deade";
+      ctx.font = "1.1rem 'Inter', sans-serif";
       const finalX = x.getPixelForValue(940);
-      const finalY = y.getPixelForValue(power.cyclingFTP - 60);
+      const finalY = y.getPixelForValue(power.cyclingFTP + 90);
       ctx.fillText(
         `Functional threshold power estimate ${power.cyclingFTP}`,
         finalX,
@@ -66,6 +66,10 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
       title: {
         display: true,
         text: "Cycling power chart",
+        font:{
+          family: "Inter, sans-serif",
+          size: 20
+        }
       },
       annotation: {
         annotations: {
@@ -98,6 +102,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           },
         },
       },
+    
     },
     scales: {
       x: {
@@ -108,7 +113,8 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           color: "#1a1a1a",
           font: {
             size: 14,
-            family: "__Inter_Fallback_1deade",
+            family: "Inter, sans-serif",
+            
           },
           callback: (val: string | number) => {
             const numVal = Number(val); // Convert 'val' to a number
@@ -122,7 +128,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           display: true,
           text: "Time",
           font: {
-            family: "__Inter_Fallback_1deade",
+            family: "Inter, sans-serif",
             size: 22,
           },
         },
@@ -132,13 +138,14 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
           display: true,
           text: "Power in watts",
           font: {
-            family: "__Inter_Fallback_1deade",
+            family: "Inter, sans-serif",
             size: 22,
           },
         },
         ticks: {
+          color: "#1a1a1a",
           font: {
-            family: "__Inter_Fallback_1deade",
+            family: "Inter, sans-serif",
             size: 14,
           },
         },
@@ -155,12 +162,33 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
         label: "Best power",
         data: Object.values(power.cyclingpbs),
         borderColor: "#00897b",
-        backgroundColor: "#84cec7",
+        backgroundColor: (ctx: any) => {
+          const chart = ctx.chart;
+          const { ctx: canvasCtx, chartArea } = chart;
+
+          if (!chartArea) {
+            // Return a fallback color if chartArea is not available
+            return "rgba(0, 137, 123, 0.2)";
+          }
+
+          const gradient = canvasCtx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom
+          );
+          gradient.addColorStop(0, "rgba(0, 137, 123, 0.6)"); // Top color
+          gradient.addColorStop(1, "rgba(0, 137, 123, 0.1)"); // Bottom color
+          return gradient;
+        },
+        fill: true, // Enable filling under the line
+      
+       
       },
     ],
   };
 
-  return <Line options={options} plugins={[floatingLabels]} data={data} className="bg-white p-4" />;
+  return <Line options={options} plugins={[floatingLabels]} data={data} className="bg-white p-4 rounded-lg" />;
 };
 
 export default LineChart;

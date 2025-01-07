@@ -40,6 +40,7 @@ function Page() {
               weight={result1?.profile.weight}
               regdata={result2?.hardknott}
             />
+            <div className="flex flex-row py-8">
              <Image
               src={"/images/hardknott.jpeg"}
               width={341}
@@ -52,6 +53,10 @@ function Page() {
              
               className="hover:shadow-2xl shadow-inner block"
             />
+             <p className="py-8 pl-8 text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+              Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, 
+              earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
+            </div>
           </div>
          
             </div>
@@ -88,7 +93,9 @@ function Page() {
             <FtpChart
                ftp={result1?.user.cyclingFTP}
             />
-            <p className="py-8 text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
+            <p className="py-8 text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+              Deleniti neque necessitatibus fugit possimus error qui dolorum mollitia, 
+              earum tempore iste odio fuga sunt iure porro. Nulla quibusdam nostrum sit aliquam.</p>
           </div>
           </div>
         </>

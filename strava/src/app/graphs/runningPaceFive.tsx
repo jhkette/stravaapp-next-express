@@ -15,9 +15,7 @@ import {
   Plugin,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { RunningPbs } from "@/lib/activitySlice";
+import { RunningPbs } from "@/lib/types";
 // Register chart components
 ChartJS.register(
   CategoryScale,
@@ -31,39 +29,37 @@ ChartJS.register(
   Legend
 );
 
-
 interface LineChartProps {
- 
-    runningpbs: RunningPbs;
-  
+  runningpbs: RunningPbs;
 }
 
 const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
   if (!runningpbs) {
     return (
       <div>
-        <p>
-        loading
-        </p>
+        <p>loading</p>
       </div>
     );
   }
- 
+
   const finaldata: number[] = [];
-   console.log(runningpbs)
+  console.log(runningpbs);
   // Define floatingLabels plugin with correct typing
   const floatingLabels: Plugin<"line"> = {
     id: "floatingLabels",
     afterDatasetDraw(chart) {
-      if(runningpbs[10000]){
-      const { ctx, scales: { x, y } } = chart;
-      ctx.save();
-      ctx.textAlign = "center";
-      ctx.fillStyle = "#0d5f96";
-      ctx.font = "1rem Lato";
-      const finalx = x.getPixelForValue(5000);
-      const finaly = y.getPixelForValue(runningpbs[10000] / 10 + 5);
-      ctx.fillText("Critical pace estimate", finalx, finaly);
+      if (runningpbs[10000]) {
+        const {
+          ctx,
+          scales: { x, y },
+        } = chart;
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#0d5f96";
+        ctx.font = "1rem __Inter_Fallback_1deade";
+        const finalx = x.getPixelForValue(5000);
+        const finaly = y.getPixelForValue(runningpbs[10000] / 10 + 5);
+        ctx.fillText("Critical pace estimate", finalx, finaly);
       }
     },
   };
@@ -74,7 +70,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
     // Ensure that 'key' is treated as a key of RunningPbs
     //@ts-ignore
     const mins = timeObj[key as keyof RunningPbs];
-  
+
     // Parse 'key' as a number for distance calculation
     const distance = Number(key) / 1000;
     const speed = distance / mins!;
@@ -90,7 +86,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
         display: true,
         text: "Running pace chart",
       },
-     
+
       tooltip: {
         callbacks: {
           label: (tooltipItem: any) => {
@@ -99,9 +95,9 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
               end: tooltipItem.formattedValue * 1000,
             });
 
-            let perKmPaceSeconds: string = duration.seconds?.toString() || '0';
+            let perKmPaceSeconds: string = duration.seconds?.toString() || "0";
             if (duration.seconds === undefined || duration.seconds < 10) {
-              perKmPaceSeconds = `0${duration.seconds || '0'}`;
+              perKmPaceSeconds = `0${duration.seconds || "0"}`;
             }
 
             return `${duration.minutes}:${perKmPaceSeconds} per/km`;
@@ -121,7 +117,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
           stepSize: 500,
           color: "#1a1a1a",
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 14,
           },
         },
@@ -129,7 +125,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
           display: true,
           text: "Distance in metres",
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 20,
           },
         },
@@ -140,14 +136,14 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
           display: true,
           text: "Best pace (mins per km)",
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 20,
           },
         },
         ticks: {
           stepSize: 30,
           font: {
-            family: "Lato",
+            family: "__Inter_Fallback_1deade",
             size: 14,
           },
           callback: (val: any) => {
@@ -178,8 +174,15 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
       },
     ],
   };
- 
-  return <Line options={options} data={chartData} plugins={[floatingLabels]} className="bg-white p-4" />;
+
+  return (
+    <Line
+      options={options}
+      data={chartData}
+      plugins={[floatingLabels]}
+      className="bg-white p-4 rounded-lg"
+    />
+  );
 };
 
 export default RunningFive;

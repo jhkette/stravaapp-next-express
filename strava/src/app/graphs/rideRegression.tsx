@@ -202,7 +202,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
   });
 
   return regdata.length ? (
-    <div className="w-11/12 bg-white p-8">
+    <div className="w-11/12 rounded-lg bg-white p-8">
       <canvas ref={chartRef} className="w-full" />
       {formattedPred && (
         <p className="border-b-2 my-4 border-green-800 text-lg inline-block text-l font-bold">

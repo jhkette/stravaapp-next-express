@@ -24,6 +24,8 @@ function Page() {
     { skip: !result1?.user }
   );
 
+  console.log(res2)
+
   const getKm = () => {
     if (result1) {
       return (
@@ -66,10 +68,10 @@ function Page() {
   const formattedTime = formatDuration(getTime());
 
   return (
-    <div className="flex flex-col  w-full px-24">
+    <div className="flex flex-col  w-full px-24 ">
       <Header />
       {isSuccess && (
-        <>
+        <div className="rounded-lg bg-white my-8 pb-8 py-8 flex flex-col items-center">
           <h2 className="text-xl py-8 font-bold">Last 5 activities</h2>
 
           <table className="w-[650px]  p-8 bg-blue-100 rounded-sm border-collapse">
@@ -95,7 +97,7 @@ function Page() {
             </tbody>
           </table>
 
-          <div className="flex flex-row justify-start gap-10">
+          <div className="flex flex-row justify-around gap-20">
             <div>
               <h2 className="text-xl py-8 font-bold">Total distances ran/cycled</h2>
               <table className="w-72 bg-blue-100 rounded-sm border-collapse">
@@ -201,7 +203,7 @@ function Page() {
               </table>
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

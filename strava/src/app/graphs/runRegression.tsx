@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression, { Result as RegressionResult } from "regression";
 import { intervalToDuration, Duration } from "date-fns";
-import {DataPoint, RunningPbs} from "../../lib/activitySlice"
+import {DataPoint, RunningPbs} from "../../lib/types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -100,7 +100,7 @@ export default function RunchartRegression({
               display: true,
               text: "5k time",
               font: {
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
                 weight: "bold",
                 size: 22,
               },
@@ -112,7 +112,7 @@ export default function RunchartRegression({
               color: "#1a1a1a",
               font: {
                 size: 14,
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
               },
               callback: (val: number | string) => {
                 const seconds = typeof val === "number" ? val : parseFloat(val);
@@ -139,7 +139,7 @@ export default function RunchartRegression({
               color: "#1a1a1a",
               font: {
                 size: 14,
-                family: "lato",
+                family: "__Inter_Fallback_1deade",
               },
               callback: (val) => {
                 const numVal = Number(val); // Coerce val to a number
@@ -211,7 +211,7 @@ export default function RunchartRegression({
   }
 
   return runningpbs ? (
-    <div className="bg-white m-auto p-8">
+    <div className="bg-white m-auto p-8 rounded-lg">
       <canvas ref={chartRef} style={{ width: "300px", height: "200px" }} />
       <article className="flex flex-col">
         <h3 className="border-b-2 border-rose-500 text-xl mb-4">

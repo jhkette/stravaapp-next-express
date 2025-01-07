@@ -40,7 +40,7 @@ export default function HeartRate({ hr }: HeartRateProps) {
         labels: {
           title: {
             font: {
-              family: "lato",
+              family: "__Inter_Fallback_1deade",
               size: 16,
               fontColor: "rgb(26, 26, 26)",
             },
@@ -74,7 +74,6 @@ export default function HeartRate({ hr }: HeartRateProps) {
         backgroundColor: [
           "rgba(222,222,222, 0.3)",
           "rgba(54, 162, 235, 0.2)",
-
           "rgba(75, 192, 192, 0.2)",
           "rgba(278, 206, 86, 0.2)",
           "rgba(230,76,60, 0.4)",
