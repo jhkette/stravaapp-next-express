@@ -48,8 +48,8 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
       ctx.save();
       ctx.textAlign = "center";
       ctx.fillStyle = "#0d5f96";
-      ctx.font = "1.1rem 'Inter', sans-serif";
-      const finalX = x.getPixelForValue(940);
+      ctx.font = ".95rem 'Inter', sans-serif";
+      const finalX = x.getPixelForValue(1800);
       const finalY = y.getPixelForValue(power.cyclingFTP + 90);
       ctx.fillText(
         `Functional threshold power estimate ${power.cyclingFTP}`,
@@ -188,7 +188,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
     ],
   };
 
-  return <Line options={options} plugins={[floatingLabels]} data={data} className="bg-white p-4 rounded-lg" />;
+  return <Line options={options} plugins={[floatingLabels]} data={data} className="bg-white p-4 rounded-xl" />;
 };
 
 export default LineChart;

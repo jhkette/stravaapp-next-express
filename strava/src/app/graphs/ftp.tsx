@@ -44,7 +44,7 @@ export default function FtpChart({ ftp }: FtpChartProps) {
 
   // returns zones table
   return (
-    <div className="bg-white p-4">
+    <div className="bg-white p-4 rounded-xl">
       <table className="border-collapse table-fixed w-full text-sm ">
         <thead>
           <tr className="shadow-xl">

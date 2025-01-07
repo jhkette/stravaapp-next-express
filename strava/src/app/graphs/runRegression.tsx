@@ -211,7 +211,7 @@ export default function RunchartRegression({
   }
 
   return runningpbs ? (
-    <div className="bg-white m-auto p-8 rounded-lg">
+    <div className="bg-white m-auto p-8 rounded-xl">
       <canvas ref={chartRef} style={{ width: "300px", height: "200px" }} />
       <article className="flex flex-col">
         <h3 className="border-b-2 border-rose-500 text-xl mb-4">

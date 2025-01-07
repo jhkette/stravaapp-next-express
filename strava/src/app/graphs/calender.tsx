@@ -7,7 +7,7 @@ import {
   faDumbbell,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "react-modal";
+
 
 import { faBiking, faRunning } from "@fortawesome/free-solid-svg-icons";
 
@@ -104,7 +104,7 @@ export default function EventsCalender({
     let classes = classNames({
       "bg-blue-300 rounded-3xl my-2 h-12 w-12": date.tss <= 25,
       "bg-yellow-200 rounded-3xl my-2 h-12 w-12": date.tss > 25 && date.tss <= 50,
-      "bg-yellow-700 rounded-3xl my-2 h-12  w-12": date.tss > 50 && date.tss <= 70,
+      "bg-yellow-400 rounded-3xl my-2 h-12  w-12": date.tss > 50 && date.tss <= 70,
       "bg-orange-300 rounded-3xl my-2 h-12 w-12": date.tss > 70 && date.tss <= 100,
       "bg-orange-500 rounded-3xl my-2 h-12 w-12": date.tss > 100 && date.tss <= 130,
       "bg-red-400 rounded-3xl my-2 h-12 w-12": date.tss > 130 && date.tss <= 200,
@@ -142,7 +142,7 @@ export default function EventsCalender({
       return (
         <div
           key={uuidv4()}
-          className="flex flex-col bg-gray-100 rounded-lg justify-between  px-4 min-h-[150px] cursor-pointer"
+          className="flex flex-col bg-white rounded-lg justify-between  px-4 min-h-[150px] cursor-pointer"
         >
           <div className="py-2">
             <p className="font-extrabold text-lg pt-2 pb-6">{date.date}</p>
@@ -156,7 +156,7 @@ export default function EventsCalender({
       return (
         <div
           key={uuidv4()}
-          className="p-4 bg-gray-100 rounded-lg p-2 min-h-[150px] cursor-pointer"
+          className="p-4 bg-white rounded-lg p-2 min-h-[150px] "
         >
           <p className="font-extrabold pt-2 pb-6 text-lg">{date.date}</p>
           <p className="py-2 text-sm">Rest day</p>

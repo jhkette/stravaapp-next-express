@@ -40,7 +40,7 @@ export default function HeartRate({ hr }: HeartRateProps) {
         labels: {
           title: {
             font: {
-              family: "__Inter_Fallback_1deade",
+              family: "Inter sans-serif",
               size: 16,
               fontColor: "rgb(26, 26, 26)",
             },
@@ -95,7 +95,7 @@ export default function HeartRate({ hr }: HeartRateProps) {
        //@ts-ignore
       plugins={[ChartDataLabels]}
       options={options}
-      className="bg-white p-4"
+      className="bg-white p-4 rounded-xl"
     />
   );
 }

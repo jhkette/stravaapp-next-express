@@ -158,7 +158,7 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
         },
       },
       y: {
-        reverse: true,
+        // reverse: true,
         title: {
           display: true,
           text: "Best pace (mins per km)",
@@ -197,7 +197,25 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
         label: "Best pace",
         data: finaldata,
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        backgroundColor: (ctx: any) => {
+          const chart = ctx.chart;
+          const { ctx: canvasCtx, chartArea } = chart;
+    
+          if (!chartArea) {
+            return "rgba(0, 137, 123, 0.2)";
+          }
+    
+          const gradient = canvasCtx.createLinearGradient(
+            0,
+            chartArea.top, // Adjusted for reversed y-axis
+            0,
+            chartArea.bottom
+          );
+          gradient.addColorStop(0, "rgba(255, 99, 132, 0.7)"); // Top color
+          gradient.addColorStop(1, "rgba(255, 99, 132, 0.1)"); // Bottom color
+          return gradient;
+        },
+        fill: true,
       },
     ],
   };
@@ -207,7 +225,7 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
       options={options}
       data={chartData}
       plugins={[floatingLabels]}
-      className="bg-white p-4 rounded-lg"
+      className="bg-white p-4 rounded-xl"
     />
   );
 };

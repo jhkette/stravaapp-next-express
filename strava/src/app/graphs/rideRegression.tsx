@@ -146,7 +146,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
               display: true,
               text: "Watts/kg of bodyweight",
               font: {
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
                 size: 18,
               },
             },
@@ -155,7 +155,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
             ticks: {
               color: "#1a1a1a",
               font: {
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
                 size: 12,
               },
             },
@@ -165,7 +165,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
               display: true,
               text: `${regdata[0]["name"]} time (hh:mm)`,
               font: {
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
                 size: 18,
               },
             },
@@ -174,7 +174,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
               stepSize: 10,
               color: "#1a1a1a",
               font: {
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
                 size: 12,
               },
               callback: (val) => {
@@ -202,7 +202,7 @@ const RidechartRegression: React.FC<RideChartRegressionProps> = ({
   });
 
   return regdata.length ? (
-    <div className="w-11/12 rounded-lg bg-white p-8">
+    <div className="w-11/12 rounded-xl bg-white p-8">
       <canvas ref={chartRef} className="w-full" />
       {formattedPred && (
         <p className="border-b-2 my-4 border-green-800 text-lg inline-block text-l font-bold">
