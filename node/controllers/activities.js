@@ -39,8 +39,7 @@ exports.getAthlete = async (req, res) => {
     const athleteStats = await axios.get(`https://www.strava.com/api/v3/athletes/${finalid}/stats`, {
       headers: { Authorization: token },
     });
-   
-    console.log(athleteStats)
+  
 
     const foundUserActs = await UserActivities.findOne({
       athlete_id: response.data.id,
@@ -83,9 +82,10 @@ exports.getLatestActivities = async (req, res) => {
       `https://www.strava.com/api/v3/athlete/activities`,
       {
         headers: { Authorization: token },
-        params: { after: after, page: 2 },
+        params: { after: after },
       }
     );
+    console.log(response.data)
 
     if (response.data.length == 0) {
       errors["error"] = "no activities found";
@@ -93,6 +93,7 @@ exports.getLatestActivities = async (req, res) => {
     }
 
     const data_list = [...response.data];
+    console.log(data_list)
 
     const { id } = data_list[0].athlete;
     // equality check for latest actviity on mongo vs latest new activity
@@ -108,7 +109,8 @@ exports.getLatestActivities = async (req, res) => {
     }
     // get all extra data for each activities i.e watts, distance 'streams'
     const data_set = await activityLoop(data_list, token);
-
+   
+    console.log(data_set, "THIS IS DATASET")
     /* checkPBs  = this is to check if there are new pbs - the helper function returns this destructured array */
     const [
       cyclingAllTime,
@@ -172,7 +174,7 @@ exports.getLatestActivities = async (req, res) => {
       { athlete_id: id },
       { $push: { activities: { $each: data_set } } }
     );
-    console.log(data_set)
+   
     return res.send(data_set);
   } catch (err) {
     console.log(err);
