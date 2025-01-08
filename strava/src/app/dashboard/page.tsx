@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../lib/store";
 import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
-import Header from "../ui/header";
 import IsAuth from "../IsAuth";
 function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);
@@ -69,7 +68,7 @@ function Page() {
 
   return (
     <div className="flex flex-col  w-full px-24 ">
-      <Header />
+    
       {isSuccess && (
         <div className="rounded-lg bg-white my-8 pb-8 py-8 flex flex-col items-center">
           <h2 className="text-xl py-8 font-bold">Last 5 activities</h2>

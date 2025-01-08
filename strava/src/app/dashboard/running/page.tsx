@@ -8,6 +8,7 @@ import RunningFive from "@/app/graphs/runningPaceFive";
 import RunchartRegression from "@/app/graphs/runRegression";
 import HeartRate from "@/app/graphs/heartRate";
 import IsAuth from "./../../IsAuth";
+import { FaSpinner } from "react-icons/fa";
 
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
@@ -18,8 +19,16 @@ function Page() {
     isSuccess: datasetSuccess,
   } = useGetDatasetsQuery();
 
+  if(isLoading){
+    return  <FaSpinner/>
+  }
+
   return (
+
+  
+     
     <div>
+       
       {result1?.user.runningpbs["10000"] && (
          <div className="w-auto mx-auto px-12">
         <LineChart runningpbs={result1?.user.runningpbs} />
