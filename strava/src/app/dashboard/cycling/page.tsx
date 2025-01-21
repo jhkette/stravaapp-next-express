@@ -26,7 +26,7 @@ function Page() {
         <p>Please upload cycling data </p>
       )}
       {isSuccess && (
-        <div className="w-auto mx-auto px-12 my-12">
+        <div className="w-auto mx-auto px-24 my-12">
           <LineChart
             power={{
               cyclingpbs: result1?.user.cyclingpbs,
@@ -37,7 +37,7 @@ function Page() {
       )}
       {isSuccess && dataSuccess && (
         <>
-          <div className="w-full flex flex-col flex-wrap px-12">
+          <div className="w-full flex flex-col flex-wrap px-24">
             <div className="w-10/12  my-12">
               <RidechartRegression
                 cyclingpbs={result1?.user.cyclingpbs}

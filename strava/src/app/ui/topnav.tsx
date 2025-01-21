@@ -4,7 +4,7 @@ import Header from "./header"
 
 export default function SideNav() {
     return (
-      <div className="flex flex-row justify-between items-center   bg-white px-3 py-4 md:px-2 w-full">
+      <div className="flex flex-row justify-between items-center max-w-1200px mx-auto bg-white px-3 py-4 md:px-24 w-full">
       
      
           <NavLinks />

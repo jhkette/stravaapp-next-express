@@ -4,7 +4,7 @@ import { useGetUserQuery } from "@/lib/activitySlice";
 export default function Header() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
   return (
-    <div className="flex flex-col items-end">
+    <div className="flex flex-col items-end ">
       {isSuccess && (
         <div className="w-48 flex flex-col justify-end items-end">
           <Image
