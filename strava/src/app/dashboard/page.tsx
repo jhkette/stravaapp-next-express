@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../lib/store";
 import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
+
 import IsAuth from "../IsAuth";
 function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);

@@ -7,6 +7,7 @@ import HeartRate from "@/app/graphs/heartRate";
 import FtpChart from "@/app/graphs/ftp";
 import Image from "next/image";
 import { FaSpinner } from "react-icons/fa";
+import PowerPbs from "../../graphs/PowerPbs";
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
   const {
@@ -26,14 +27,20 @@ function Page() {
         <p>Please upload cycling data </p>
       )}
       {isSuccess && (
-        <div className="w-auto mx-auto px-24 my-12">
+        <div className="w-full max-w-1200px mx-auto flex justify-between mx-auto px-24 my-12">
+          <div className="w-9/12">  
           <LineChart
             power={{
               cyclingpbs: result1?.user.cyclingpbs,
               cyclingFTP: result1?.user.cyclingFTP,
             }}
           />
+          </div>
+          <div className="w-fit bg-white p-4 rounded-md"> 
+           <PowerPbs/>
+           </div>
         </div>
+       
       )}
       {isSuccess && dataSuccess && (
         <>

@@ -188,7 +188,7 @@ const LineChart: React.FC<LineChartProps> = ({ power }) => {
     ],
   };
 
-  return <Line options={options} plugins={[floatingLabels]} data={data} className="bg-white p-8 rounded-xl" />;
+  return <Line options={options} plugins={[floatingLabels]} data={data} className="bg-white p-4 rounded-xl" />;
 };
 
 export default LineChart;
