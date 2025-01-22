@@ -93,7 +93,7 @@ function Page() {
                 width={460}
                 height={306}
                 alt="Picture of the author"
-                className="hover:shadow-2xl shadow-inner"
+                className="hover:shadow-2xl shadow-inner mb-8"
               />
               <p className="text-lg">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab
