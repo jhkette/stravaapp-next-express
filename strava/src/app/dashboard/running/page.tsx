@@ -9,6 +9,7 @@ import RunchartRegression from "@/app/graphs/runRegression";
 import HeartRate from "@/app/graphs/heartRate";
 import IsAuth from "./../../IsAuth";
 import { FaSpinner } from "react-icons/fa";
+import {FaceFrownIcon} from '@heroicons/react/24/solid'
 
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
@@ -22,6 +23,17 @@ function Page() {
   if(isLoading){
     return  <FaSpinner/>
   }
+
+  if(!result1?.user.runningpbs["5000"]){
+    return  (
+    <div className="w-fit py-4 mx-auto mb-96">
+    <FaceFrownIcon className="size-32 text-blue-500"/>
+
+   <p className="text-xl text-center">Please add running data </p>
+   </div>
+    )
+
+ }
 
   return (
 
@@ -76,12 +88,7 @@ function Page() {
         
         </>
       )}
-      { !result1?.user.runningpbs["5000"] && (
-         <div className="w-8/12 py-4 mx-auto mt-48">
-        <p>Please add running data </p>
-        </div>
-
-      )}
+   
     </div>
   );
 }

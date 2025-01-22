@@ -193,7 +193,7 @@ export default function EventsCalender({
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 text-sm w-full">{finalHtml}</div>
+      <div className="grid grid-cols-5 gap-3 text-sm w-full">{finalHtml}</div>
     </>
   );
 }
