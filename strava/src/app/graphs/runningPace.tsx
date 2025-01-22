@@ -74,7 +74,7 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
         ctx.save();
         ctx.textAlign = "center";
         ctx.fillStyle = "#0d5f96";
-        ctx.font = "1rem __Inter_Fallback_1deade";
+        ctx.font = ".95rem 'Inter', sans-serif";
         const finalx = x.getPixelForValue(5000);
         const finaly = y.getPixelForValue(runningpbs[10000] / 10 + 5);
         ctx.fillText("Critical pace estimate", finalx, finaly);
@@ -144,7 +144,7 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
           stepSize: 500,
           color: "#1a1a1a",
           font: {
-            family: "__Inter_Fallback_1deade",
+            family: "Inter, sans-serif",
             size: 14,
           },
         },
@@ -152,8 +152,8 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
           display: true,
           text: "Distance in metres",
           font: {
-            family: "__Inter_Fallback_1deade",
-            size: 20,
+            family: "Inter, sans-serif",
+            size: 14,
           },
         },
       },
@@ -163,15 +163,15 @@ const LineChart: React.FC<LineChartProps> = ({ runningpbs }) => {
           display: true,
           text: "Best pace (mins per km)",
           font: {
-            family: "__Inter_Fallback_1deade",
+            family: "Inter, sans-serif",
             size: 20,
           },
         },
         ticks: {
           stepSize: 30,
           font: {
-            family: "__Inter_Fallback_1deade",
-            size: 14,
+            family: "Inter, sans-serif",
+            size: 16,
           },
           callback: (val: any) => {
             if (val < 60) {

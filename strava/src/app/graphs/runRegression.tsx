@@ -100,7 +100,7 @@ export default function RunchartRegression({
               display: true,
               text: "5k time",
               font: {
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
                 weight: "bold",
                 size: 22,
               },
@@ -112,7 +112,7 @@ export default function RunchartRegression({
               color: "#1a1a1a",
               font: {
                 size: 14,
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
               },
               callback: (val: number | string) => {
                 const seconds = typeof val === "number" ? val : parseFloat(val);
@@ -139,7 +139,7 @@ export default function RunchartRegression({
               color: "#1a1a1a",
               font: {
                 size: 14,
-                family: "__Inter_Fallback_1deade",
+                family: "Inter, sans-serif",
               },
               callback: (val) => {
                 const numVal = Number(val); // Coerce val to a number

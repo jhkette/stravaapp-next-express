@@ -42,7 +42,7 @@ function Page() {
     <div>
        
       {result1?.user.runningpbs["10000"] && (
-         <div className="w-auto mx-auto px-12">
+         <div className="w-auto mx-auto px-24 my-16">
         <LineChart runningpbs={result1?.user.runningpbs} />
         </div>
       )}
