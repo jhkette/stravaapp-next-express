@@ -1,30 +1,45 @@
 "use client";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../lib/store";
-import { useGetUserQuery, useGetLatestQuery } from "@/lib/activitySlice";
+import { useGetUserQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
-
+import { useEffect, useState } from "react";
 import IsAuth from "../IsAuth";
+import axios from "axios"
+import Cookies from "js-cookie";
 function Page() {
+  const [latest, setLatest] = useState("")
+  const baseURL = "http://localhost:3000/api";
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
 
-  const {
-    data: res2,
-    isError: error2,
-    isLoading: load2,
-    isSuccess: succcess2,
-  } = useGetLatestQuery(
-    Date.parse(
-      result1!?.user.activities[result1!?.user.activities.length - 1][
-        "start_date_local"
-      ]
-    ) / 1000,
-    { skip: !result1?.user }
-  );
+  
+  useEffect(() => {
+    const token = Cookies.get("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const getLatestData = async () => {
+      try {
+        // date is a unix timestamp - just modifying so it works with strava api
+        const date = Math.floor(Date.parse(latest) / 1000);
+        const activities = await axios.get(
+          baseURL + `/user/activities/${date}`,
+          config
+        );
+        // if an error object from api call return
+       console.log(activities)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (auth && isSuccess) {
+      setLatest(result1?.user.activities[result1?.user.activities.length -1]["start_date"])
+      getLatestData();
+    }
+  }, [auth, isSuccess, result1?.user.activities, latest]);
 
-  console.log(res2)
 
   const getKm = () => {
     if (result1) {

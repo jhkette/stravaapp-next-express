@@ -62,7 +62,7 @@ function Page() {
       {result1?.user.runningpbs["5000"] && datasetSuccess && (
         <>
           <div className="flex flex-row items-start mx-auto  py-4 px-12">
-            <div className="w-7/12 mx-12 ">
+            <div className="w-6/12 mx-12 ">
               <RunchartRegression
                 runningpbs={result1?.user.runningpbs}
                 event={"Half Marathon"}
@@ -83,7 +83,7 @@ function Page() {
               impedit inventore sed quia ipsa sint, facere voluptatem quisquam,
               exercitationem temporibus illo assumenda architecto.
             </p>
-            <div className="w-7/12 mx-12 ">
+            <div className="w-6/12 mx-12 ">
               <RunchartRegression
                 runningpbs={result1?.user.runningpbs}
                 event={"Marathon"}

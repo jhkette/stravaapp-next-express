@@ -31,18 +31,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
         headers: { Authorization: `Bearer ${getToken()}` },
       }),
     }),
-    getLatest: builder.query({
-      query: (data) => ({
-        url: `/user/activities/${data}`,
-        method: "GET",
-        headers: { Authorization: `Bearer ${getToken()}` },
-      }),
-    }),
+  
   }),
 });
 
 export const {
-  useGetLatestQuery,
+
   useGetUserQuery,
   useGetDatasetsQuery,
   useLogoutMutation,
