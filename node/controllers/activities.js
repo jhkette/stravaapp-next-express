@@ -73,6 +73,7 @@ exports.getLatestActivities = async (req, res) => {
   const after = parseInt(req.params.after);
   console.log(after, "activities ran");
   const token = req.headers.authorization;
+  console.log(token, "THIS IS THE TOKEN")
   if (!token) {
     errors["error"] = "Permission not granted";
     return res.status(400).send(errors);
@@ -105,6 +106,7 @@ exports.getLatestActivities = async (req, res) => {
       data_list[data_list.length - 1].id
     ) {
       errors["error"] = "this activity has already been added";
+      console.log("activity already added")
       return res.status(400).send(errors);
     }
     // get all extra data for each activities i.e watts, distance 'streams'

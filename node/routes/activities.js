@@ -11,10 +11,6 @@ const router = express.Router();
  */
 router.get("/activities/activities-list", activitiesController.importActivities);
 
-router.get("/hi",(req, res) => {
-   console.log("ran")
-   res.send({msg: "sent"})
-} );
 
 /**
  * get api/user/activities/activities-after

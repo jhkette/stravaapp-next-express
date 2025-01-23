@@ -9,10 +9,10 @@ import axios from "axios"
 import Cookies from "js-cookie";
 function Page() {
   const [latest, setLatest] = useState("")
-  const baseURL = "http://localhost:3000/api";
+  const baseURL = process.env.NODE_API
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
-  const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
+  const { data: result1, isError, isLoading, isSuccess, refetch } = useGetUserQuery();
 
   
   useEffect(() => {
@@ -28,6 +28,10 @@ function Page() {
           baseURL + `/user/activities/${date}`,
           config
         );
+        console.log(date, config)
+        if(activities.data.user.activities.length){
+          refetch()
+        }
         // if an error object from api call return
        console.log(activities)
       } catch (error) {
@@ -38,7 +42,7 @@ function Page() {
       setLatest(result1?.user.activities[result1?.user.activities.length -1]["start_date"])
       getLatestData();
     }
-  }, [auth, isSuccess, result1?.user.activities, latest]);
+  }, [auth, isSuccess, result1?.user.activities, latest, refetch]);
 
 
   const getKm = () => {
