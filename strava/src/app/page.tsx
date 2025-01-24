@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [link, setLink] = useState("");
   const dispatch = useDispatch();
-  const baseURL = process.env.NODE_API
+  const baseURL = "http://localhost:3000/api"
   // const fetcher = url => axios.get(url, config).then(res => res.data)
   // const { userData, error, isLoading } = useSWR(baseURL + "/user/athlete", fetcher)
 

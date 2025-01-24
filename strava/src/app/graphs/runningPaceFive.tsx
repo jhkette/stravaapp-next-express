@@ -15,7 +15,7 @@ import {
   Plugin,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { RunningPbs } from "@/lib/types";
+import { RunningPbs } from "../../../types/types";
 // Register chart components
 ChartJS.register(
   CategoryScale,

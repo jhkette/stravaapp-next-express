@@ -44,7 +44,6 @@ export default function NavLinks() {
       href: "/dashboard/running",
       icon: PresentationChartLineIcon,
     },
-    { name: "Calender icons", href: "/dashboard/calender", icon: CalendarIcon },
     {
       name: "logout",
       href: "/",

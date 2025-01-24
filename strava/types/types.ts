@@ -143,30 +143,30 @@ interface HrZones {
 }
 
 export interface CyclingPbs {
-  "15": number;
-  "30": number;
-  "60": number;
-  "90": number;
-  "120": number;
-  "150": number;
-  "180": number;
-  "210": number;
-  "240": number;
-  "270": number;
-  "300": number;
-  "330": number;
-  "360": number;
-  "390": number;
-  "410": number;
-  "440": number;
-  "480": number;
-  "600": number;
-  "720": number;
-  "900": number;
-  "1200": number;
-  "1800": number;
-  "2700": number;
-  "3600": number;
+  "15": number|null
+  "30": number|null
+  "60": number|null
+  "90": number|null
+  "120": number|null
+  "150": number|null
+  "180": number|null
+  "210": number|null
+  "240": number|null
+  "270": number|null
+  "300": number|null
+  "330": number|null
+  "360": number|null
+  "390": number|null
+  "410": number|null
+  "440": number|null
+  "480": number|null
+  "600": number|null
+  "720": number|null
+  "900": number|null
+  "1200": number|null
+  "1800": number|null
+  "2700": number|null
+  "3600": number|null
 }
 
 export interface RunningPbs {
