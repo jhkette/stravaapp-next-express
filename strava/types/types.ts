@@ -169,6 +169,33 @@ export interface CyclingPbs {
   "3600": number|null
 }
 
+export interface CyclingPbsFinal {
+  "15": number
+  "30": number
+  "60": number
+  "90": number
+  "120": number
+  "150": number
+  "180": number
+  "210": number
+  "240": number
+  "270": number
+  "300": number
+  "330": number
+  "360": number
+  "390": number
+  "410": number
+  "440": number
+  "480": number
+  "600": number
+  "720": number
+  "900": number
+  "1200": number
+  "1800": number
+  "2700": number
+  "3600": number
+}
+
 export interface RunningPbs {
   400: number | null;
   800: number | null;
@@ -200,7 +227,7 @@ export interface Route {
 
 export interface RideChartRegressionProps {
   regdata: Route[];
-  cyclingpbs: CyclingPbs;
+  cyclingpbs: CyclingPbsFinal;
   weight: number;
   ftp: number;
 }

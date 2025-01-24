@@ -2,7 +2,7 @@
 
 "use client";
 import { useSelector} from "react-redux";
-import type { RootState } from "../lib/store";
+import type { RootState } from "./store";
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
 

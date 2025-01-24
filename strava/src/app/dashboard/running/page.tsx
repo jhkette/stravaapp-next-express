@@ -1,13 +1,13 @@
 "use client";
 import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
-import LineChart from "@/app/graphs/runningPace";
-import RunningFive from "@/app/graphs/runningPaceFive";
-import RunchartRegression from "@/app/graphs/runRegression";
-import HeartRate from "@/app/graphs/heartRate";
-import IsAuth from "./../../IsAuth";
+import LineChart from "@/graphs/runningPace";
+import RunningFive from "@/graphs/runningPaceFive";
+import RunchartRegression from "@/graphs/runRegression";
+import HeartRate from "@/graphs/heartRate";
+import IsAuth from "../../../lib/IsAuth";
 import { FaSpinner } from "react-icons/fa";
 import { FaceFrownIcon } from "@heroicons/react/24/solid";
-import RunningPbs from "@/app/graphs/RunningPbs";
+import RunningPbs from "@/graphs/RunningPbs";
 import { format, secondsToMilliseconds } from 'date-fns';
 
 function Page() {

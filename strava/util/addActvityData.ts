@@ -2,16 +2,13 @@
 import axios from "axios";
 import _ from "lodash";
 // helper functions
-import { findMaxSubArray} from "./arraySorting";
-import { BikeActivityElement } from "../types/activityElement";
+import { findMaxSubArray } from "./arraySorting";
+import { ActivityElement } from "../types/activityElement";
 
-import { runDistance, getShortestSubarray } from "./runSorting"
+import { runDistance, getShortestSubarray } from "./runSorting";
 import { durations, distances } from "./values";
-const { sleep } = require("../helpers/sleep");
-const { checkForTimeError } = require("./timeErrorCheck");
-
-
-
+import { sleep } from "./sleep";
+import { checkForTimeError } from "./timeErrorCheck";
 
 /**
  * This funtion takes activities in an array and then call the
@@ -22,7 +19,10 @@ const { checkForTimeError } = require("./timeErrorCheck");
  * @param data_set[], @param token String
  *  @returns data_set []
  */
-async function activityLoop(data_set: BikeActivityElement[], token: string) {
+export async function activityLoop(
+  data_set: ActivityElement[],
+  token: string
+) {
   let calls = 10; // we have already made at least 8 calls - err on side of safety
   for (let element of data_set) {
     if (calls === 90) {
@@ -40,31 +40,30 @@ async function activityLoop(data_set: BikeActivityElement[], token: string) {
         if (watts["data"]["watts"]) {
           element["watt_stream"] = watts.data;
           const pbs = {
-            "15":null,
-            "30":null,
-            "60":null,
-            "90":null,
-            "120":null,
-            "150":null,
-            "180":null,
-            "210":null,
-            "240":null,
-            "270":null,
-            "300":null,
-            "330":null,
-            "360":null,
-            "390":null,
-            "410":null,
-            "440":null,
-            "480":null,
-            "600":null,
-            "720":null,
-            "900":null,
-            "1200":null,
-            "1800":null,
-            "2700":null,
-            "3600":null
-
+            "15": null,
+            "30": null,
+            "60": null,
+            "90": null,
+            "120": null,
+            "150": null,
+            "180": null,
+            "210": null,
+            "240": null,
+            "270": null,
+            "300": null,
+            "330": null,
+            "360": null,
+            "390": null,
+            "410": null,
+            "440": null,
+            "480": null,
+            "600": null,
+            "720": null,
+            "900": null,
+            "1200": null,
+            "1800": null,
+            "2700": null,
+            "3600": null,
           };
           // checking there is time data for each second - some recording devices don't
           // if they don't i just return an empty pb array object as it interferes with accurate data
@@ -76,6 +75,7 @@ async function activityLoop(data_set: BikeActivityElement[], token: string) {
               for (let duration of durations) {
                 const maxAverage = findMaxSubArray(
                   duration,
+                  //@ts-ignore
                   element["watt_stream"]["watts"]["data"]
                 );
                 if (maxAverage) {
@@ -101,14 +101,14 @@ async function activityLoop(data_set: BikeActivityElement[], token: string) {
         calls++;
         element["run_stream"] = run.data;
         const runpbs = {
-          400:  null,
-          800:  null,
+          400: null,
+          800: null,
           1000: null,
           2414: null,
           3000: null,
-          5000:  null,
-          10000: null
-        }
+          5000: null,
+          10000: null,
+        };
 
         // checking there is time data for each second - some recording devices don't
         // if they don't i just return an empty pb array object as it interferes with accurate data.
@@ -133,5 +133,3 @@ async function activityLoop(data_set: BikeActivityElement[], token: string) {
   }
   return data_set;
 }
-
-module.exports = activityLoop;

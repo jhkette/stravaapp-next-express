@@ -4,8 +4,8 @@ import type { RootState } from "../../lib/store";
 import { useGetUserQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
 import { useEffect, useState } from "react";
-import EventsCalender from "../graphs/calender";
-import IsAuth from "../IsAuth";
+import EventsCalender from "@/graphs/calender";
+import IsAuth from "../../lib/IsAuth";
 import axios from "axios"
 import Cookies from "js-cookie";
 function Page() {
@@ -16,6 +16,14 @@ function Page() {
   const { data: result1, isError, isLoading, isSuccess, refetch } = useGetUserQuery();
    console.log(result1)
   
+  useEffect(()=> {
+    const getTest = async () => {
+    const data = await axios.get("/api/test")
+    console.log(data)
+    }
+    getTest()
+  })
+
   useEffect(() => {
     const token = Cookies.get("token");
     const config = {

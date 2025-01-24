@@ -9,7 +9,7 @@ import {
 import Cookies from "js-cookie";
 import { MouseEventHandler } from "react";
 import Link from "next/link";
-import {  deauthorise } from "../../lib/authSlice";
+import {  deauthorise } from "@/lib/authSlice";
 
 import { useDispatch } from "react-redux";
 import { usePathname } from "next/navigation";

@@ -1,14 +1,14 @@
 "use client";
 import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
-import LineChart from "@/app/graphs/cyclingPower";
-import RidechartRegression from "@/app/graphs/rideRegression";
-import IsAuth from "./../../IsAuth";
-import HeartRate from "@/app/graphs/heartRate";
-import FtpChart from "@/app/graphs/ftp";
+import LineChart from "@/graphs/cyclingPower";
+import RidechartRegression from "@/graphs/rideRegression";
+import IsAuth from "../../../lib/IsAuth";
+import HeartRate from "@/graphs/heartRate";
+import FtpChart from "@/graphs/ftp";
 import Image from "next/image";
 import { FaSpinner } from "react-icons/fa";
 import {FaceFrownIcon} from '@heroicons/react/24/solid'
-import PowerPbs from "../../graphs/PowerPbs";
+import PowerPbs from "@/graphs/PowerPbs";
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
   const {
