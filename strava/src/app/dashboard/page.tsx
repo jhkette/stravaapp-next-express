@@ -14,7 +14,7 @@ function Page() {
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
   const { data: result1, isError, isLoading, isSuccess, refetch } = useGetUserQuery();
-   console.log(result1)
+   console.log(result1, "THIS IS RESULT 1")
   
   useEffect(()=> {
     const getTest = async () => {
@@ -37,7 +37,7 @@ function Page() {
           baseURL + `/user/activities/${date}`,
           config
         );
-        console.log(date, config)
+        console.log(date, config, activities, "console logging everything")
         if(activities.data.user.activities.length){
           refetch()
         }
@@ -47,8 +47,10 @@ function Page() {
         console.log(error);
       }
     };
-    if (auth && isSuccess) {
+    if (auth && result1?.user.activities.length) {
       setLatest(result1?.user.activities[result1?.user.activities.length -1]["start_date"])
+      console.log(result1?.user.activities[result1?.user.activities.length -1]["start_date"])
+  
       getLatestData();
     }
   }, [auth, isSuccess, result1?.user.activities, latest, refetch, baseURL]);

@@ -99,7 +99,7 @@ export interface AthleteData {
   bikeHrZones: HrZones; // Heart rate zones for cycling
   cyclingFTP: number; // Functional Threshold Power for cycling
   cyclingMaxHr: number; // Maximum heart rate for cycling
-  cyclingpbs: CyclingPbs; // Personal best power values for cycling
+  cyclingpbs: CyclingPbsFinal; // Personal best power values for cycling
   runHrZones: HrZones; // Heart rate zones for running
   runningMaxHr: number; // Maximum heart rate for running
   runningpbs: RunningPbs; // Personal best times for running

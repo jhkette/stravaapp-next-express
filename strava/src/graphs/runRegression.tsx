@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression, { Result as RegressionResult } from "regression";
 import { intervalToDuration, Duration } from "date-fns";
-import {DataPoint, RunningPbs} from "../../types/types"
+import {DataPoint, RunningPbs} from "../types/types"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 

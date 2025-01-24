@@ -4,7 +4,7 @@ import LineChart from "@/graphs/runningPace";
 import RunningFive from "@/graphs/runningPaceFive";
 import RunchartRegression from "@/graphs/runRegression";
 import HeartRate from "@/graphs/heartRate";
-import IsAuth from "../../../lib/IsAuth";
+import IsAuth from "@/lib/IsAuth";
 import { FaSpinner } from "react-icons/fa";
 import { FaceFrownIcon } from "@heroicons/react/24/solid";
 import RunningPbs from "@/graphs/RunningPbs";

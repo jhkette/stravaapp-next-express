@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels, { Context } from "chartjs-plugin-datalabels";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { HeartRateZones } from "../../types/types";
+import { HeartRateZones } from "../types/types";
 
 interface HeartRateProps {
   hr: HeartRateZones | null;

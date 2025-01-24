@@ -2,7 +2,7 @@
 import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
 import LineChart from "@/graphs/cyclingPower";
 import RidechartRegression from "@/graphs/rideRegression";
-import IsAuth from "../../../lib/IsAuth";
+import IsAuth from "@/lib/IsAuth";
 import HeartRate from "@/graphs/heartRate";
 import FtpChart from "@/graphs/ftp";
 import Image from "next/image";

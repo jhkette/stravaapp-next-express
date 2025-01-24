@@ -1,6 +1,6 @@
 import { apiSlice } from "./apiSlice";
-import { getToken } from "../../util/getToken";
-import { Route, Datasets, Athlete, CyclingPbs } from "../../types/types";
+import { getToken } from "../util/getToken";
+import { Route, Datasets, Athlete, CyclingPbs } from "../types/types";
 
 
 
