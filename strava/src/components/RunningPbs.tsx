@@ -3,10 +3,11 @@ import { useGetUserQuery,  } from "@/lib/activitySlice";
 export default function RunningPbs() {
 
       const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
+      console.log(result1?.user.runningpbs, "THIS IS RUNNING PBS")
   return (
     
     <div>
-        {result1?.user.runningpbs["10000"] && result1?.user.runningpbs["5000"] &&
+        {result1?.user.runningpbs["5000"] &&
         <div>
               <h2 className="text-xl py-8 font-bold">Cycling power PBs</h2>
               <table className="w-64 p-8 bg-blue-100 rounded-sm border-collapse">
@@ -53,13 +54,14 @@ export default function RunningPbs() {
                       {result1.user.runningpbs["5000"]}
                     </td>
                   </tr>
+                  {result1?.user.runningpbs["10000"] &&
                   <tr className="bg-gray-50">
                     <td className="py-2 px-4">10000m</td>
                     <td className="py-2 px-4">
                       {result1.user.runningpbs["10000"]}
                     </td>
                   </tr>
-                 
+}
                 </tbody>
               </table>
             </div>

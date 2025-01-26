@@ -4,25 +4,53 @@ import type { RootState } from "../../lib/store";
 import { useGetUserQuery } from "@/lib/activitySlice";
 import { intervalToDuration } from "date-fns";
 import { useEffect, useState } from "react";
-import EventsCalender from "@/graphs/calender";
+import EventsCalender from "@/components/calender";
 import IsAuth from "../../lib/IsAuth";
-import axios from "axios"
+import axios from "axios";
+import { setimporttrue, setimportfalse } from "@/lib/importSlice";
+
+import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 function Page() {
-  const [latest, setLatest] = useState("")
-  const baseURL = "http://localhost:3000/api"
+  const [latest, setLatest] = useState("");
+  const baseURL = "http://localhost:3000/api";
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
-  const { data: result1, isError, isLoading, isSuccess, refetch } = useGetUserQuery();
-   console.log(result1, "THIS IS RESULT 1")
-  
-  useEffect(()=> {
-    const getTest = async () => {
-    const data = await axios.get("/api/test")
-    console.log(data)
+  const {
+    data: result1,
+    isError,
+    isLoading,
+    isSuccess,
+    refetch,
+  } = useGetUserQuery();
+  console.log(result1, "THIS IS RESULT 1");
+
+  // useEffect(() => {
+  //   const getTest = async () => {
+  //     const data = await axios.get("/api/test");
+  //     console.log(data);
+  //   };
+  //   getTest();
+  // });
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}`, id: result1?.profile.id },
+    };
+    const importData = async () => {
+      const activities = await axios.get(
+        baseURL + `/user/activities/activities-list`,
+        config
+      );
+      console.log(activities)
+      refetch();
+    };
+
+    if (isSuccess && result1?.user.activities.length === 0) {
+      importData();
     }
-    getTest()
-  })
+  }, [isSuccess, result1?.user.activities.length, refetch, result1?.profile.id]);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -37,74 +65,42 @@ function Page() {
           baseURL + `/user/activities/${date}`,
           config
         );
-        console.log(date, config, activities, "console logging everything")
-        if(activities.data.user.activities.length){
-          refetch()
+        console.log(date, config, activities, "console logging everything");
+        if (activities.data.user.activities.length) {
+          refetch();
         }
         // if an error object from api call return
-       console.log(activities)
+        console.log(activities);
       } catch (error) {
         console.log(error);
       }
     };
+
     if (auth && result1?.user.activities.length) {
-      setLatest(result1?.user.activities[result1?.user.activities.length -1]["start_date"])
-      console.log(result1?.user.activities[result1?.user.activities.length -1]["start_date"])
-  
+      setLatest(
+        result1?.user.activities[result1?.user.activities.length - 1][
+          "start_date"
+        ]
+      );
+      console.log(
+        result1?.user.activities[result1?.user.activities.length - 1][
+          "start_date"
+        ]
+      );
+
       getLatestData();
     }
   }, [auth, isSuccess, result1?.user.activities, latest, refetch, baseURL]);
 
-
-  const getKm = () => {
-    if (result1) {
-      return (
-        result1?.user?.activities.slice(-5).reduce((acc, activities) => {
-          return acc + activities.distance;
-        }, 0) / 1000
-      );
-    }
-  };
-
-  const getCalories = () => {
-    if (result1) {
-      return result1?.user?.activities.slice(-5).reduce((acc, activities) => {
-        const kj = activities.kilojoules ? activities.kilojoules : 0
-        return acc + kj;
-      }, 0)}
-  
-    }
-
-  const getTime = () => {
-    if (result1) {
-      const seconds = result1?.user?.activities
-        .slice(-5)
-        .reduce((acc, activities) => {
-          return acc + activities.elapsed_time;
-        }, 0);
-      const time = intervalToDuration({ start: 0, end: seconds * 1000 });
-      return time;
-    }
-  };
-  const formatDuration = (duration: any) => {
-    if (result1) {
-      const hours = String(duration.hours).padStart(2, "0");
-      const minutes = String(duration.minutes).padStart(2, "0");
-      const seconds = String(duration.seconds).padStart(2, "0");
-      return `${hours}:${minutes}:${seconds}`;
-    }
-  };
-
-  const formattedTime = formatDuration(getTime());
+ 
 
   return (
     <div className="flex flex-col  w-full px-24 ">
-       <div className="px-24">
-          {result1?.user.activities && (
-            <EventsCalender userActivities={result1?.user.activities} />
-          )}
-          
-        </div>
+      <div className="px-24">
+        {result1?.user.activities && (
+          <EventsCalender userActivities={result1?.user.activities} />
+        )}
+      </div>
     </div>
   );
 }

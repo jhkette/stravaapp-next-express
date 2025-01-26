@@ -1,13 +1,13 @@
 "use client";
 import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
-import LineChart from "@/graphs/runningPace";
-import RunningFive from "@/graphs/runningPaceFive";
-import RunchartRegression from "@/graphs/runRegression";
-import HeartRate from "@/graphs/heartRate";
+import LineChart from "@/components/runningPace";
+import RunningFive from "@/components/runningPaceFive";
+import RunchartRegression from "@/components/runRegression";
+import HeartRate from "@/components/heartRate";
 import IsAuth from "@/lib/IsAuth";
 import { FaSpinner } from "react-icons/fa";
 import { FaceFrownIcon } from "@heroicons/react/24/solid";
-import RunningPbs from "@/graphs/RunningPbs";
+import RunningPbs from "@/components/RunningPbs";
 import { format, secondsToMilliseconds } from 'date-fns';
 
 function Page() {
@@ -55,9 +55,16 @@ function Page() {
       }
       {result1?.user.runningpbs["5000"] &&
         !result1?.user.runningpbs["10000"] && (
-          <div className="w-auto mx-auto px-12">
-            <RunningFive runningpbs={result1?.user.runningpbs} />
-          </div>
+        
+
+<div className="w-full max-w-1200px mx-auto flex justify-between mx-auto px-24 my-12">
+<div className="w-9/12">  
+<RunningFive runningpbs={result1?.user.runningpbs} />
+</div>
+<div className="w-fit bg-white p-4 rounded-xl"> 
+         <RunningPbs/>
+  </div>
+  </div>
         )}
       {result1?.user.runningpbs["5000"] && datasetSuccess && (
         <>

@@ -1,7 +1,7 @@
 "use client";
 import Cookies from "js-cookie";
 import {  useEffect,} from "react";
-import SideNav from "@/app/ui/topnav";
+import SideNav from "@/components/ui/topnav";
 import { authorise, deauthorise } from "../../lib/authSlice";
 import { useDispatch } from "react-redux";
 

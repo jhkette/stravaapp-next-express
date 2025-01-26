@@ -15,7 +15,7 @@ import {
   Plugin,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { RunningPbs } from "../types/types";
+import { RunningPbs } from "@/types/types";
 // Register chart components
 ChartJS.register(
   CategoryScale,
@@ -131,7 +131,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
         },
       },
       y: {
-        reverse: true,
+        // reverse: true,
         title: {
           display: true,
           text: "Best pace (mins per km)",
@@ -198,7 +198,7 @@ const RunningFive: React.FC<LineChartProps> = ({ runningpbs }) => {
       options={options}
       data={chartData}
       plugins={[floatingLabels]}
-      className="bg-white p-4 rounded-xl"
+       className="bg-white p-4  rounded-xl"
     />
   );
 };

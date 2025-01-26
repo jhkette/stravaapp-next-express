@@ -1,14 +1,14 @@
 "use client";
 import { useGetUserQuery, useGetDatasetsQuery } from "@/lib/activitySlice";
-import LineChart from "@/graphs/cyclingPower";
-import RidechartRegression from "@/graphs/rideRegression";
+import LineChart from "@/components/cyclingPower";
+import RidechartRegression from "@/components/rideRegression";
 import IsAuth from "@/lib/IsAuth";
-import HeartRate from "@/graphs/heartRate";
-import FtpChart from "@/graphs/ftp";
+import HeartRate from "@/components/heartRate";
+import FtpChart from "@/components/ftp";
 import Image from "next/image";
 import { FaSpinner } from "react-icons/fa";
 import {FaceFrownIcon} from '@heroicons/react/24/solid'
-import PowerPbs from "@/graphs/PowerPbs";
+import PowerPbs from "@/components/powerpbs";
 function Page() {
   const { data: result1, isError, isLoading, isSuccess } = useGetUserQuery();
   const {
@@ -22,7 +22,7 @@ function Page() {
     return <FaSpinner />;
   }
 
-  if(!result1?.user.cyclingpbs["1200"]){
+  if(isSuccess && !result1?.user.cyclingpbs){
     return  (
     <div className="w-fit py-4 mx-auto mb-96">
     <FaceFrownIcon className="size-32 text-blue-500"/>
