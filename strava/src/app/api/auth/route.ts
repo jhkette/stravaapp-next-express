@@ -13,24 +13,26 @@
 //   };
 
 //   GET
-
+import { cookies } from 'next/headers'
 import { NextResponse, NextRequest } from "next/server";
-import { connectDb } from "@/lib/db/connect";
-import RunDataSet from "@/models/RunDataSet";
-import RideDataSet from "@/models/RideDataSet";
-import mongoose from "mongoose";
+
 import {client} from "@/lib/client";
 
 export async function GET(request: Request) {
-    const errors = {};
     const url = new URL(request.url);
+
+    
+    // Get the token from your client
     const token = await client.getToken(url.toString()); 
-     // Create a response object
-     const response = NextResponse.redirect(process.env.ORIGIN || '/');
-
-     // Set cookie (equivalent to res.cookie)
-     response.headers.set('Set-Cookie', `token=${token.access_token}; Path=/; HttpOnly; Max-Age=1800; Secure; SameSite=Strict`);
  
-     return response;
 
+    // Set the cookie using the cookies function
+    cookies().set('token', token.access_token, {
+       
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+        path: '/',
+    });
+
+    // Redirect the user
+    return NextResponse.redirect(process.env.ORIGIN || '/');
 }

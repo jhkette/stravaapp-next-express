@@ -6,7 +6,7 @@ const config = {
     token_uri: 'https://www.strava.com/api/v3/oauth/token',
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
-    redirect_uri: `${process.env.SERVER}/auth/authorise`,
+    redirect_uri: `${process.env.SERVER}/api/auth`,
     scopes: ['read','activity:read'],
 }
 const client = new Client(config);

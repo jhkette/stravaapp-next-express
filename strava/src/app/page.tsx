@@ -21,7 +21,7 @@ export default function Home() {
   
   useEffect(() => {
     axios
-      .get(baseURL + "/auth/link")
+      .get("http://localhost:8080/api/link")
       .then((res) => setLink(res.data.link))
       .catch((err) => {
         console.log(err);
