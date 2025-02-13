@@ -25,7 +25,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
     getDatasets: builder.query<Datasets, void>({
       query: () => ({
-        url: "/data/datasets",
+        url: "http://localhost:8080/api/rundata",
         method: "GET",
 
         headers: { Authorization: `Bearer ${getToken()}` },

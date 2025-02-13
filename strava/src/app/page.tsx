@@ -18,6 +18,7 @@ export default function Home() {
   // const fetcher = url => axios.get(url, config).then(res => res.data)
   // const { userData, error, isLoading } = useSWR(baseURL + "/user/athlete", fetcher)
 
+  
   useEffect(() => {
     axios
       .get(baseURL + "/auth/link")

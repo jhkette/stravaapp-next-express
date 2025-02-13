@@ -25,13 +25,13 @@ function Page() {
   } = useGetUserQuery();
   console.log(result1, "THIS IS RESULT 1");
 
-  // useEffect(() => {
-  //   const getTest = async () => {
-  //     const data = await axios.get("/api/test");
-  //     console.log(data);
-  //   };
-  //   getTest();
-  // });
+  useEffect(() => {
+    const getTest = async () => {
+      const data = await axios.get("/api/rundata");
+      console.log(data);
+    };
+    getTest();
+  });
 
   useEffect(() => {
     const token = Cookies.get("token");

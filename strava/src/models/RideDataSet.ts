@@ -1,16 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
 interface IRideDataSet extends Document {
   name: string;
-  dataset: Array<any>;
+  dataset: mongoose.Mixed[];
 }
 // ride dataset
 const rideDataSetSchema = new Schema({
   name: String,
-  dataset: [
-    Schema.Types.Mixed 
-  ]
+  dataset: { type: [Schema.Types.Mixed] },
 })
 
 
 
-export default mongoose.model<IRideDataSet>("RunDataSet", rideDataSetSchema);
+const RideDataSet = mongoose.models.RideDataSet ||mongoose.model <IRideDataSet>("RideDataSet", rideDataSetSchema);
+export default RideDataSet
