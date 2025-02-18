@@ -10,4 +10,4 @@ function calcFtp (obj: any) {
     
   }
   
-  module.exports = {calcFtp}
+export  {calcFtp};
