@@ -1,10 +1,11 @@
 const _ = require("lodash");
 const { quickSort } = require("./arraysorting");
+import { ActivityElement } from "@/types/activityElement";
 import { Activity } from "../types/types";
 
 
-function calcMaxHr(performances: Activity[], activityType: string): number {
-  let hrList: Activity[];
+function calcMaxHr(performances: ActivityElement[], activityType: string): number {
+  let hrList: ActivityElement[];
   if (activityType === "ride") {
     hrList = performances.filter(
       (performance) =>

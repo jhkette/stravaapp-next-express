@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import UserActivities from "@/models/UserActivities"; // Adjust import based on your project setup
+import { CyclingPbs, RunningPbs } from "@/types/types";
+import {durations, distances} from "@/util/values";
 import _ from "lodash";
 import {
   activityLoop,
@@ -51,27 +53,40 @@ export async function GET(req: NextRequest) {
     console.error(error);
     return NextResponse.json({ error: "Failed to fetch activities" }, { status: 500 });
   }
+  
 
   // Process all activities
   const dataSet = await activityLoop(dataList, token);
-  const allTime: Record<number, number> = {};
-  const runAllTime: Record<number, number> = {};
+  console.log(dataSet, "THIS IS DATALIST");
+  //  let allTime, runAllTime;
+ 
+  const allTime = durations.reduce<Record<number, null>>((acc, duration) => {
+    acc[duration] = null;
+    return acc;
+  }, {});
+
+
+   const runAllTime =  distances.reduce<Record<number, null>>((acc, distance) => {
+     acc[distance] = null;
+     return acc;
+   }, {});
+
 
   // Separate running and cycling activities
   const bikeActivities = dataSet.filter((activity) => "pbs" in activity);
   const runActivities = dataSet.filter((activity) => "runpbs" in activity);
 
   // Process cycling power PBs
-  const durations = [15, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 410, 440, 480, 600, 720, 900, 1200, 1800, 2700, 3600];
   for (const duration of durations) {
-    const result = bikeActivities.map((activity) => activity.pbs?.[duration] ?? 0);
+    //@ts-ignore
+    const result = bikeActivities.map((activity) => activity.pbs[duration] ?? null);
     allTime[duration] = _.max(result) || 0;
   }
 
-  // Process running PBs
-  const distances = [400, 800, 1000, 2414, 3000, 5000, 10000];
+
   for (const distance of distances) {
-    const result = runActivities.map((activity) => activity.runpbs?.[distance] ?? Infinity);
+    //@ts-ignore
+    const result = runActivities.map((activity) => activity.runpbs[distance] ?? null);
     runAllTime[distance] = _.min(result) || 0;
   }
 

@@ -67,7 +67,7 @@ function Page() {
         );
 
         const athlete = await axios.get(
-          `http://localhost:8080/api/athlete`,
+          `http://localhost:8080/api/importactivity`,
           config
         );
         console.log(athlete, "console logging everything");

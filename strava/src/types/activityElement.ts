@@ -3,6 +3,8 @@ import { CyclingPbs, RunningPbs } from "./types";
 export interface ActivityElement {
   type: string;
   device_watts: string;
+  max_heartrate: number;
+  average_heartrate: number;
   data: [
     {
       type: string;
@@ -32,5 +34,6 @@ export interface ActivityElement {
   pbs: CyclingPbs
   runpbs: RunningPbs
   has_heartrate: boolean
+  tss?: number
 }
 
