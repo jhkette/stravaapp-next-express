@@ -18,10 +18,10 @@ import {calculateTss} from "@/util/calculateTss"
 
 export async function GET(req: NextRequest) {
   const token = req.headers.get("Authorization");
-  console.log(token, "THIS IS TOKEN FROM IMPORT ACTIVITIES");
+ 
 
   const userId = req.headers.get("id");
-  console.log(userId, "THIS IS USERID FROM IMPORT");
+
 
   if (!token) {
     return NextResponse.json({ error: "Permission not granted" }, { status: 401 });
@@ -105,23 +105,25 @@ export async function GET(req: NextRequest) {
   // Reverse activities to maintain chronological order
   dataSet.reverse();
 
+  console.log(dataSet, "THIS IS DATA SET");
+
   // Update user activity data in MongoDB
-  await UserActivities.findOneAndUpdate(
-    { athlete_id: userId },
-    {
-      $push: { activities: { $each: dataSet } },
-      $set: {
-        cyclingpbs: allTime,
-        runningpbs: runAllTime,
-        bikeHrZones: bikeZones,
-        runHrZones: runZones,
-        cyclingFTP: ftp,
-        cyclingMaxHr: maxCyclingHr,
-        runningMaxHr: runMaxHr,
-      },
-    },
-    { upsert: true }
-  );
+  // await UserActivities.findOneAndUpdate(
+  //   { athlete_id: userId },
+  //   {
+  //     $push: { activities: { $each: dataSet } },
+  //     $set: {
+  //       cyclingpbs: allTime,
+  //       runningpbs: runAllTime,
+  //       bikeHrZones: bikeZones,
+  //       runHrZones: runZones,
+  //       cyclingFTP: ftp,
+  //       cyclingMaxHr: maxCyclingHr,
+  //       runningMaxHr: runMaxHr,
+  //     },
+  //   },
+  //   { upsert: true }
+  // );
 
   return NextResponse.json({ message: "Successful import" }, { status: 200 });
 }

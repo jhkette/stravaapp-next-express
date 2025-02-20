@@ -1,5 +1,5 @@
-const _ = require("lodash");
-const { quickSort } = require("./arraysorting");
+import _ from "lodash"
+import { quickSort } from "./arraySorting"
 import { ActivityElement } from "@/types/activityElement";
 import { Activity } from "../types/types";
 
