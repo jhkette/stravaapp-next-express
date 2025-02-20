@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
       pageNum++;
     }
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
     return NextResponse.json({ error: "Failed to fetch activities" }, { status: 500 });
   }
 

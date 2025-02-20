@@ -65,7 +65,12 @@ function Page() {
           baseURL + `/user/activities/${date}`,
           config
         );
-        console.log(date, config, activities, "console logging everything");
+
+        const athlete = await axios.get(
+          `http://localhost:8080/api/athlete`,
+          config
+        );
+        console.log(athlete, "console logging everything");
         if (activities.data.user.activities.length) {
           refetch();
         }

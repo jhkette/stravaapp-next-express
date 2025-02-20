@@ -21,9 +21,14 @@ export async function GET(req: NextRequest) {
       headers: { Authorization: token },
     });
 
+    console.log(athleteStats, 'athlete stats');
+
     const foundUserActs = await UserActivities.findOne({ athlete_id: athleteId });
 
-    if (foundUserActs) {
+    console.log(foundUserActs, 'found user acts');
+
+    if (foundUserActs?._id) {
+      console.log("THIS IS RUNNING , USER EXISTS");
       return NextResponse.json({ profile: athlete, user: foundUserActs, stats: athleteStats }, { status: 200 });
     }
 
