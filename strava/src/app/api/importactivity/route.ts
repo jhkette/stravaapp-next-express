@@ -1,19 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import UserActivities from "@/models/UserActivities"; // Adjust import based on your project setup
-import { CyclingPbs, RunningPbs } from "@/types/types";
 import { durations, distances } from "@/util/values";
 import _ from "lodash";
 import { activityLoop } from "@/util/addActvityData"; // Adjust the utility imports
 import { calcFtp } from "@/util/ftpCalculation";
-
 import { getHrZones, calcMaxHr } from "@/util/hrCalcualtion";
 import { calculateTss } from "@/util/calculateTss";
-// calculateTss,
+
 
 export async function GET(req: NextRequest) {
   const token = req.headers.get("Authorization");
-
   const userId = req.headers.get("id");
 
   if (!token) {

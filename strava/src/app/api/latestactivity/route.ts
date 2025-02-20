@@ -1,16 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import UserActivities from "@/models/UserActivities"; // Adjust import based on your project setup
-import { CyclingPbs, RunningPbs } from "@/types/types";
-import { durations, distances } from "@/util/values";
 import _ from "lodash";
 import { activityLoop } from "@/util/addActvityData"; // Adjust the utility imports
 import { calcFtp } from "@/util/ftpCalculation";
 import { checkPbs } from "@/util/checkPbs";
-import { getHrZones, calcMaxHr } from "@/util/hrCalcualtion";
 import { calculateTss } from "@/util/calculateTss";
-import page from "@/app/dashboard/page";
-// calculateTss,
+
 
 export async function GET(req: NextRequest) {
   const errors: Record<string, string> = {};
@@ -27,18 +23,15 @@ export async function GET(req: NextRequest) {
       {
         headers: { Authorization: token },
         params: { after: after, page: 3 },
-      
       }
     );
-    console.log(response.data);
-
     if (response.data.length == 0) {
       errors["error"] = "no activities found";
       return NextResponse.json(errors);
     }
 
     const data_list = [...response.data];
-    console.log(data_list);
+    // console.log(data_list);
 
     const { id } = data_list[0].athlete;
     // equality check for latest actviity on mongo vs latest new activity
@@ -59,7 +52,7 @@ export async function GET(req: NextRequest) {
 
     console.log(data_set, "THIS IS DATASET");
     /* checkPBs  = this is to check if there are new pbs - the helper function returns this destructured array */
-   
+
     const [
       cyclingAllTime,
       runAllTime,
@@ -68,7 +61,6 @@ export async function GET(req: NextRequest) {
       ftpChange,
       //@ts-ignore
     ] = checkPbs(data_set, allActs.cyclingpbs, allActs.runningpbs);
-  
 
     if (updateFlagCycling) {
       // if updatepb flag is true - update DB
@@ -108,23 +100,23 @@ export async function GET(req: NextRequest) {
         }
       );
     }
-    if(allActs){
-    //add tss score to each activity
-    for (let element of data_set) {
-      const finalTss = calculateTss(
-        element,
-        allActs.cyclingFTP as number,
-        allActs.bikeHrZones,
-        allActs.runHrZones
-      );
-      element["tss"] = finalTss;
+    if (allActs) {
+      //add tss score to each activity
+      for (let element of data_set) {
+        const finalTss = calculateTss(
+          element,
+          allActs.cyclingFTP as number,
+          allActs.bikeHrZones,
+          allActs.runHrZones
+        );
+        element["tss"] = finalTss;
+      }
     }
-  }
 
-    await UserActivities.updateOne(
-      { athlete_id: id },
-      { $push: { activities: { $each: data_set } } }
-    );
+    // await UserActivities.updateOne(
+    //   { athlete_id: id },
+    //   { $push: { activities: { $each: data_set } } }
+    // );
 
     return NextResponse.json(data_set);
   } catch (err) {
