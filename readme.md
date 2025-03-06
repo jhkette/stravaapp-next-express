@@ -1,5 +1,7 @@
 # Node/React Strava API application
 
+## NOTE! The original application was built for a Bsc computing project. 
+
 This application takes data from the Strava API to analyse a user's data. The app produces a cycling power curve and a pace graph, from raw strava data. This is data then used to make predictions. A user's 5k performance is used to esimtate their performance over longer distances using linear regression. I also use a power graph and the athlete's weight to estimate time up a climb. 
 
 
