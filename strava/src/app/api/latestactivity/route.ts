@@ -38,8 +38,12 @@ export async function GET(req: NextRequest) {
     const allActs = await UserActivities.findOne({ athlete_id: id });
 
     //the last activities to check its not the latest one.
+    console.log( 
+          //@ts-ignore 
+      allActs?.activities[allActs.activities.length - 1].id ,
+      data_list[data_list.length - 1].id)
     if (
-      //@ts-ignore
+    
       allActs?.activities[allActs.activities.length - 1].id ==
       data_list[data_list.length - 1].id
     ) {
@@ -50,7 +54,7 @@ export async function GET(req: NextRequest) {
     // get all extra data for each activities i.e watts, distance 'streams'
     const data_set = await activityLoop(data_list, token);
 
-    console.log(data_set, "THIS IS DATASET");
+    // console.log(data_set, "THIS IS DATASET");
     /* checkPBs  = this is to check if there are new pbs - the helper function returns this destructured array */
 
     const [
@@ -112,6 +116,8 @@ export async function GET(req: NextRequest) {
         element["tss"] = finalTss;
       }
     }
+
+    // console.log(data_set, "THIS IS DATASET");
 
     // await UserActivities.updateOne(
     //   { athlete_id: id },

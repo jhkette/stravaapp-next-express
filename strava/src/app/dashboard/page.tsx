@@ -25,13 +25,7 @@ function Page() {
   } = useGetUserQuery();
   console.log(result1, "THIS IS RESULT 1");
 
-  useEffect(() => {
-    const getTest = async () => {
-      const data = await axios.get("/api/rundata");
-      console.log(data);
-    };
-    getTest();
-  });
+  
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -40,13 +34,13 @@ function Page() {
     };
     const importData = async () => {
       const activities = await axios.get(
-        baseURL + `/user/activities/activities-list`,
+        baseURL + `/user/activities/importactivity`,
         config
       );
       console.log(activities)
       refetch();
     };
-
+     console.log(result1?.user.activities.length === 0 , 'checking activities length')
     if (isSuccess && result1?.user.activities.length === 0) {
       importData();
     }
@@ -67,7 +61,7 @@ function Page() {
         );
 
         const athlete = await axios.get(
-          `http://localhost:8080/api/importactivity`,
+          `http://localhost:8080/api/latestactivity`,
           config
         );
         console.log(athlete, "console logging everything");

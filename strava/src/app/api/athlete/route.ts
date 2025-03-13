@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
 
     const newUser = new UserActivities({ athlete_id: athleteId });
     const userToSave = await newUser.save();
-
+  
     return NextResponse.json({ profile: athlete, user: userToSave, stats: athleteStats }, { status: 201 });
   } catch (error) {
     console.error(error);
