@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 function Page() {
   const [latest, setLatest] = useState("");
-  const baseURL = "http://localhost:3000/api";
+  const baseURL = "http://localhost:8080/api";
   const auth = useSelector((state: RootState) => state.authorisation.auth);
 
   const {
@@ -26,7 +26,7 @@ function Page() {
   console.log(result1, "THIS IS RESULT 1");
 
   
-
+  // import activities
   useEffect(() => {
     const token = Cookies.get("token");
     const config = {
@@ -34,18 +34,19 @@ function Page() {
     };
     const importData = async () => {
       const activities = await axios.get(
-        baseURL + `/user/activities/importactivity`,
+        baseURL + `/importactivity`,
         config
       );
       console.log(activities)
       refetch();
     };
-     console.log(result1?.user.activities.length === 0 , 'checking activities length')
-    if (isSuccess && result1?.user.activities.length === 0) {
+     console.log(!!result1?.user.activities.length == false , isSuccess, 'checking activities length')
+    if (isSuccess && !!result1?.user.activities.length === false ) {
+      console.log("import running")
       importData();
     }
   }, [isSuccess, result1?.user.activities.length, refetch, result1?.profile.id]);
-
+  // import all activities
   useEffect(() => {
     const token = Cookies.get("token");
     const config = {
@@ -56,7 +57,7 @@ function Page() {
         // date is a unix timestamp - just modifying so it works with strava api
         const date = Math.floor(Date.parse(latest) / 1000);
         const activities = await axios.get(
-          baseURL + `/user/activities/${date}`,
+          baseURL + `/latestactivity/?after=${encodeURIComponent(date)}`,
           config
         );
 

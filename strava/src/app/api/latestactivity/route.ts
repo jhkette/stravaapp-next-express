@@ -10,7 +10,7 @@ import { calculateTss } from "@/util/calculateTss";
 
 export async function GET(req: NextRequest) {
   const errors: Record<string, string> = {};
-  const after = parseInt(req.nextUrl.searchParams.get("after") as string);
+  const after = req.nextUrl.searchParams.get("after") as string;
   console.log(after, "activities ran");
   const token = req.headers.get("authorization");
   if (!token) {

@@ -17,7 +17,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
     getUser: builder.query<Athlete, void>({
       query: () => ({
-        url: "/user/athlete",
+        url: "http://localhost:8080/api/athlete",
         method: "GET",
 
         headers: { Authorization: `Bearer ${getToken()}` },

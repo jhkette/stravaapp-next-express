@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
-import UserActivities from '@/models/UserActivities'; // Adjust import as needed
+import UserActivities from '@/models/UserActivities'; 
+import { connectDb } from "@/lib/db/connect";
 
 export async function GET(req: NextRequest) {
+  connectDb()
   const token = req.headers.get('authorization');
   console.log(token, 'called api');
 
@@ -14,7 +16,7 @@ export async function GET(req: NextRequest) {
     const { data: athlete } = await axios.get('https://www.strava.com/api/v3/athlete', {
       headers: { Authorization: token },
     });
-
+    console.log(athlete, athlete.id, "THIS IS ATHLETE")
     const athleteId = parseInt(athlete.id);
 
     const { data: athleteStats } = await axios.get(`https://www.strava.com/api/v3/athletes/${athleteId}/stats`, {

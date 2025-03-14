@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDb } from "@/lib/db/connect";
 import RunDataSet from "@/models/RunDataSet";
 import RideDataSet from "@/models/RideDataSet";
-import mongoose from "mongoose";
+
 
 export async function GET(request: Request) {
   connectDb();
