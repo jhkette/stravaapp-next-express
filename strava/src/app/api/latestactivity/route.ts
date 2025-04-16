@@ -117,12 +117,12 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    // console.log(data_set, "THIS IS DATASET");
+    console.log(data_set, "THIS IS DATASET FOR LATEST ACTIVITY");
 
-    // await UserActivities.updateOne(
-    //   { athlete_id: id },
-    //   { $push: { activities: { $each: data_set } } }
-    // );
+    await UserActivities.updateOne(
+      { athlete_id: id },
+      { $push: { activities: { $each: data_set } } }
+    );
 
     return NextResponse.json(data_set);
   } catch (err) {

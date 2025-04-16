@@ -1,5 +1,4 @@
 import React from "react";
-import GoogleMapReact from 'google-map-react';
 import LineChart from "./components/LineChart";
 import DoughnutChart from "./components/Doughnut";
 import RidechartRegression from "./components/RideChartRegression";
@@ -16,15 +15,6 @@ export default function Cycling({
 }) {
 
 
-
-
-  const defaultProps = {
-    center: {
-      lat: 54.15241,
-      lng: -2
-    },
-    zoom: 6
-  };
   return (
     <section className="min-h-screen w-full py-4 px-24">
       <h1 className="text-2xl font-bold py-8 ">Power Chart</h1>

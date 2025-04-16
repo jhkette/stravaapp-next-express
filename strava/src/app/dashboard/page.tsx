@@ -27,25 +27,25 @@ function Page() {
 
   
   // import activities
-  useEffect(() => {
-    const token = Cookies.get("token");
-    const config = {
-      headers: { Authorization: `Bearer ${token}`, id: result1?.profile.id },
-    };
-    const importData = async () => {
-      const activities = await axios.get(
-        baseURL + `/importactivity`,
-        config
-      );
-      console.log(activities)
-      refetch();
-    };
-     console.log(!!result1?.user.activities.length == false , isSuccess, 'checking activities length')
-    if (isSuccess && !!result1?.user.activities.length === false ) {
-      console.log("import running")
-      importData();
-    }
-  }, [isSuccess, result1?.user.activities.length, refetch, result1?.profile.id]);
+  // useEffect(() => {
+  //   const token = Cookies.get("token");
+  //   const config = {
+  //     headers: { Authorization: `Bearer ${token}`, id: result1?.profile.id },
+  //   };
+  //   const importData = async () => {
+  //     const activities = await axios.get(
+  //       baseURL + `/importactivity`,
+  //       config
+  //     );
+  //     console.log(activities)
+  //     refetch();
+  //   };
+  //    console.log(Boolean(result1?.user.activities.length) == false , isSuccess, 'checking activities length')
+  //   if (isSuccess && Boolean(result1?.user.activities.length) === false ) {
+  //     console.log("import running")
+  //     importData();
+  //   }
+  // }, [isSuccess, result1?.user.activities.length, refetch, result1?.profile.id]);
   // import all activities
   useEffect(() => {
     const token = Cookies.get("token");
@@ -92,12 +92,16 @@ function Page() {
     }
   }, [auth, isSuccess, result1?.user.activities, latest, refetch, baseURL]);
 
- 
+ if(Boolean(result1?.user.activities.length) === false && isSuccess){
+    return <p>
+      import activities
+    </p>
+ }
 
   return (
     <div className="flex flex-col  w-full px-24 ">
       <div className="px-24">
-        {result1?.user.activities && (
+        {result1?.user.activities.length && (
           <EventsCalender userActivities={result1?.user.activities} />
         )}
       </div>
