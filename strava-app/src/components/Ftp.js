@@ -1,8 +1,5 @@
 import React from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-
+import { Spinner } from "phosphor-react";
 // Active Recovery
 // (<55%FTP)
 // Endurance
@@ -24,7 +21,7 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function DoughnutChart({ ftp }) {
   if (!ftp) {
-    return <FontAwesomeIcon icon={faSpinner} spinPulse />;
+    return <Spinner size={32} />
   }
 
  

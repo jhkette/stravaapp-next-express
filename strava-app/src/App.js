@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import _ from "lodash";
-import { faSquareArrowUpRight } from "@fortawesome/free-solid-svg-icons";
 import { Routes, Route } from "react-router-dom";
 // context
 import { useAuth } from "./context/AuthContext";
@@ -194,11 +193,11 @@ function App() {
         {!!athlete.id && (
           <header className="pt-4 px-24 w-full flex justify-end ">
             {message && <h3>{message}</h3>}
-            {faSquareArrowUpRight && (
+            { 
               <div>
                 <ReturnProfile athlete={athlete} />{" "}
               </div>
-            )}
+            }
           </header>
         )}
 

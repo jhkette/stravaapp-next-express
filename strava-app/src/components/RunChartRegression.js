@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import regression from "regression";
 import { intervalToDuration } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { Spinner } from "phosphor-react";
 
 
 
@@ -225,7 +224,7 @@ export default function RunchartRegression({ userRecords, event, regdata }) {
   ) : (
     <p>
       {" "}
-      <FontAwesomeIcon icon={faSpinner} spinPulse />
+      <Spinner size={32} />
     </p>
   );
 }

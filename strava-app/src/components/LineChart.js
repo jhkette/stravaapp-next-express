@@ -3,12 +3,9 @@ import annotationPlugin from "chartjs-plugin-annotation";
 import "chartjs-adapter-date-fns";
 // import { enUS } from 'date-fns/locale';
 import "chartjs-adapter-moment";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  
-  faSpinner
-} from "@fortawesome/free-solid-svg-icons";
 
+
+import { Spinner } from "phosphor-react";
 
 import {
   Chart as ChartJS,
@@ -45,7 +42,7 @@ export default function LineChart(props) {
 
   if(!props.power.cyclingpbs){ // if no data show spinner
     return(
-      <FontAwesomeIcon icon={faSpinner} spinPulse />
+      <Spinner size={32} />
     )
   }
 

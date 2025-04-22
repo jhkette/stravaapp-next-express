@@ -1,14 +1,9 @@
 import { subMonths, eachDayOfInterval, format } from "date-fns";
 import { v4 as uuidv4 } from 'uuid';
 import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faDumbbell, faHeart } from "@fortawesome/free-solid-svg-icons";
-import { Bicycle, PersonSimpleRun,  Barbell, Heart } from "phosphor-react";
+import { Bicycle, PersonSimpleRun,  Barbell, Heart, ArrowRight } from "phosphor-react";
 
-import {
-  faBiking,
-  faRunning,
-} from "@fortawesome/free-solid-svg-icons";
+
 
 
 // calender component
@@ -130,7 +125,7 @@ export default function EventsCalender({ userActivities }) {
        
           <p className="flex font-bold items-center py-2">
             Training stress key: Low{" "}
-            <FontAwesomeIcon icon={faArrowRight} size="sm" className="mx-2" />{" "}
+            <ArrowRight size="20px" />{" "}
             High.{" "}
           </p>
           </div>

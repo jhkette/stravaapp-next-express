@@ -4,7 +4,7 @@ import "chartjs-adapter-date-fns";
 // import { enUS } from 'date-fns/locale';
 import "chartjs-adapter-moment";
 import { intervalToDuration } from "date-fns";
-
+import { Spinner } from "phosphor-react";
 
 
 import {
@@ -19,8 +19,7 @@ import {
   TimeScale,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 
 ChartJS.register(
   CategoryScale,
@@ -41,7 +40,7 @@ export default function Linechart(props) {
       <div>
         <p>
           {" "}
-          <FontAwesomeIcon icon={faSpinner} spinPulse />
+          <Spinner size={32} />
         </p>
       </div>
     );
