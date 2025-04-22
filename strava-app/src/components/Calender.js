@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faDumbbell, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { Bicycle, PersonSimpleRun,  Barbell, Heart } from "phosphor-react";
 
 import {
   faBiking,
@@ -42,22 +43,16 @@ export default function EventsCalender({ userActivities }) {
     let formattedDate = format(date, "E LLL dd yyyy");
     let dateFound = allDates.find((obj) => obj.date === formattedDate);
     if (dateFound) {
-     const watts = activity["average_watts"]  ? activity["average_watts"] : null
+     
       if (activity["average_heartrate"]) { // for all actvities with heart rate
       
         dateFound.events.push([
           activity.sport_type,
           activity.average_heartrate,
           activity.tss,
-          watts
+          
         ]);
         dateFound.tss += activity.tss;
-      } else if(activity["average_watts"]){ // if power meter but no heart rate
-        dateFound.events.push([
-          activity.sport_type,
-          activity.tss,
-          watts
-        ])
       } 
       
       else {  // eveything else
@@ -91,10 +86,10 @@ export default function EventsCalender({ userActivities }) {
           // this is the event text - that displays event info
           <div key={uuidv4()}>
             <p className="font-semibold"> 
-            {(eventArr[0] === 'VirtualRide' || eventArr[0] === 'Ride' ) &&  <FontAwesomeIcon icon={faBiking} size="sm"  className="pr-2"/> } 
-            {(eventArr[0] === "Run") &&   <FontAwesomeIcon icon={faRunning} size="sm"  className="pr-2"/>} 
-            {(eventArr[0] === "WeightTraining") &&   <FontAwesomeIcon icon={faDumbbell} size="sm" className="pr-2" />} 
-            {(!sports.includes(eventArr[0])) && <FontAwesomeIcon icon={faHeart} size="sm" className="pr-2" />}
+            {(eventArr[0] === 'VirtualRide' || eventArr[0] === 'Ride' ) &&  < Bicycle size={32}  className="pr-2"/> } 
+            {(eventArr[0] === "Run") &&   < PersonSimpleRun  size={32} className="pr-2"/>} 
+            {(eventArr[0] === "WeightTraining") &&   <Barbell size={32} className="pr-2" />} 
+            {(!sports.includes(eventArr[0])) && <Heart size={24}  />}
             {eventArr[0]}</p>
             <p>Average heartrate: {eventArr[1]}</p>
             {/* {eventArr[2]?.watts ? <p>Average watts: {eventArr[3].watts}</p> : ""}
