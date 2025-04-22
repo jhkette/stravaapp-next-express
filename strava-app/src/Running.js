@@ -8,8 +8,8 @@ export default function Running({ userRecords, mardataset, halfdataset }) {
   if (!userRecords.runningpbs["5000"]) {
     return (
       <section className="min-h-screen px-24">
-        <div className="pb-16">
-          <h2>Please add running data</h2>
+        <div className="pt-16">
+          <h2 className="inline-block py-2 border-b-4 border-red-500">Please add at least one 5km run</h2>
         </div>
       </section>
     );
