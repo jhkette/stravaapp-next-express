@@ -13,7 +13,16 @@ export default function Cycling({
   ftp,
   weight,
 }) {
+  if(!userRecords.cyclingpbs["1200"]) {
+    return (
+      <section className="min-h-screen px-24">
+        <div className="pb-16">
+        <h2 >Please add running data</h2>
+        </div>
+      </section>
+    )
 
+  }
 
   return (
     <section className="min-h-screen w-full py-4 px-24">

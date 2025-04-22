@@ -49,14 +49,14 @@ export default function EventsCalender({ userActivities }) {
           activity.sport_type,
           activity.average_heartrate,
           activity.tss,
-          {"watts":watts}
+          watts
         ]);
         dateFound.tss += activity.tss;
       } else if(activity["average_watts"]){ // if power meter but no heart rate
         dateFound.events.push([
           activity.sport_type,
           activity.tss,
-          {"watts":watts}
+          watts
         ])
       } 
       
@@ -68,17 +68,18 @@ export default function EventsCalender({ userActivities }) {
    // creates the the html for the main calender
   const finalHtml = allDates.map((date) => {
     let classes = classNames({
-      "bg-blue-300 h-12 w-auto": date.tss <= 25,
-      "bg-yellow-200 h-12 w-auto": date.tss > 25 && date.tss <= 50,
-      "bg-yellow-400 h-12  w-auto": date.tss > 50 && date.tss <= 70,
-      "bg-orange-300 h-12 w-auto": date.tss > 70 && date.tss <= 100,
-      "bg-orange-500 h-12 w-auto": date.tss > 100 && date.tss <= 130,
-      "bg-red-400 h-12 w-auto": date.tss > 130 && date.tss <= 200,
-      "bg-red-600 h-12  w-auto": date.tss > 200,
+      "bg-blue-300 h-12 w-12 rounded-sm": date.tss <= 25,
+      "bg-yellow-200 h-12 w-12 rounded-sm": date.tss > 25 && date.tss <= 50,
+      "bg-yellow-400 h-12  w-12 rounded-sm": date.tss > 50 && date.tss <= 70,
+      "bg-orange-300 h-12 w-12 rounded-sm": date.tss > 70 && date.tss <= 100,
+      "bg-orange-500 h-12 w-12 rounded-sm": date.tss > 100 && date.tss <= 130,
+      "bg-red-400 h-12 w-12 rounded-sm": date.tss > 130 && date.tss <= 200,
+      "bg-red-600 h-12  w-12 rounded-sm": date.tss > 200,
     });
      const sports = ["VirtualRide", "Ride", "Run", "WeightTraining" ]
     if (date.events.length) { // if the date has events on it - created in object earlier
       let eventText = date.events.map((eventArr) => { // looping through events using map
+        console.log(eventArr)
         if (eventArr.length === 1) { // if the only thing we have is an event name
           return (
             <div key={uuidv4()}>
@@ -96,8 +97,8 @@ export default function EventsCalender({ userActivities }) {
             {(!sports.includes(eventArr[0])) && <FontAwesomeIcon icon={faHeart} size="sm" className="pr-2" />}
             {eventArr[0]}</p>
             <p>Average heartrate: {eventArr[1]}</p>
-            {eventArr[2].watts ? <p>Average watts: {eventArr[3].watts}</p> : ""}
-            {eventArr[3].watts ? <p>Average watts: {eventArr[3].watts}</p> : ""}
+            {/* {eventArr[2]?.watts ? <p>Average watts: {eventArr[3].watts}</p> : ""}
+            {eventArr[3]?.watts ? <p>Average watts: {eventArr[3].watts}</p> : ""} */}
             <p className="pb-2">TSS: {eventArr[2]}</p>{" "}
           </div>
         );
@@ -105,7 +106,7 @@ export default function EventsCalender({ userActivities }) {
 
       return (
         // the event text is then added to the day div wih the date
-        <div key={uuidv4()} className=" flex flex-col  bg-gray-200 justify-between  p-2 min-h-[150px]">
+        <div key={uuidv4()} className=" flex flex-col  bg-gray-200 justify-between  p-4 min-h-[150px]">
           <div className="py-2">
             <p className="font-semibold">{date.date}</p>
             <p>{eventText}</p>  
@@ -116,7 +117,7 @@ export default function EventsCalender({ userActivities }) {
       );
     } else {
       return ( // if there are no events on the data - just add text with rest day
-        <div key={uuidv4()} className="p-2 bg-gray-200 p-2 min-h-[150px]">
+        <div key={uuidv4()} className="p-2 bg-gray-200 p-4 min-h-[150px]">
           <p className="font-semibold py-2">{date.date}</p>
           <p className="font-semibold py-2">Rest day</p>
         </div>

@@ -11,10 +11,10 @@ import logo from './images/strava.png'
 */
 export default function Landing({ userActivities, link, message }) {
   const { auth } = useAuth();
-
+   console.log(userActivities)
   return (
     <>
-      {auth === false && (
+      {auth === false && userActivities.length == false  && (
         <main className="min-h-screen bg-[url('./images/balach_cover.jpeg')] bg-no-repeat bg-cover bg-center bg-fixed flex flex-col content-center justify-center">
           <div className="px-32 pb-16 ">
             <div className=" p-8 opacity-70 rounded-md bg-blue-100 ">
