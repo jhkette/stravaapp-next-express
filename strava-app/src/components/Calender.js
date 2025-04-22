@@ -123,11 +123,11 @@ export default function EventsCalender({ userActivities }) {
       
         <div className="flex flex-col  p-2">
        
-          <p className="flex font-bold items-center py-2">
-            Training stress key: Low{" "}
+          <div className="flex flex-row font-bold items-center py-2">
+            <p className="pr-1">Training stress key: Low{" "}</p>
             <ArrowRight size="20px" />{" "}
-            High.{" "}
-          </p>
+            <p className="pl-1">High.{" "}</p>
+          </div>
           </div>
           <div className="w-full flex">
             <div className="bg-blue-300 mx-1 h-12 w-12"></div>
