@@ -1,81 +1,63 @@
+const { durations, distances } = require("./values");
 
-// TSS = (sec x NP® x IF®)/(FTP x 3600) x 100
-// “sec” is duration of the workout in seconds,
-// “NP” is Normalized Power® (don’t worry about this for now),
-// “IF” is Intensity Factor® (a percentage of your FTP; in other words how intense the effort was),
-// “FTP” is Functional Threshold Power (your best average power for a one-hour race or test),
-// and “3600” is the number of seconds in an hour.
-
-// average_heartrate
-// weighted_average_watts
-//  moving_time
 /**
- * Calculates TSS from activity
- * @param activity {}
- * @param ftp Int
- * @param bikeHrZones {}
- * @param runZones {}
- * @returns tss float
+ * Calculates TSS (Training Stress Score) from an activity.
+ * @param {Object} activity - Activity data.
+ * @param {number} ftp - Functional Threshold Power.
+ * @param {Object} bikeHrZones - HR zones for cycling.
+ * @param {Object} runZones - HR zones for running.
+ * @returns {number} - Calculated TSS (rounded).
  */
 function calculateTss(activity, ftp, bikeHrZones, runZones) {
-  let zones;
-  if ((activity["has_heartrate"] === false) && (activity["device_watts"] === false)) {
-    return 0
+  if (!activity.has_heartrate && !activity.device_watts) {
+    return 0;
   }
-  else if (activity["device_watts"]) {
-    const intensityFactor = activity["weighted_average_watts"] / ftp;
+
+  if (activity.device_watts) {
+    const intensityFactor = activity.weighted_average_watts / ftp;
     const tss =
-      ((activity["moving_time"] *
-        activity["weighted_average_watts"] *
+      ((activity.moving_time *
+        activity.weighted_average_watts *
         intensityFactor) /
         (ftp * 3600)) *
       100;
     return Math.round(tss);
   }
-  else {
-    // use different zones based on activty
-    if (activity["type"] == "Ride" || element["type"] == "VirtualRide") {
-      zones = bikeHrZones;
-    } else {
-      zones = runZones;
-    }
-    
-  
-    // tss score per hour at zones
-    const tssScore = {
-      1: 30,
-      2: 55,
-      3: 70,
-      4: 80,
-      5: 120,
-    };
-    const hours = activity["moving_time"] / 3600;
-    const hr = activity["average_heartrate"];
-    let tss;
-    // console.log(bikeHrZones, runZones, "these are zones")
-    switch (true) {
-        case hr <= zones.zone1[1]:
-          tss= hours * tssScore[1];
-          break;
-        case hr >= zones.zone2[0] && hr <= zones.zone2[1]:
-          tss=  hours * tssScore[2];
-          break;
-        case hr >= zones.zone3[0] && hr <= zones.zone3[1]:
-          tss=  hours * tssScore[3];
-          break;
-        case hr >= zones.zone4[0] && hr <= zones.zone4[1]:
-          tss=  hours * tssScore[4];
-          break;
-        case hr >= zones.zone5[0] && hr <= zones.zone5[1]:
-          tss= hours * tssScore[5];
-          break;
-        default:
-          tss = 0
-      }
-    return Math.round(tss);
+
+  // Heart rate method
+  const zones = (activity.type === "Ride" || activity.type === "VirtualRide")
+    ? bikeHrZones
+    : runZones;
+
+  const tssScore = {
+    1: 30,
+    2: 55,
+    3: 70,
+    4: 80,
+    5: 120,
+    6: 150, // Optional: you might want a "zone 6+" if HR is super high
+  };
+
+  const hours = activity.moving_time / 3600;
+  const hr = activity.average_heartrate || 0;
+  let tss = 0;
+
+  if (hr <= zones.zone1[1]) {
+    tss = hours * tssScore[1];
+  } else if (hr <= zones.zone2[1]) {
+    tss = hours * tssScore[2];
+  } else if (hr <= zones.zone3[1]) {
+    tss = hours * tssScore[3];
+  } else if (hr <= zones.zone4[1]) {
+    tss = hours * tssScore[4];
+  } else if (hr <= zones.zone5[1]) {
+    tss = hours * tssScore[5];
+  } else {
+    // HR is above zone 5
+    tss = hours * (tssScore[6] || tssScore[5]); // fallback if zone 6 doesn't exist
   }
 
+  return Math.round(tss);
 }
-
 
 module.exports = calculateTss;

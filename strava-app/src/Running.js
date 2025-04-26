@@ -5,6 +5,7 @@ import RunchartRegression from "./components/RunChartRegression";
 
 // running page with charts
 export default function Running({ userRecords, mardataset, halfdataset }) {
+  console.log(userRecords)
   if (!userRecords.runningpbs["5000"]) {
     return (
       <section className="min-h-screen px-24">
