@@ -21,7 +21,7 @@ function App() {
 
   // const [auth, setAuth] = useState(false);
   const [athlete, setAthlete] = useState({});
-
+  const [fetched, setFetched] = useState(false)
   const [latest, setLatest] = useState(null);
   const [userActivities, setUseractivities] = useState([]);
   const [userRecords, setUserRecords] = useState({});
@@ -76,7 +76,11 @@ function App() {
 
         const userRecordsInfo = _.omit(userData.data.user, "activities");
         setUserRecords(userRecordsInfo);
+        if(userData.data.user.activities){
+          setFetched(true)
+        }
         setUseractivities(userData.data.user.activities);
+        
         setLatest(
           userData.data.user.activities[
             userData.data.user.activities.length - 1
@@ -216,6 +220,7 @@ function App() {
                   importData={importData}
                   link={link}
                   message={message}
+                  fetched={fetched}
                 />
               }
             ></Route>

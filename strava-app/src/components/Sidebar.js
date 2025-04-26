@@ -8,8 +8,6 @@ import { useAuth } from "../context/AuthContext";
 export default function Sidebar({
   logout,
   userActivities,
-  message,
-  importData,
 }) {
   const { auth } = useAuth();
   return (
@@ -55,24 +53,7 @@ export default function Sidebar({
           </div>
         )}
 
-        {auth && !userActivities.length ? (
-          <div className="flex flex-row justify-start items-center py-16">
-            <div className="w-10"></div>
-            <div>
-              <button
-                className="bg-white px-6 py-2 rounded-md hover:bg-green-700 hover:text-white transition ease-in-out"
-                onClick={importData}
-              >
-                {message ? "importing" : "import"}
-              </button>
-              <p className="p-6 my-6 text-white bg-red-600  font-semibold">
-                If this is your first time logging in - please click import.
-                This will retrieve data from Strava. Your future activities will
-                then be added automatically.
-              </p>
-            </div>
-          </div>
-        ) : null}
+     
       </nav>
     </div>
   );

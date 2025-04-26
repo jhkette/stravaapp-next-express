@@ -2,7 +2,7 @@
 
 ### NOTE! The original application was built for a Bsc computing project. The folders with my Bsc work were in Node (the node/express server) and strava-app, which was built using create react-app. I am in the process of moving the entire app to a nextjs application. This is in the strava folder. I kept it in this repo as I initially still relied on the node/express server. I am now moving this over to Next API routes but this is not completely finished. The Cypress folder contains end to end tests for the Bsc project.
 
-This application takes data from the Strava API to analyse a user's data. The app produces a cycling power curve and a pace graph, from raw strava data. This is data then used to make predictions. A user's 5k performance is used to esimtate their performance over longer distances using linear regression. I also use a power graph and the athlete's weight to estimate time up a climb. 
+This application takes data from the Strava API to analyse a user's data. The app produces a cycling power curve and a pace graph, from raw strava data. This is data then used to make predictions. A user's 5k performance is used to esimtate their performance over longer distances using linear regression. I also use a power graph and the athlete's weight to estimate time up a climb. My inspiration was strava sauce [https://road.cc/content/tech-news/sauce-strava-releases-ps2-month-analysis-tools-290433](described here in a road.cc article). My aim was to improve on some of Strava Sauce's analytics - and offer more predictive insights. 
 
 
 ![Screenshot 1](./images/screen1.jpg)
