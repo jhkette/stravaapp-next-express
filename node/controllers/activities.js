@@ -108,6 +108,7 @@ exports.importActivities = async (req, res) => {
     }
   } catch (err) {
     console.log(err.message);
+    return res.status(500).send({ error: "Something went wrong fetching activities." });
   }
   // get all the extra data for each activity
   const data_set = await activityLoop(data_list, token);
@@ -264,12 +265,12 @@ exports.getLatestActivities = async (req, res) => {
     const allActs = await UserActivities.findOne({ athlete_id: id });
 
     //the last activities to check its not the latest one.
-    if (
-      allActs.activities[allActs.activities.length - 1].id ==
-      data_list[data_list.length - 1].id
-    ) {
-      errors["error"] = "this activity has already been added";
-      console.log("activity already added")
+    const existingActivityIds = new Set(allActs.activities.map(act => act.id));
+
+    const newActivities = data_list.filter(act => !existingActivityIds.has(act.id));
+    
+    if (newActivities.length === 0) {
+      errors["error"] = "all activities already added";
       return res.status(400).send(errors);
     }
     // get all extra data for each activities i.e watts, distance 'streams'
@@ -342,7 +343,8 @@ exports.getLatestActivities = async (req, res) => {
    
     return res.send(data_set);
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return res.status(500).send({ error: "Something went wrong fetching activities." });
   }
 };
 /**
@@ -497,6 +499,7 @@ exports.importActivities = async (req, res) => {
     );
   } catch (err) {
     console.log(err);
+    return res.status(500).send({ error: "Something went wrong fetching activities." });
   }
 
   // the user is not going to need the data
