@@ -16,7 +16,7 @@ export default function Landing({
   fetched,
 }) {
   const { auth } = useAuth();
-  console.log(userActivities);
+
   return (
     <>
       {auth === false && userActivities.length == false && (
