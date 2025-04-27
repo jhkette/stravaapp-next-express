@@ -28,6 +28,7 @@ function App() {
   const [marathon, setMarathon] = useState({});
   const [half, setHalf] = useState({});
   const [alpe, setAlpe] = useState({});
+  const [box, setBox] = useState({});
 
   const [message, setMessage] = useState("");
   const [hardknott, setHardknott] = useState({});
@@ -89,6 +90,7 @@ function App() {
         setMarathon(dataSet.data.marathon);
         setHalf(dataSet.data.half);
         setAlpe(dataSet.data.alpe);
+        setBox(dataSet.data.box);
 
         setHardknott(dataSet.data.hardknott);
         setScotland(dataSet.data.scotland);
@@ -232,7 +234,7 @@ function App() {
                   <Cycling
                     userRecords={userRecords}
                     ftp={userRecords.cyclingFTP}
-                    alpedataset={alpe}
+               
                     scotland={scotland}
                     weight={weight}
                     hardknott={hardknott}

@@ -9,8 +9,9 @@ exports.dataSet = async (req, res) => {
   const half = await RunDataSet.find({ name: "half marathon" });
   const hardknott= await RideDataSet.find({ name: "Hardknott pass" });
   const scotland= await RideDataSet.find({ name: "Bealach-na-ba" });
-
-  res.send({ marathon, half,  hardknott, scotland });
+  const alpe = await RideDataSet.find({ name: "Alpe du zwift" });
+  const box = await RideDataSet.find({ name: "Box hill" });
+  res.send({ marathon, half,  hardknott, scotland, alpe, box });
 };
 
 
@@ -24,7 +25,8 @@ exports.dataSetWrite = async (req, res) => {
     const hardknott = await RideDataSet.find({ name: "Hardknott pass" });
     const scotland = await RideDataSet.find({ name: "Bealach-na-ba" });
 
-    const data = { marathon, half, hardknott, scotland };
+
+    const data = { marathon, half, hardknott, scotland, alpe, boxHill };
     const filePath = path.join(__dirname, "data.json");
 
     await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
