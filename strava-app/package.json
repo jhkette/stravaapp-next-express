@@ -28,8 +28,8 @@
     "web-vitals": "^2.1.4"
   },
   "optionalDependencies": {
-  "fsevents": "*"
-},
+    "fsevents": "*"
+  },
   "scripts": {
     "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
