@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 export default function Sidebar({ logout, userActivities }) {
   const { auth } = useAuth();
   return (
-    <div className="h-auto w-4/12 min-w-[380px] bg-slate-200 min-h-screen">
+    <div className="h-auto w-4/12 min-w-[365px] bg-slate-200 min-h-screen">
       <nav className="flex flex-col py-16 px-8 ml-8">
         <div className="flex flex-row justify-start items-center py-2 border-b border-gray-300 border-dashed">
           <div className="w-10">
