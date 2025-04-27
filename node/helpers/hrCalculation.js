@@ -101,17 +101,27 @@ function getStandardDeviation(array) {
  * @returns zones {}
  */
 function getHrZones(hr) {
- 
-  const zones = {};
-  zones["zone1"] = [Math.ceil(hr * 0.68), Math.ceil(hr * 0.73)];
-  zones["zone2"] = [Math.ceil(hr * 0.73), Math.ceil(hr * 0.8)];
-  zones["zone3"] = [Math.ceil(hr * 0.8), Math.ceil(hr * 0.87)];
-  zones["zone4"] = [Math.ceil(hr * 0.87), Math.ceil(hr * 0.93)];
-  zones["zone5"] = [Math.ceil(hr * 0.93), hr];
+  const thresholds = [
+    [0.68, 0.73],
+    [0.73, 0.8],
+    [0.8, 0.87],
+    [0.87, 0.93],
+    [0.93, 1],
+  ];
 
-  return zones;
+  const zones = thresholds.map(([start, end]) => [
+    Math.ceil(hr * start),
+    Math.ceil(hr * end),
+  ]);
+
+  return {
+    zone1: zones[0],
+    zone2: zones[1],
+    zone3: zones[2],
+    zone4: zones[3],
+    zone5: zones[4],
+  };
 }
-
 
 
 module.exports = {calcMaxHr, getHrZones}
