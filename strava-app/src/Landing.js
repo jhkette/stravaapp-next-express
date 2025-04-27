@@ -44,18 +44,19 @@ export default function Landing({
       {auth && !userActivities.length && fetched ? (
         <div className="flex flex-row justify-start items-center py-16">
           <div className="w-10"></div>
-          <div>
-            <button
-              className="bg-blue-400 px-6 py-12 rounded-md hover:bg-green-700 hover:text-white transition ease-in-out"
-              onClick={importData}
-            >
-              {message ? "importing" : "import"}
-            </button>
-            <p className="p-6 my-6 text-white font-semibold">
+          <div className="p-6 my-6">
+          
+            <p className=" text-gray-600 font-base">
               If this is your first time logging in - please click import. This
               will retrieve data from Strava. Your future activities will then
               be added automatically.
             </p>
+            <button
+              className="bg-blue-400 my-6 px-16 py-3 rounded-md hover:bg-green-700 hover:text-white transition ease-in-out hover:bg-blue-900"
+              onClick={importData}
+            >
+              {message ? "importing" : "import"}
+            </button>
           </div>
         </div>
       ) : null}

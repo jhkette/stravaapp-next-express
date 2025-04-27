@@ -2,81 +2,90 @@ const _ = require("lodash");
 const { quickSort } = require("./arraysorting");
 
 /**
- * this function calculates maxhr - it check if
- * activities are rides or runs and then removes obvious
- * outliers. This is an issue as hr monitors can occasionaly
- * misreport numbers.
- * Thus i've filtered for the activities that were obvsiouly done
- * at a higher intensity and then removed data 3 standard devivations from the
- * mean (if such data exists.)
- * @function  calcMaxHr
- * @param {} performances
- * @param {} activityType
- * @returns final maxhr int
+ * Calculates max HR, removing obvious outliers
+ * @param {Array} performances
+ * @param {String} activityType
+ * @returns {Number} max heart rate
  */
 function calcMaxHr(performances, activityType) {
-  let hrList;
-  if (activityType == "ride") {
-    hrList = performances.filter(
-      (performance) =>
-        performance["type"] == "VirtualRide" || performance["type"] == "Ride"
-    );
-  } else {
-    hrList = performances.filter((performance) => performance["type"] == "Run");
-  }
-  const hrNumbers = hrList.map((activity) => activity["max_heartrate"]);
+  const relevantActivities = performances.filter((activity) => {
+    if (activityType === "ride") {
+      return activity.type === "Ride" || activity.type === "VirtualRide";
+    }
+    return activity.type === "Run";
+  });
 
-  if (hrNumbers.length == 0) {
+  const hrValues = relevantActivities
+    .map((activity) => activity.max_heartrate)
+    .filter((hr) => hr); // filter out null or undefined HRs
+
+  if (hrValues.length === 0) {
     return 0;
   }
-  if (hrNumbers.length == 1) {
-    return hrNumbers[0];
+  if (hrValues.length === 1) {
+    return hrValues[0];
   }
-  if (hrList.length > 10) {   // only if hr length is more than 10 are we removing some numbers to remove 'easy' efforts
-    const sortedHr = quickSort(hrNumbers);
-    const quarterLength = Math.ceil(hrNumbers.length / 4);
-    const higherIntensity = sortedHr.slice(quarterLength, sortedHr.length - 1);
-    const mean = calcMean(higherIntensity)
-    const  standardDeviation = getStandardDeviation(higherIntensity);
-    const outlierLimit = mean + (3 * standardDeviation);
 
-    const removeHighOutliers = higherIntensity.filter(
-      (number) => number < outlierLimit
-    );
-    if (removeHighOutliers > 8) {
-    return calcMean(removeHighOutliers.slice(-3));
-    }
-    return removeHighOutliers[removeHighOutliers.length -1];
+  const filteredHrValues = removeOutliers(hrValues);
+
+  if (filteredHrValues.length >= 8) {
+    return calcMean(filteredHrValues.slice(-3));
+  } else if (filteredHrValues.length >= 2) {
+    return calcMean(filteredHrValues.slice(-2));
+  } else {
+    return filteredHrValues[filteredHrValues.length - 1];
   }
-  const mean = calcMean(hrNumbers)
-  const  standardDeviation = getStandardDeviation(hrNumbers);
-  const outlierLimit = mean + (3 * standardDeviation);
-
-  const removeHighOutliers = hrNumbers.filter(
-    (number) => number < outlierLimit
-  );
-  if (removeHighOutliers > 5) {
-    // return the mean of the last 3 indexes
-    return calcMean(removeHighOutliers.slice(-2));
-  } 
-  return removeHighOutliers[removeHighOutliers.length -1];
 }
 
+/**
+ * Removes HR outliers (above mean + 3 std deviations)
+ * @param {Array} hrArray
+ * @returns {Array} cleaned hr values
+ */
+function removeOutliers(hrArray) {
+  const sorted = quickSort(hrArray); // sort the array - small to large
+  const quarterLength = Math.ceil(sorted.length / 4); // remove easy efforts
+  const higherIntensity = sorted.slice(quarterLength); // keep upper 75% - that are higher intensity
+
+  const mean = calcTrueMean(higherIntensity);
+  const stdDev = getStandardDeviation(higherIntensity);
+  const limit = mean + (3 * stdDev);
+
+  return higherIntensity.filter((hr) => hr < limit);
+}
+
+/**
+ * Calculates rounded mean
+ * @param {Array} array
+ * @returns {Number}
+ */
 function calcMean(array) {
   const n = array.length;
-  const mean = array.reduce((a, b) => a + b) / n;
+  const mean = array.reduce((a, b) => a + b, 0) / n;
   return Math.ceil(mean);
 }
 
-function getStandardDeviation(array) {
+/**
+ * Calculates exact mean (no rounding)
+ * @param {Array} array
+ * @returns {Number}
+ */
+function calcTrueMean(array) {
   const n = array.length;
-  const meanValue = calcMean(array)
-  const standardDeviation = Math.sqrt(
-    array.map((x) => Math.pow(x - meanValue, 2)).reduce((a, b) => a + b) / n
-  );
-  return standardDeviation;
+  return array.reduce((a, b) => a + b, 0) / n;
 }
 
+/**
+ * Calculates standard deviation
+ * @param {Array} array
+ * @returns {Number}
+ */
+function getStandardDeviation(array) {
+  const n = array.length;
+  const meanValue = calcTrueMean(array);
+  const variance = array.map(x => Math.pow(x - meanValue, 2)).reduce((a, b) => a + b, 0) / n;
+  return Math.sqrt(variance);
+}
 // https://www.myprocoach.net/calculators/hr-zones/#:~:text=Work%20out%20your%20heart%20rate%20zones&text=Zone%201%3A%20Easy%20%E2%80%93%2068%25,fat%20and%20carbohydrates%20as%20fuel.
 // Zone	Intensity	Percentage of HRmax
 // Zone 1	Very light	68–73%
@@ -103,4 +112,6 @@ function getHrZones(hr) {
   return zones;
 }
 
-module.exports = { calcMaxHr, getHrZones };
+
+
+module.exports = {calcMaxHr, getHrZones}
