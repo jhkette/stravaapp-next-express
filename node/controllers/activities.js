@@ -101,8 +101,6 @@ exports.importActivities = async (req, res) => {
           params: { per_page: 8, page: page_num },
         }
       );
-      console.log("LOOP RUNNING TO FETCH DATA")
-      console.log(response.data[0])
       data_list.push(...response.data); // push data to array
       page_num++;
     }
@@ -250,16 +248,11 @@ exports.getLatestActivities = async (req, res) => {
         page: 3
       }
     );
-    console.log(response.data)
-
     if (response.data.length == 0) {
       errors["error"] = "no activities found";
       return res.send(errors);
     }
-
     const data_list = [...response.data];
-    console.log(data_list)
-
     const { id } = data_list[0].athlete;
     // equality check for latest actviity on mongo vs latest new activity
     const allActs = await UserActivities.findOne({ athlete_id: id });
@@ -275,8 +268,7 @@ exports.getLatestActivities = async (req, res) => {
     }
     // get all extra data for each activities i.e watts, distance 'streams'
     const data_set = await activityLoop(data_list, token);
-   
-    console.log(data_set, "THIS IS DATASET")
+
     /* checkPBs  = this is to check if there are new pbs - the helper function returns this destructured array */
     const [
       cyclingAllTime,
@@ -288,7 +280,6 @@ exports.getLatestActivities = async (req, res) => {
 
     if (updateFlagCycling) {
       // if updatepb flag is true - update DB
-
       await UserActivities.updateOne(
         { athlete_id: id },
         {
@@ -301,7 +292,6 @@ exports.getLatestActivities = async (req, res) => {
 
     if (updateFlagRunning) {
       // if updatepb flag is true - update DB
-
       await UserActivities.updateOne(
         { athlete_id: id },
         {

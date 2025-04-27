@@ -21,7 +21,6 @@ export default function RidechartRegression({
   let predWkg;
   let pbLevel;
   if (cyclingpbs && weight && regdata[0] !== undefined) {
-    console.log(cyclingpbs);
     if (regdata[0]["name"] === "Bealach-na-ba") {
       if (cyclingpbs["1200"] / weight >= 6.5) {
         predWkg = cyclingpbs["1200"];
