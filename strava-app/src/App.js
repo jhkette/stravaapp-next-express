@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import _ from "lodash";
@@ -10,18 +10,18 @@ import ReturnProfile from "./components/UserProfile";
 import Sidebar from "./components/Sidebar";
 import Landing from "./Landing";
 import Cycling from "./Cycling";
+import IndoorCycling from "./IndoorCycling";
 import Running from "./Running";
 import ProtectedRoute from "./protectRoute";
+import Footer from "./components/Footer";
+// config
+import { API_BASE_URL } from "./config";
 
-
-import powered from "./images/powered.png";
-// AIzaSyCe3QhH1ZHrGz3jRZFhhojd-LPtov-otH8
 function App() {
+  // initial link
   const [link, setLink] = useState();
-
-  // const [auth, setAuth] = useState(false);
+  // athlete data save as state
   const [athlete, setAthlete] = useState({});
-  const [fetched, setFetched] = useState(false)
   const [latest, setLatest] = useState(null);
   const [userActivities, setUseractivities] = useState([]);
   const [userRecords, setUserRecords] = useState({});
@@ -29,28 +29,59 @@ function App() {
   const [half, setHalf] = useState({});
   const [alpe, setAlpe] = useState({});
   const [box, setBox] = useState({});
-
-  const [message, setMessage] = useState("");
   const [hardknott, setHardknott] = useState({});
   const [scotland, setScotland] = useState({});
+  // fetched boolean flags
+  const [fetched, setFetched] = useState(false);
+  const [latestFetched, setLatestFetched] = useState(false);
 
-  const baseURL = "http://localhost:3000/api";
+  const [message, setMessage] = useState("");
 
-  // impprt react context auth - this gives access to global auth state
-  const {auth, setAuth } = useAuth();
+  // this gives access to global auth state
+  const { auth, setAuth } = useAuth();
 
+  const fetchAthleteData = async (config) => {
+    const userData = await axios.get(API_BASE_URL + "/user/athlete", config);
+    const dataSet = await axios.get(API_BASE_URL + "/data/datasets", config);
+    return { userData, dataSet };
+  };
+
+  const getLatestData = useCallback(async () => {
+    const token = Cookies.get("token");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    try {
+      const date = Math.floor(Date.parse(latest) / 1000);
+      const activities = await axios.get(
+        API_BASE_URL + `/user/activities/${date}`,
+        config
+      );
+      if (activities.data.error) {
+        console.log(activities.data.error);
+        return;
+      } else {
+        if (activities.data.length) {
+          setLatestFetched(true);
+          setUseractivities((oldArray) => [...oldArray, ...activities.data]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [latest, setLatestFetched, setUseractivities]);
   /*
    * Useffect function runs when page loads,
    * return the oauth link to authorise strava
    */
   useEffect(() => {
     axios
-      .get(baseURL + "/auth/link")
+      .get(API_BASE_URL + "/auth/link")
       .then((res) => setLink(res.data.link))
       .catch((err) => {
         console.log(err);
       });
-  }, [baseURL]);
+  }, []);
 
   // useffect function - gets the main athlete data from /user/athlete/
   // and the datasets from /data/datasets. Then sets the state variables
@@ -63,45 +94,37 @@ function App() {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-
-    const getData = async () => {
-      try {
-        const userData = await axios.get(baseURL + "/user/athlete", config);
-        const dataSet = await axios.get(baseURL + "/data/datasets", config);
-        if (userData.data.errors) {
-          console.log(userData.data.errors);
-          return;
-        }
-        // set the state values with response
-        setAthlete(userData.data.profile);
-
-        const userRecordsInfo = _.omit(userData.data.user, "activities");
-        setUserRecords(userRecordsInfo);
-        if(userData.data.user.activities){
-          setFetched(true)
-        }
-        setUseractivities(userData.data.user.activities);
-        
-        setLatest(
-          userData.data.user.activities[
-            userData.data.user.activities.length - 1
-          ]["start_date"]
-        );
-        setMarathon(dataSet.data.marathon);
-        setHalf(dataSet.data.half);
-        setAlpe(dataSet.data.alpe);
-        setBox(dataSet.data.box);
-
-        setHardknott(dataSet.data.hardknott);
-        setScotland(dataSet.data.scotland);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    // only call the get data function
-    // if there is a token - avoid axios error
     if (token) {
-      getData();
+      fetchAthleteData(config)
+        .then(({ userData, dataSet }) => {
+          if (userData.data.errors) {
+            console.log(userData.data.errors);
+            return;
+          }
+          // set the state values with response
+          setAthlete(userData.data.profile);
+
+          const userRecordsInfo = _.omit(userData.data.user, "activities");
+          setUserRecords(userRecordsInfo);
+          if (userData.data.user.activities) {
+            setFetched(true);
+          }
+          setUseractivities(userData.data.user.activities);
+
+          setLatest(
+            userData.data.user.activities[
+              userData.data.user.activities.length - 1
+            ]["start_date"]
+          );
+          setMarathon(dataSet.data.marathon);
+          setHalf(dataSet.data.half);
+          setAlpe(dataSet.data.alpe);
+          setBox(dataSet.data.box);
+
+          setHardknott(dataSet.data.hardknott);
+          setScotland(dataSet.data.scotland);
+        })
+        .catch(console.error);
     }
   }, [setAuth]);
   /**
@@ -115,31 +138,10 @@ function App() {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    const getLatestData = async () => {
-      try {
-        // date is a unix timestamp - just modifying so it works with strava api
-        const date = Math.floor(Date.parse(latest) / 1000);
-        const activities = await axios.get(
-          baseURL + `/user/activities/${date}`,
-          config
-        );
-        // if an error object from api call return
-        if (activities.data.error) {
-          console.log(activities.data.error);
-          return;
-        } else {
-          if (activities.data.length) {
-            setUseractivities((oldArray) => [...oldArray, ...activities.data]);
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (auth && latest && userActivities.length) {
-      getLatestData();
+    if (auth && userActivities.length && !latestFetched) {
+      getLatestData(config);
     }
-  }, [auth, latest, userActivities]);
+  }, [auth, latest, userActivities, getLatestData, latestFetched]);
 
   /**
    * function importData
@@ -155,7 +157,7 @@ function App() {
     const config = {
       headers: { Authorization: `Bearer ${token}`, id: athlete.id },
     };
-    axios(baseURL + `/user/activities/activities-list`, config);
+    axios(API_BASE_URL + `/user/activities/activities-list`, config);
 
     setTimeout(() => {
       logout();
@@ -172,8 +174,7 @@ function App() {
     setAuth(false);
     setMessage("");
     Cookies.remove("token");
-
-    axios.get(baseURL + "/auth/logout");
+    axios.get(API_BASE_URL + "/auth/logout");
     window.location.href = "/";
     if (window.location.pathname === "/") {
       window.location.reload();
@@ -198,12 +199,12 @@ function App() {
       <div className="h-auto w-full ">
         {!!athlete.id && (
           <header className="pt-4 px-24 w-full flex justify-end ">
-            {message && <h3>{message}</h3>}
-            { 
+            {
               <div>
                 <ReturnProfile athlete={athlete} />{" "}
               </div>
             }
+            {message && <h4>{message}</h4>}
           </header>
         )}
 
@@ -234,10 +235,23 @@ function App() {
                   <Cycling
                     userRecords={userRecords}
                     ftp={userRecords.cyclingFTP}
-               
                     scotland={scotland}
                     weight={weight}
                     hardknott={hardknott}
+                  />
+                }
+              ></Route>
+            </Route>
+            <Route exact path="/indoorcycling" element={<ProtectedRoute />}>
+              <Route
+                path="/indoorcycling"
+                element={
+                  <IndoorCycling
+                    userRecords={userRecords}
+                    ftp={userRecords.cyclingFTP}
+                    alpe={alpe}
+                    weight={weight}
+                    box={box}
                   />
                 }
               ></Route>
@@ -256,25 +270,7 @@ function App() {
               ></Route>
             </Route>
           </Routes>
-          <footer className="flex   px-24 justify-end align-center">
-            {auth && <div className="w-72 flex flex-col justify-end items-end">
-             
-              <img src={powered} alt="Logo" className="h-12 w-72" />
-              <p className="text-orange-800 mr-4 pb-4">
-                {" "}
-                {athlete.id && (
-                  <a
-                    href={`https://www.strava.com/athletes/${athlete.id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {" "}
-                    View your profile on Strava{" "}
-                  </a>
-                )}
-              </p>
-            </div> }
-          </footer>
+          <Footer id={athlete.id} />
         </div>
       </div>
     </div>

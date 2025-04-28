@@ -10,7 +10,7 @@ exports.dataSet = async (req, res) => {
   const hardknott= await RideDataSet.find({ name: "Hardknott pass" });
   const scotland= await RideDataSet.find({ name: "Bealach-na-ba" });
   const alpe = await RideDataSet.find({ name: "Alpe du zwift" });
-  const box = await RideDataSet.find({ name: "Box hill" });
+  const box = await RideDataSet.find({ name: "Box Hill" });
   res.send({ marathon, half,  hardknott, scotland, alpe, box });
 };
 

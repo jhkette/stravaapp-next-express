@@ -46,8 +46,6 @@ exports.getAthlete = async (req, res) => {
     });
 
     if (foundUserActs) {
-  
-
       return res.send({ profile: response.data, user: foundUserActs, stats: athleteStats.data });
     }
 

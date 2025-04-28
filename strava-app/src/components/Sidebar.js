@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { Bicycle, PersonSimpleRun, SignOut, Calendar } from "phosphor-react";
+import { Bicycle, PersonSimpleRun, House, SignOut, Calendar } from "phosphor-react";
 import { useAuth } from "../context/AuthContext";
 
 // sidebar component - contains links to other pages depending on auth status
@@ -25,6 +25,16 @@ export default function Sidebar({ logout, userActivities }) {
             </div>
             <p className="p-2 text-lg">
               <Link to="/cycling"> Cycling</Link>
+            </p>
+          </div>
+        )}
+         {!!userActivities.length && (
+          <div className="flex flex-row justify-start items-center py-2 border-b border-gray-300 border-dashed">
+            <div className="w-10">
+            <House size={32} />
+            </div>
+            <p className="p-2 text-lg">
+              <Link to="/indoorcycling"> Indoor Cycling</Link>
             </p>
           </div>
         )}

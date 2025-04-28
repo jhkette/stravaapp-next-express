@@ -1,6 +1,6 @@
 import React from "react";
 
-import RidechartRegression from "./components/RideChartRegression";
+import IndoorRidechartRegression from "./components/IndoorRideChartRegression.js";
 
 // cycling page
 export default function IndoorCycling({
@@ -10,15 +10,15 @@ export default function IndoorCycling({
   ftp,
   weight,
 }) {
-  if (!userRecords.cyclingpbs["1200"]) {
-    return (
-      <section className="min-h-screen px-24">
-        <div className="pb-16">
-          <h2>Please add at least one 30 mins effort with a power meter</h2>
-        </div>
-      </section>
-    );
-  }
+  // if (!userRecords.cyclingpbs["1200"]) {
+  //   return (
+  //     <section className="min-h-screen px-24">
+  //       <div className="pb-16">
+  //         <h2>Please add at least one 30 mins effort with a power meter</h2>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   return (
     <section className="min-h-screen w-full py-4 px-24">
@@ -31,9 +31,9 @@ export default function IndoorCycling({
           ability over longer periods, whereas Hardknott pass is a shorter climb
           - that should take between 10 and 20 minutes.
         </p>
-        <RidechartRegression
+        <IndoorRidechartRegression
           regdata={alpe}
-          userRecords={box}
+          userRecords={userRecords}
           weight={weight}
           ftp={ftp}
         />
@@ -51,8 +51,8 @@ export default function IndoorCycling({
       </section>
 
       <section className="w-full pt-16">
-        <RidechartRegression
-          regdata={alpe}
+        <IndoorRidechartRegression
+          regdata={box}
           userRecords={userRecords}
           weight={weight}
           ftp={ftp}
