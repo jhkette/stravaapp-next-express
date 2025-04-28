@@ -1,11 +1,9 @@
-// libraries
 const axios = require("axios");
 const _ = require("lodash");
 // helper functions
 const { findMaxSubArray} = require("./arraysorting");
 const { runDistance, getShortestSubarray } = require("./runSorting");
 const { durations, distances } = require("./values");
-const { sleep } = require("../helpers/sleep");
 const { checkForTimeError } = require("./timeErrorCheck");
 
 /**
@@ -14,16 +12,12 @@ const { checkForTimeError } = require("./timeErrorCheck");
  * this is only needed for watts stream data or run data - both of which return a long array
  * of number representing speed/watts/ distance travelled per second on the activity.
  * @function activityLoop
- * @param data_set[], @param token String
- *  @returns data_set []
+ * @param dataList[], @param token String
+ *  @returns dataList []
  */
-async function activityLoop(data_set, token) {
-  let calls = 10; // we have already made at least 8 calls - err on side of safety
-  for (element of data_set) {
-    if (calls === 90) {
-      await sleep();
-      calls = 0;
-    }
+async function activityLoop(dataList, token) {
+ 
+  for (element of dataList) {
     // ride block
     if (element["type"] == "Ride" || element["type"] == "VirtualRide") {
       if (element["device_watts"]) {
@@ -31,7 +25,6 @@ async function activityLoop(data_set, token) {
           `https://www.strava.com/api/v3/activities/${element.id}/streams?keys=watts,time&key_by_type=true&resolution=high`,
           { headers: { Authorization: token } }
         );
-        calls++;
         if (watts["data"]["watts"]) {
           element["watt_stream"] = watts.data;
           const pbs = {};
@@ -66,7 +59,6 @@ async function activityLoop(data_set, token) {
           `https://www.strava.com/api/v3/activities/${element.id}/streams?keys=time,heartrate,velocity_smooth&key_by_type=true&resolution=high`,
           { headers: { Authorization: token } }
         );
-        calls++;
         element["run_stream"] = run.data;
         const runpbs = {};
 
@@ -91,7 +83,7 @@ async function activityLoop(data_set, token) {
       }
     }
   }
-  return data_set;
+  return dataList;
 }
 
 module.exports = activityLoop;

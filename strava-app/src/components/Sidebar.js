@@ -1,12 +1,13 @@
 import React from "react";
-
+import { useAuth } from "../context/AuthContext";
+import { useLogout } from "../hooks/logout";
 import { Link } from "react-router-dom";
 import { Bicycle, PersonSimpleRun, House, SignOut, Calendar } from "phosphor-react";
-import { useAuth } from "../context/AuthContext";
 
 // sidebar component - contains links to other pages depending on auth status
-export default function Sidebar({ logout, userActivities }) {
-  const { auth } = useAuth();
+export default function Sidebar({  logout, userActivities }) {
+  const { auth, setAuth } = useAuth();
+
   return (
     <div className="h-auto w-4/12 min-w-[365px] bg-slate-200 min-h-screen">
       <nav className="flex flex-col py-16 px-8 ml-8">
