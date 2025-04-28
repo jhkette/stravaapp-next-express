@@ -4,18 +4,15 @@ import regression from "regression";
 import { intervalToDuration } from "date-fns";
 import { Spinner } from "phosphor-react";
 
-
-
 /**
- * 
+ *
  * This returns a regression chart runs
  * the actual graph is constrcuted in the useffect function
  * I have had to create several checks that the relevant data is present
- * then I construct the chart - it gets passed as a parameter to the canvas 
- * 
+ * then I construct the chart - it gets passed as a parameter to the canvas
+ *
  */
 export default function RunchartRegression({ userRecords, event, regdata }) {
-  
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
@@ -29,8 +26,6 @@ export default function RunchartRegression({ userRecords, event, regdata }) {
 
     prediction = my_regression.predict(userRecords.runningpbs["5000"])[1];
   }
-
-
 
   useEffect(() => {
     if (!userRecords.runningpbs["5000"] || !regdata) {
@@ -100,7 +95,7 @@ export default function RunchartRegression({ userRecords, event, regdata }) {
               color: "#1a1a1a",
               font: {
                 size: "14pts",
-                family: "lato"
+                family: "lato",
               },
               callback: (val) => {
                 if (val < 60) {
@@ -156,75 +151,68 @@ export default function RunchartRegression({ userRecords, event, regdata }) {
       }
     };
   }, [userRecords, prediction, regData, my_regression.points, event, regdata]);
-  
+
   /**
    * Returns human readable time as an object {hh:mm} or {mm:ss}
-  */
-  function humanDuration(time) {
-    const times = intervalToDuration({ start: 0, end: time * 1000 });
-    if (times["minutes"] < 10 && times["hours"]){
-      times["minutes"] = "0"+times["minutes"]
-    }
-    if (times["seconds"] < 10){
-      times["seconds"] = "0"+times["seconds"]
-    }
-    return times
+   */
+
+  function humanDuration(timeInSeconds) {
+    const duration = intervalToDuration({
+      start: 0,
+      end: timeInSeconds * 1000,
+    });
+    const { hours, minutes, seconds } = duration;
+
+    return {
+      hours: hours || 0,
+      minutes: minutes < 10 ? `0${minutes}` : `${minutes}`,
+      seconds: seconds < 10 ? `0${seconds}` : `${seconds}`,
+    };
   }
 
-   // gets pacing for event
-  function getPace(time, event){
-  
-    let pace, pace2, finalpace1, finalpace2 // initialise variable
+  function getPace(time, event) {
+    const distanceMiles = event === "Half Marathon" ? 13.1 : 26.2;
+    const distanceKm = event === "Half Marathon" ? 20.09 : 42.2;
 
-    if (event === "Half Marathon"){
-       pace  = time/ 13.1
-       pace2 = time/ 20.09
-      
-      finalpace1 = humanDuration(pace)
-      finalpace2 =  humanDuration(pace2)
-      return [finalpace1, finalpace2]
+    const pacePerMile = humanDuration(time / distanceMiles);
+    const pacePerKm = humanDuration(time / distanceKm);
 
-    }else{
-      pace = time/26.2
-      pace2 = time/42.2
-      finalpace1 = humanDuration(pace)
-      finalpace2 =  humanDuration(pace2)
-      return [finalpace1, finalpace2]
-    } 
+    return [pacePerMile, pacePerKm];
   }
 
-  let fivekFormat, predFormat, recPace
-  if (prediction && userRecords.runningpbs) {
-    predFormat = humanDuration(prediction);
-    fivekFormat = humanDuration(userRecords.runningpbs["5000"]);
-    recPace = getPace(prediction, event)
- 
+  if (!userRecords?.runningpbs) {
+    return (
+      <p>
+        <Spinner size={32} />
+      </p>
+    );
   }
 
-  return userRecords.runningpbs ? (
+  const predFormat = humanDuration(prediction);
+  const fivekFormat = humanDuration(userRecords.runningpbs["5000"]);
+  const [pacePerMile, pacePerKm] = getPace(prediction, event);
+
+  return (
     <div className="bg-white m-auto p-8">
       <canvas ref={chartRef} style={{ width: "300px", height: "200px" }} />
       <article className="flex flex-col">
-        <h3 className="border-b-2 border-rose-500 text-xl mb-4">Predictions and pacing</h3>
-      <p className="text-lg ">
-       Your five km personal best: {fivekFormat["minutes"]}:{fivekFormat["seconds"]}
-      </p>
+        <h3 className="border-b-2 border-rose-500 text-xl mb-4">
+          Predictions and Pacing
+        </h3>
 
-      <p className=" text-lg ">
-        {event} prediction: {predFormat["hours"]}:{predFormat["minutes"]}
-      </p>
-      <p className="  text-lg">
-        Recommended pace:   {recPace[0]["minutes"]}: {recPace[0]["seconds"] } per/mile
-       or {recPace[1]["minutes"]}: {recPace[1]["seconds"] } per/km
-      </p>
-    
-    
+        <p className="text-lg">
+          Your 5 km personal best: {fivekFormat.minutes}:{fivekFormat.seconds}
+        </p>
+
+        <p className="text-lg">
+          {event} prediction: {predFormat.hours}:{predFormat.minutes}
+        </p>
+
+        <p className="text-lg">
+          Recommended pace: {pacePerMile.minutes}:{pacePerMile.seconds} per mile
+          or {pacePerKm.minutes}:{pacePerKm.seconds} per km
+        </p>
       </article>
     </div>
-  ) : (
-    <p>
-      {" "}
-      <Spinner size={32} />
-    </p>
   );
 }

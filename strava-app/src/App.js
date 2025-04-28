@@ -6,7 +6,6 @@ import { Routes, Route } from "react-router-dom";
 // context
 import { useAuth } from "./context/AuthContext";
 // components
-import ReturnProfile from "./components/UserProfile";
 import Sidebar from "./components/Sidebar";
 import Landing from "./Landing";
 import Cycling from "./Cycling";
@@ -16,6 +15,7 @@ import ProtectedRoute from "./protectRoute";
 import Footer from "./components/Footer";
 // config
 import { API_BASE_URL } from "./config";
+import Header from "./components/Header";
 
 function App() {
   // initial link
@@ -198,17 +198,7 @@ function App() {
         userActivities={userActivities}
       />
       <div className="h-auto w-full ">
-        {!!athlete.id && (
-          <header className="pt-4 px-24 w-full flex justify-end ">
-            {
-              <div>
-                <ReturnProfile athlete={athlete} />{" "}
-              </div>
-            }
-            {message && <h4>{message}</h4>}
-          </header>
-        )}
-
+        <Header athlete={athlete} message={message} />
         <div className="bg-grey-50">
           {/* App Naviation each route shows a different element in the 
           main block of the page/ ie the cycling page, running page etc*/}

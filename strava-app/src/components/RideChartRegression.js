@@ -57,9 +57,7 @@ export default function RidechartRegression({
     }
   }
 
-  // console.log(regdata[0]["name"], predWkg, weight, ftp, predWkg2);
 
-  // https://www.youtube.com/watch?v=1b1wC1ksJoI
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   
@@ -241,8 +239,8 @@ export default function RidechartRegression({
       <canvas ref={chartRef} className="w-full" />
       {/* some conditional formatting to check time is readable */}
       <p className="border-b-2 my-4 border-green-800 text-lg inline-block text-l font-bold">
-        {" "} Your predicted time is: 
-        {formattedPred["hours"] ? formattedPred["hours"] : ""}{" "}
+       Your predicted time is: 
+        {formattedPred["hours"] ? formattedPred["hours"] : ""}
         {formattedPred["minutes"]}:
         {formattedPred["seconds"] < 10
           ? "0" + formattedPred["seconds"]

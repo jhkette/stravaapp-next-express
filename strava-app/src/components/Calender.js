@@ -96,7 +96,7 @@ export default function EventsCalender({ userActivities }) {
 
       return (
         // the event text is then added to the day div wih the date
-        <div key={uuidv4()} className=" flex flex-col  bg-gray-200 justify-between  p-4 min-h-[150px]">
+        <div key={uuidv4()} className=" flex flex-col rounded-sm  bg-gray-100 border-2 border-gray-200 justify-between  p-4 min-h-[150px]">
           <div className="py-2">
             <p className="font-semibold">{date.date}</p>
             <p>{eventText}</p>  
@@ -107,7 +107,7 @@ export default function EventsCalender({ userActivities }) {
       );
     } else {
       return ( // if there are no events on the data - just add text with rest day
-        <div key={uuidv4()} className="p-2 bg-gray-200 p-4 min-h-[150px]">
+        <div key={uuidv4()} className="p-2 bg-gray-100 rounded-sm border-2 border-gray-200 p-4 min-h-[150px]">
           <p className="font-semibold py-2">{date.date}</p>
           <p className="font-semibold py-2">Rest day</p>
         </div>
