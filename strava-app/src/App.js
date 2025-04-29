@@ -65,6 +65,46 @@ function App() {
       console.log(error);
     }
   }, [latest, setLatestFetched, setUseractivities]);
+
+
+    /**
+   * function importData
+   * function runs when user logs in for first time
+   * and first set of data is imported.
+   * setsUserRecords and
+   * setsUseractivities
+   * @returns void
+   */
+    const importData = async () => {
+      const token = Cookies.get("token");
+      setMessage("Please come back and login after 15 minutes");
+      const config = {
+        headers: { Authorization: `Bearer ${token}`, id: athlete.id },
+      };
+      axios(API_BASE_URL + `/user/activities/activities-list`, config);
+  
+      setTimeout(() => {
+        logout();
+      }, 20000);
+    };
+  
+    /**
+     * function logout
+     * remove token
+     * calls logout function on server
+     * @return void
+     */
+    const logout = () => {
+      setAuth(false);
+      setMessage("");
+      Cookies.remove("token");
+      axios.get(API_BASE_URL + "/auth/logout");
+      window.location.href = "/";
+      if (window.location.pathname === "/") {
+        window.location.reload();
+      }
+    };
+  
   /*
    * Useffect function runs when page loads,
    * return the oauth link to authorise strava
@@ -89,7 +129,7 @@ function App() {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    if (token) {
+    if (token && !fetched) {
       fetchAthleteData(config)
         .then(({ userData, dataSet }) => {
           if (userData.data.errors) {
@@ -98,14 +138,12 @@ function App() {
           }
           // set the state values with response
           setAthlete(userData.data.profile);
-
           const userRecordsInfo = _.omit(userData.data.user, "activities");
           setUserRecords(userRecordsInfo);
           if (userData.data.user.activities) {
             setFetched(true);
           }
           setUseractivities(userData.data.user.activities);
-
           setLatest(
             userData.data.user.activities[
               userData.data.user.activities.length - 1
@@ -122,7 +160,7 @@ function App() {
         })
         .catch(console.error);
     }
-  }, [setAuth]);
+  }, [setAuth, fetched]);
   /**
    * useffect data
    * get the latest data from strava api
@@ -139,43 +177,6 @@ function App() {
     }
   }, [auth, latest, userActivities, getLatestData, latestFetched]);
 
-  /**
-   * function importData
-   * function runs when user logs in for first time
-   * and first set of data is imported.
-   * setsUserRecords and
-   * setsUseractivities
-   * @returns void
-   */
-  const importData = async () => {
-    const token = Cookies.get("token");
-    setMessage("Please come back and login after an hour");
-    const config = {
-      headers: { Authorization: `Bearer ${token}`, id: athlete.id },
-    };
-    axios(API_BASE_URL + `/user/activities/activities-list`, config);
-
-    setTimeout(() => {
-      logout();
-    }, 20000);
-  };
-
-  /**
-   * function logout
-   * remove token
-   * calls logout function on server
-   * @return void
-   */
-  const logout = () => {
-    setAuth(false);
-    setMessage("");
-    Cookies.remove("token");
-    axios.get(API_BASE_URL + "/auth/logout");
-    window.location.href = "/";
-    if (window.location.pathname === "/") {
-      window.location.reload();
-    }
-  };
 
   // define weight variable for cycling page
   let weight;
