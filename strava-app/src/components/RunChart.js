@@ -1,11 +1,8 @@
 import React from "react";
-import annotationPlugin from "chartjs-plugin-annotation";
 import "chartjs-adapter-date-fns";
-// import { enUS } from 'date-fns/locale';
 import "chartjs-adapter-moment";
 import { intervalToDuration } from "date-fns";
 import { Spinner } from "phosphor-react";
-
 
 import {
   Chart as ChartJS,
@@ -20,15 +17,12 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
   TimeScale,
-
-  annotationPlugin,
   Title,
   Tooltip,
   Legend
@@ -62,49 +56,17 @@ export default function Linechart(props) {
       const perkm = 1 / speed;
       finaldata.push(perkm);
     }
-
-    floatingLabels = {
-      id: 'floatingLabels',
-      afterDatasetDraw(chart, args, options){
-        const {ctx, scales:{x,y}} = chart
-    
-        // var xAxis = chart.scales.x;
-        // var yAxis = chart.scales.y;
-        ctx.save();
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#0d5f96';
-        ctx.font = '1rem Lato'
-        var finalx = x.getPixelForValue('5000')
-        var finaly = y.getPixelForValue((props.data.runningpbs["10000"]/10) + 5)
-        ctx.fillText(`Critical pace estimate `, finalx, finaly )
-      }
-    }
   }
 
-
   const labels = Object.keys(props.data.runningpbs);
-  console.log(props.data.runningpbs)
+
   const options = {
-  
-   
     responsive: true,
     plugins: {
       plugins: {
         title: {
           display: true,
           text: "Running pace chart",
-        },
-      },
-      annotation: {
-        annotations: {
-          line1: {
-            type: "line",
-            yMin: props.data.runningpbs["10000"] / 10,
-            yMax: props.data.runningpbs["10000"]  / 10,
-            borderColor: "#0d5f96",
-            borderWidth: 3,
-            borderDash: [4],
-          },
         },
       },
       tooltip: {
@@ -147,11 +109,9 @@ export default function Linechart(props) {
           color: "#1a1a1a",
 
           font: {
-          
             family: "lato",
-         
+
             size: 14,
-            
           },
         },
         title: {
@@ -169,28 +129,26 @@ export default function Linechart(props) {
           display: true,
           text: "Best pace mins per km",
           font: {
-           
             family: "lato",
             size: 20,
           },
         },
         ticks: {
           stepSize: 30,
-          
-          font:{
-          family: "lato",
-         
+
+          font: {
+            family: "lato",
+
             size: 14,
-          
           },
-            
+
           callback: (val) => {
             if (val < 60) {
               return val;
             }
             const remainder = val % 60;
             const minutes = (val - remainder) / 60;
-            if(remainder !== 0){
+            if (remainder !== 0) {
               return `${minutes}:${remainder}`;
             }
             return `${minutes}:00`;
@@ -215,5 +173,11 @@ export default function Linechart(props) {
     ],
   };
 
-  return <Line options={options} data={data} plugins={[floatingLabels]}  className="bg-white p-4"/>;
+  return (
+    <Line
+      options={options}
+      data={data}
+      className="bg-white p-4"
+    />
+  );
 }

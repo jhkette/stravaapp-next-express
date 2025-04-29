@@ -83,8 +83,8 @@ exports.importActivities = async (req, res) => {
   // First I am checking if there is data for activities in mongodb
   const foundUserActs = await UserActivities.findOne({ athlete_id: userId });
   if (foundUserActs) {
-    if (foundUserActs.activities.length > 5) {
-      return res.send({error:"data has already imported"});
+    if (foundUserActs.activities.length > 2) {
+      return res.send({error:"data has already benn imported"});
     }
   }
 
@@ -92,7 +92,7 @@ exports.importActivities = async (req, res) => {
   const dataList = []; // used to store activities
   try {
     // get 200 activities through this loop
-    while (page_num <= 5) {
+    while (page_num <= 4) {
       let response = await axios.get(
         `https://www.strava.com/api/v3/athlete/activities`,
         {

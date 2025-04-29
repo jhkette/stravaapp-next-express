@@ -26,12 +26,6 @@ function App() {
   const [userActivities, setUseractivities] = useState([]);
   const [userRecords, setUserRecords] = useState({});
   const [datasets, setDatasets] = useState({});
-  const [marathon, setMarathon] = useState({});
-  const [half, setHalf] = useState({});
-  const [alpe, setAlpe] = useState({});
-  const [box, setBox] = useState({});
-  const [hardknott, setHardknott] = useState({});
-  const [scotland, setScotland] = useState({});
   // fetched boolean flags
   const [fetched, setFetched] = useState(false);
   const [latestFetched, setLatestFetched] = useState(false);
@@ -117,13 +111,14 @@ function App() {
               userData.data.user.activities.length - 1
             ]["start_date"]
           );
-          setMarathon(dataSet.data.marathon);
-          setHalf(dataSet.data.half);
-          setAlpe(dataSet.data.alpe);
-          setBox(dataSet.data.box);
-
-          setHardknott(dataSet.data.hardknott);
-          setScotland(dataSet.data.scotland);
+          setDatasets({
+            marathon:  dataSet.data.marathon,
+            half: dataSet.data.half,
+            alpe: dataSet.data.alpe,
+            box: dataSet.data.box,
+            hardknott: dataSet.data.hardknott,
+            scotland: dataSet.data.scotland
+          })
         })
         .catch(console.error);
     }
@@ -226,9 +221,9 @@ function App() {
                   <Cycling
                     userRecords={userRecords}
                     ftp={userRecords.cyclingFTP}
-                    scotland={scotland}
+                    scotland={datasets.scotland}
                     weight={weight}
-                    hardknott={hardknott}
+                    hardknott={datasets.hardknott}
                   />
                 }
               ></Route>
@@ -240,9 +235,9 @@ function App() {
                   <IndoorCycling
                     userRecords={userRecords}
                     ftp={userRecords.cyclingFTP}
-                    alpe={alpe}
+                    alpe={datasets.alpe}
                     weight={weight}
-                    box={box}
+                    box={datasets.box}
                   />
                 }
               ></Route>
@@ -254,8 +249,8 @@ function App() {
                 element={
                   <Running
                     userRecords={userRecords}
-                    mardataset={marathon}
-                    halfdataset={half}
+                    mardataset={datasets.marathon}
+                    halfdataset={datasets.half}
                   />
                 }
               ></Route>
