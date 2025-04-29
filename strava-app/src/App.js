@@ -34,13 +34,21 @@ function App() {
 
   // this gives access to global auth state
   const { auth, setAuth } = useAuth();
-  // fetches atheletedata and datasets from API
+  /**
+   * Function fetches both the userData set and the dataset data.
+   * @function fetchAthleteData
+   * @return void
+   */
   const fetchAthleteData = async (config) => {
     const userData = await axios.get(API_BASE_URL + "/user/athlete", config);
     const dataSet = await axios.get(API_BASE_URL + "/data/datasets", config);
     return { userData, dataSet };
   };
-  // gets the latest data for the athlete from Strava
+   /**
+   * Function fetches both the latest activities - from last login. 
+   * @function getLatestData
+   * @return void
+   */
   const getLatestData = useCallback(async () => {
     const token = Cookies.get("token");
     const config = {
@@ -139,13 +147,15 @@ function App() {
             console.log(dataSet.data.error)
             return;
           }
+          // set boolean flag as fetched
+          if (userData.data.user.activities && dataSet.data.marathon) {
+            setFetched(true);
+          }
           // set the state values with response
           setAthlete(userData.data.profile);
           const userRecordsInfo = _.omit(userData.data.user, "activities");
           setUserRecords(userRecordsInfo);
-          if (userData.data.user.activities) {
-            setFetched(true);
-          }
+         
           setUseractivities(userData.data.user.activities);
           setLatest(
             userData.data.user.activities[
