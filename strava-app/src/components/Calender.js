@@ -69,7 +69,6 @@ export default function EventsCalender({ userActivities }) {
      const sports = ["VirtualRide", "Ride", "Run", "WeightTraining" ]
     if (date.events.length) { // if the date has events on it - created in object earlier
       let eventText = date.events.map((eventArr) => { // looping through events using map
-        console.log(eventArr)
         if (eventArr.length === 1) { // if the only thing we have is an event name
           return (
             <div key={uuidv4()}>

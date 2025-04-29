@@ -42,8 +42,6 @@ export default function Linechart(props) {
 
   const finaldata = [];
 
-  let floatingLabels;
-
   if (props.data.runningpbs) {
     const timeObj = props.data.runningpbs;
 
@@ -76,9 +74,6 @@ export default function Linechart(props) {
               start: 0,
               end: tooltipItem.formattedValue * 1000,
             });
-
-            console.log(duration);
-
             let perKmPaceSeconds = duration["seconds"];
             if (duration["seconds"] === undefined) {
               return `${duration["minutes"]}:00 per/km`;
@@ -135,7 +130,6 @@ export default function Linechart(props) {
         },
         ticks: {
           stepSize: 30,
-
           font: {
             family: "lato",
 
@@ -156,6 +150,8 @@ export default function Linechart(props) {
         },
 
         beginAtZero: false,
+        min: "160"
+        // grace: 60
       },
     },
   };

@@ -5,10 +5,9 @@ import RunchartRegression from "./components/RunChartRegression";
 
 // running page with charts
 export default function Running({ userRecords, mardataset, halfdataset }) {
-  console.log(userRecords)
   if (!userRecords.runningpbs["5000"]) {
     return (
-      <section className="min-h-screen px-24">
+      <section className="min-h-screen px-24 pt-16">
         <div className="pt-16">
           <h2 className="inline-block py-2 border-b-4 border-red-500">Please add at least one 5km run</h2>
         </div>
@@ -16,11 +15,11 @@ export default function Running({ userRecords, mardataset, halfdataset }) {
     );
   }
   return (
-    <section className="min-h-screen px-24">
+    <section className="min-h-screen px-24 py-4">
       {userRecords.runningpbs && (
         <>
           <section className="w-full">
-            <h1 className="pb-8">Pace chart: minutes per km </h1>
+            <h1 className="py-8">Pace chart: minutes per km </h1>
             <RunChart data={userRecords} />
             <p className="pt-8 text-lg">
               This is a pace chart of your best performances for different

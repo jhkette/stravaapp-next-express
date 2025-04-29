@@ -58,9 +58,6 @@ export default function IndoorRideChartRegression({
     }
   }
 
-  // console.log(regdata[0]["name"], predWkg, weight, ftp, predWkg2);
-
-  // https://www.youtube.com/watch?v=1b1wC1ksJoI
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   
