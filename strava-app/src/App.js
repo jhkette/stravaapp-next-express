@@ -34,13 +34,13 @@ function App() {
 
   // this gives access to global auth state
   const { auth, setAuth } = useAuth();
-
+  // fetches atheletedata and datasets from API
   const fetchAthleteData = async (config) => {
     const userData = await axios.get(API_BASE_URL + "/user/athlete", config);
     const dataSet = await axios.get(API_BASE_URL + "/data/datasets", config);
     return { userData, dataSet };
   };
-
+  // gets the latest data for the athlete from Strava
   const getLatestData = useCallback(async () => {
     const token = Cookies.get("token");
     const config = {
@@ -119,8 +119,7 @@ function App() {
   }, []);
 
   // useffect function - gets the main athlete data from /user/athlete/
-  // and the datasets from /data/datasets. Then sets the state variables
-  // with response.
+  // and the datasets from /data/datasets. Then sets the state variables with response.
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
@@ -132,8 +131,12 @@ function App() {
     if (token && !fetched) {
       fetchAthleteData(config)
         .then(({ userData, dataSet }) => {
-          if (userData.data.errors) {
-            console.log(userData.data.errors);
+          if (userData.data.error) {
+            console.log(userData.data.error);
+            return;
+          }
+          if(dataSet.data.error){
+            console.log(dataSet.data.error)
             return;
           }
           // set the state values with response
