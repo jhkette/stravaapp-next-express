@@ -13,7 +13,8 @@ const router = express.Router();
  */
 router.get("/datasets", dataController.dataSet);
 
-router.get("/datasetswrite", dataController.dataSetWrite);
+// no longer needed - route used to upload data
+// router.get("/datasetswrite", dataController.dataSetWrite);
 
 
 module.exports = router;

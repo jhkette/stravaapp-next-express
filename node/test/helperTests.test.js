@@ -88,6 +88,7 @@ describe("Testing the CheckPbs function", function () {
       updateFlagRunning,
       ftpChange,
     ] = checkPbs(dataSet, oldTimes, runTimes);
+    console.log(cyclingAllTime)
 
     expect(updateFlagCycling).toBe(true);
 
@@ -102,6 +103,7 @@ describe("Testing the CheckPbs function", function () {
 describe("Testing the TSS function", function () {
   it("it returns the correct number for TSS - ", function () {
     const activity = {
+      device_watts: true,
       moving_time: 3600,
       weighted_average_watts: 200,
       has_heartrate: false,

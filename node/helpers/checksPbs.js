@@ -22,7 +22,7 @@ function checkPbs(dataSet, cyclingAllTime, runAllTime) {
         const currentBest = cyclingAllTime[duration];
 
         if (newPower != null && (currentBest == null || newPower > currentBest)) {
-          if (duration === "720" || duration === "1200") {
+          if (duration == "720" || duration == "1200") {
             ftpChange = true;
           }
           updateFlagCycling = true;
