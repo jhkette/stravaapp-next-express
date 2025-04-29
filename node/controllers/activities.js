@@ -23,7 +23,7 @@ exports.getAthlete = async (req, res) => {
   const token = req.headers.authorization;
   if (!token) {
     errors["error"] = "Permission not granted";
-    return res.json(errors);
+    return res.status(401).send({ error: "permission not granted. " });
   }
   try {
     const response = await axios.get(`https://www.strava.com/api/v3/athlete`, {
@@ -51,17 +51,22 @@ exports.getAthlete = async (req, res) => {
       });
     }
 
-    const id = parseInt(response.data.id);
+    const id = response.data.id;
     const newUser = new UserActivities({ athlete_id: id });
     const userToSave = await newUser.save();
 
-    return res.json({
+    return res.send({
       profile: response.data,
       user: userToSave,
       stats: athleteStats.data,
     });
   } catch (err) {
     console.log(err);
+    return res
+      .status(500)
+      .send({
+        error: `Something went wrong fetching activities. ${err.message} `,
+      });
   }
 };
 
@@ -78,13 +83,13 @@ exports.importActivities = async (req, res) => {
   const token = await req.headers.Authorization;
   const userId = req.headers.id;
   if (!token) {
-    return res.send({errors:"Permission not granted"});
+    return res.send({ errors: "Permission not granted" });
   }
   // First I am checking if there is data for activities in mongodb
   const foundUserActs = await UserActivities.findOne({ athlete_id: userId });
   if (foundUserActs) {
     if (foundUserActs.activities.length > 2) {
-      return res.send({error:"data has already benn imported"});
+      return res.send({ error: "data has already benn imported" });
     }
   }
 
@@ -152,69 +157,73 @@ exports.importActivities = async (req, res) => {
   activities need to be arranged
    * first to last **/
   data_set.reverse();
-  await UserActivities.findOneAndUpdate(
-    { athlete_id: userId },
-    {
-      $push: { activities: { $each: data_set } },
-      $set: {
-        cyclingpbs: {
-          15: allTime["15"],
-          30: allTime["30"],
-          60: allTime["60"],
-          90: allTime["90"],
-          120: allTime["120"],
-          150: allTime["150"],
-          180: allTime["180"],
-          210: allTime["210"],
-          240: allTime["240"],
-          270: allTime["270"],
-          300: allTime["300"],
-          330: allTime["330"],
-          360: allTime["360"],
-          390: allTime["390"],
-          410: allTime["410"],
-          440: allTime["440"],
-          480: allTime["480"],
-          600: allTime["600"],
-          720: allTime["720"],
-          900: allTime["900"],
-          1200: allTime["1200"],
-          1800: allTime["1800"],
-          2700: allTime["2700"],
-          3600: allTime["3600"],
-        },
-        runningpbs: {
-          400: runAllTime[400],
-          800: runAllTime[800],
-          1000: runAllTime[1000],
-          2414: runAllTime[2414],
-          3000: runAllTime[3000],
-          5000: runAllTime[5000],
-          10000: runAllTime[10000],
-        },
-        bikeHrZones: {
-          zone1: bikeZones["zone1"],
-          zone2: bikeZones["zone2"],
-          zone3: bikeZones["zone3"],
-          zone4: bikeZones["zone4"],
-          zone5: bikeZones["zone5"],
-        },
-        runHrZones: {
-          zone1: runZones["zone1"],
-          zone2: runZones["zone2"],
-          zone3: runZones["zone3"],
-          zone4: runZones["zone4"],
-          zone5: runZones["zone5"],
-        },
+  try {
+    await UserActivities.findOneAndUpdate(
+      { athlete_id: userId },
+      {
+        $push: { activities: { $each: data_set } },
+        $set: {
+          cyclingpbs: {
+            15: allTime["15"],
+            30: allTime["30"],
+            60: allTime["60"],
+            90: allTime["90"],
+            120: allTime["120"],
+            150: allTime["150"],
+            180: allTime["180"],
+            210: allTime["210"],
+            240: allTime["240"],
+            270: allTime["270"],
+            300: allTime["300"],
+            330: allTime["330"],
+            360: allTime["360"],
+            390: allTime["390"],
+            410: allTime["410"],
+            440: allTime["440"],
+            480: allTime["480"],
+            600: allTime["600"],
+            720: allTime["720"],
+            900: allTime["900"],
+            1200: allTime["1200"],
+            1800: allTime["1800"],
+            2700: allTime["2700"],
+            3600: allTime["3600"],
+          },
+          runningpbs: {
+            400: runAllTime[400],
+            800: runAllTime[800],
+            1000: runAllTime[1000],
+            2414: runAllTime[2414],
+            3000: runAllTime[3000],
+            5000: runAllTime[5000],
+            10000: runAllTime[10000],
+          },
+          bikeHrZones: {
+            zone1: bikeZones["zone1"],
+            zone2: bikeZones["zone2"],
+            zone3: bikeZones["zone3"],
+            zone4: bikeZones["zone4"],
+            zone5: bikeZones["zone5"],
+          },
+          runHrZones: {
+            zone1: runZones["zone1"],
+            zone2: runZones["zone2"],
+            zone3: runZones["zone3"],
+            zone4: runZones["zone4"],
+            zone5: runZones["zone5"],
+          },
 
-        cyclingFTP: ftp,
-        cyclingMaxHr: maxCyclingHr,
-        runningMaxHr: runMaxHr,
-      },
-    }
-  );
-
-  return res.send({ msg: "Succesful import" });
+          cyclingFTP: ftp,
+          cyclingMaxHr: maxCyclingHr,
+          runningMaxHr: runMaxHr,
+        },
+      }
+    );
+    return res.send({ msg: "Succesful import" });
+  } catch (err) {
+    console.log(err)
+    return res.status(500).send({ error: "error saving user data" });
+  }
 };
 
 /**
@@ -228,8 +237,7 @@ exports.getLatestActivities = async (req, res) => {
   const after = parseInt(req.params.after);
   const token = req.headers.authorization;
   if (!token) {
-    errors["error"] = "Permission not granted";
-    return res.status(400).send(errors);
+    return res.status(400).send({ error: "Permission not granted" });
   }
   try {
     let response = await axios.get(
@@ -241,7 +249,7 @@ exports.getLatestActivities = async (req, res) => {
       }
     );
     if (response.data.length == 0) {
-      return res.send({error:"no activities found"});
+      return res.send({ error: "no activities found" });
     }
     const data_list = [...response.data];
     const { id } = data_list[0].athlete;
@@ -258,7 +266,7 @@ exports.getLatestActivities = async (req, res) => {
     );
 
     if (newActivities.length === 0) {
-      return res.status(400).send({errors:"all activities already added"});
+      return res.status(400).send({ error: "all activities already added" });
     }
     // get all extra data for each activities i.e watts, distance 'streams'
     const data_set = await activityLoop(data_list, token);

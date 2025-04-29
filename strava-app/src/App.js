@@ -107,7 +107,7 @@ function App() {
   
   /*
    * Useffect function runs when page loads,
-   * return the oauth link to authorise strava
+   * return the oauth link to authorise the user
    */
   useEffect(() => {
     axios
@@ -162,8 +162,8 @@ function App() {
     }
   }, [setAuth, fetched]);
   /**
-   * useffect data
-   * get the latest data from strava api
+   * this useffect gest
+   * the latest data from strava api
    * call the api with the date of last activity in app state.
    * get all events recorded after that.
    */
