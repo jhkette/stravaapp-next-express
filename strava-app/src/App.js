@@ -75,33 +75,30 @@ function App() {
   }, [latest, setLatestFetched, setUseractivities]);
 
 
-    /**
-   * function importData
+  /**
+   * @function importData
+   * @returns void
    * function runs when user logs in for first time
    * and first set of data is imported.
-   * setsUserRecords and
-   * setsUseractivities
-   * @returns void
+   * sets UserRecords and sets Useractivities
    */
     const importData = async () => {
       const token = Cookies.get("token");
       setMessage("Please come back and login after 15 minutes");
-   
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
       axios(API_BASE_URL + `/user/activities/activities-list`, config);
-  
       setTimeout(() => {
         logout();
       }, 20000);
     };
   
     /**
-     * function logout
+     * @function logout
+     * @return void
      * remove token
      * calls logout function on server
-     * @return void
      */
     const logout = () => {
       setAuth(false);
@@ -120,13 +117,13 @@ function App() {
    */
   useEffect(() => {
     if(!link.length){
-    axios
-      .get(API_BASE_URL + "/auth/link")
-      .then((res) => setLink(res.data.link))
-      .catch((err) => {
-        console.log(err);
-      });
-    }
+      axios
+        .get(API_BASE_URL + "/auth/link")
+        .then((res) => setLink(res.data.link))
+        .catch((err) => {
+          console.log(err);
+        });
+      }
   }, [link]);
 
   // this useffect function - gets the main athlete data from /user/athlete/
