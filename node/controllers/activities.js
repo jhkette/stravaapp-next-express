@@ -66,7 +66,7 @@ exports.getAthlete = async (req, res) => {
 
 /**
  *
- *  Bulk Imports all activities (200)
+ *  Bulk Imports all activities (200) (now around 35)
  *  loops through and adds running/cycling pbs
  *  maxhr, tss for each activiy
  * This will take up to an hour because
@@ -240,7 +240,7 @@ exports.importActivities = async (req, res) => {
  * automatically
  **/
 exports.getLatestActivities = async (req, res) => {
-  const after = parseInt(req.params.after);
+  const after = req.params.after;
   const token = req.headers.authorization;
   if (!token) {
     return res.status(400).send({ error: "Permission not granted" });
@@ -262,11 +262,12 @@ exports.getLatestActivities = async (req, res) => {
     // equality check for latest actviity on mongo vs latest new activity
     const allActs = await UserActivities.findOne({ athlete_id: id });
 
-    //the last activities to check its not the latest one.
+    //create a set and add stored activity ids
     const existingActivityIds = new Set(
       allActs.activities.map((act) => act.id)
     );
-
+    // filter new activities from api to see if they are in set. 
+    // only those not in set will be in new array.
     const newActivities = data_list.filter(
       (act) => !existingActivityIds.has(act.id)
     );
