@@ -29,18 +29,15 @@ exports.getAthlete = async (req, res) => {
     const response = await axios.get(`https://www.strava.com/api/v3/athlete`, {
       headers: { Authorization: token },
     });
-
     const finalid = response.data.id;
-
     const athleteStats = await axios.get(
       `https://www.strava.com/api/v3/athletes/${finalid}/stats`,
       {
         headers: { Authorization: token },
       }
     );
-
     const foundUserActs = await UserActivities.findOne({
-      athlete_id: response.data.id,
+      athlete_id: finalid,
     });
 
     if (foundUserActs) {
@@ -51,8 +48,7 @@ exports.getAthlete = async (req, res) => {
       });
     }
 
-    const id = response.data.id;
-    const newUser = new UserActivities({ athlete_id: id });
+    const newUser = new UserActivities({ athlete_id: finalid });
     const userToSave = await newUser.save();
 
     return res.send({
@@ -78,8 +74,8 @@ exports.getAthlete = async (req, res) => {
  */
 
 exports.importActivities = async (req, res) => {
-  const token = await req.headers.Authorization;
-
+  const token = req.headers.authorization;
+  console.log(token);
   if (!token) {
     return res.send({ errors: "Permission not granted" });
   }
@@ -92,10 +88,9 @@ exports.importActivities = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res
-    .status(500)
-    .send({ error: "Something went wrong fetching activities." });
+      .status(500)
+      .send({ error: "Something went wrong fetching activities." });
   }
-
   // First I am checking if there is data for activities in mongodb
   const foundUserActs = await UserActivities.findOne({ athlete_id: finalid });
   if (foundUserActs) {
@@ -170,7 +165,7 @@ exports.importActivities = async (req, res) => {
   data_set.reverse();
   try {
     await UserActivities.findOneAndUpdate(
-      { athlete_id: userId },
+      { athlete_id: finalid },
       {
         $push: { activities: { $each: data_set } },
         $set: {

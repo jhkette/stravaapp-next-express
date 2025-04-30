@@ -19,7 +19,7 @@ import Header from "./components/Header";
 
 function App() {
   // initial link
-  const [link, setLink] = useState();
+  const [link, setLink] = useState("");
   // athlete data save as state
   const [athlete, setAthlete] = useState({});
   const [latest, setLatest] = useState(null);
@@ -86,6 +86,7 @@ function App() {
     const importData = async () => {
       const token = Cookies.get("token");
       setMessage("Please come back and login after 15 minutes");
+   
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
@@ -118,15 +119,17 @@ function App() {
    * return the oauth link to authorise the user
    */
   useEffect(() => {
+    if(!link.length){
     axios
       .get(API_BASE_URL + "/auth/link")
       .then((res) => setLink(res.data.link))
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [link]);
 
-  // useffect function - gets the main athlete data from /user/athlete/
+  // this useffect function - gets the main athlete data from /user/athlete/
   // and the datasets from /data/datasets. Then sets the state variables with response.
   useEffect(() => {
     const token = Cookies.get("token");
@@ -175,10 +178,9 @@ function App() {
     }
   }, [setAuth, fetched]);
   /**
-   * this useffect gest
-   * the latest data from strava api
-   * call the api with the date of last activity in app state.
-   * get all events recorded after that.
+   * this useffect gets the latest activities from strava api.
+   * it calls the api with the date of last activity in app state.
+   * and retrieves all events recorded after that.
    */
   useEffect(() => {
     const token = Cookies.get("token");

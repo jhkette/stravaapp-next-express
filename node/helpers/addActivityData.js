@@ -1,7 +1,7 @@
 const axios = require("axios");
 const _ = require("lodash");
 // helper functions
-const { findMaxSubArray} = require("./arraysorting");
+const { findMaxSubArray } = require("./arraysorting");
 const { runDistance, getShortestSubarray } = require("./runSorting");
 const { durations, distances } = require("./values");
 const { checkForTimeError } = require("./timeErrorCheck");
@@ -16,7 +16,6 @@ const { checkForTimeError } = require("./timeErrorCheck");
  *  @returns dataList []
  */
 async function activityLoop(dataList, token) {
- 
   for (element of dataList) {
     // ride block
     if (element["type"] == "Ride" || element["type"] == "VirtualRide") {
