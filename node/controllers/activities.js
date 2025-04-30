@@ -271,7 +271,7 @@ exports.getLatestActivities = async (req, res) => {
     const newActivities = data_list.filter(
       (act) => !existingActivityIds.has(act.id)
     );
-
+    // if newactivities length == 0 - these are all already added
     if (newActivities.length === 0) {
       return res.status(400).send({ error: "all activities already added" });
     }
