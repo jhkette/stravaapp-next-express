@@ -87,7 +87,7 @@ function App() {
       const token = Cookies.get("token");
       setMessage("Please come back and login after 15 minutes");
       const config = {
-        headers: { Authorization: `Bearer ${token}`, id: athlete.id },
+        headers: { Authorization: `Bearer ${token}` },
       };
       axios(API_BASE_URL + `/user/activities/activities-list`, config);
   

@@ -62,11 +62,9 @@ exports.getAthlete = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res
-      .status(500)
-      .send({
-        error: `Something went wrong fetching activities. ${err.message} `,
-      });
+    return res.status(500).send({
+      error: `Something went wrong fetching activities. ${err.message} `,
+    });
   }
 };
 
@@ -81,12 +79,25 @@ exports.getAthlete = async (req, res) => {
 
 exports.importActivities = async (req, res) => {
   const token = await req.headers.Authorization;
-  const userId = req.headers.id;
+
   if (!token) {
     return res.send({ errors: "Permission not granted" });
   }
+  let finalid;
+  try {
+    const response = await axios.get(`https://www.strava.com/api/v3/athlete`, {
+      headers: { Authorization: token },
+    });
+    finalid = response.data.id;
+  } catch (err) {
+    console.log(err);
+    return res
+    .status(500)
+    .send({ error: "Something went wrong fetching activities." });
+  }
+
   // First I am checking if there is data for activities in mongodb
-  const foundUserActs = await UserActivities.findOne({ athlete_id: userId });
+  const foundUserActs = await UserActivities.findOne({ athlete_id: finalid });
   if (foundUserActs) {
     if (foundUserActs.activities.length > 2) {
       return res.send({ error: "data has already benn imported" });
@@ -221,7 +232,7 @@ exports.importActivities = async (req, res) => {
     );
     return res.send({ msg: "Succesful import" });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     return res.status(500).send({ error: "error saving user data" });
   }
 };
