@@ -32,34 +32,15 @@ made using node/express. The cypress folder just contains end to end testing fil
 
 Please use the test Strava account I have given at the top of the report for authentication. 
 
-## Instructions for local node-react strava app
+## Instructions for running node-react strava app in a container
 
-Run git clone or download a zip file of the code. Then from the command line cd into the root of the entire project.
-To then start the node server you need to run:
-
-```
-cd node
-```
-```
-npm install
-```
-```
-npm run start
-```
-Then return to the root of the project and start the react client by running:
+Run git clone or download a zip file of the code. Then from the command line cd into the root of the entire project. Ensure the Docker Daemon is running and then from the root of the project run:
 
 ```
-cd strava-app
+docker compose build
 ```
 ```
-npm install
+docker compose up
 ```
-```
-npm run start
-```
-This will start a localserver and your browser should open a window
-on localhost:8080. 
 
-To use cypress to test the main (live) application run ```npm test``` in the root directory of the whole project. 
-To run the unit tests in the node folder cd into the node server folder and run ```npm test```
 
