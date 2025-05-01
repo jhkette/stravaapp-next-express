@@ -44,8 +44,8 @@ function App() {
     const dataSet = await axios.get(API_BASE_URL + "/data/datasets", config);
     return { userData, dataSet };
   };
-   /**
-   * Function fetches both the latest activities - from last login. 
+  /**
+   * Function fetches both the latest activities - from last login.
    * @function getLatestData
    * @return void
    */
@@ -63,17 +63,15 @@ function App() {
       if (activities.data.error) {
         console.log(activities.data.error);
         return;
-      } else {
-        if (activities.data.length) {
-          setLatestFetched(true);
-          setUseractivities((oldArray) => [...oldArray, ...activities.data]);
-        }
+      }
+      if (activities.data.length) {
+        setLatestFetched(true);
+        setUseractivities((oldArray) => [...oldArray, ...activities.data]);
       }
     } catch (error) {
       console.log(error);
     }
   }, [latest, setLatestFetched, setUseractivities]);
-
 
   /**
    * @function importData
@@ -82,48 +80,48 @@ function App() {
    * and first set of data is imported.
    * sets UserRecords and sets Useractivities
    */
-    const importData = async () => {
-      const token = Cookies.get("token");
-      setMessage("Please come back and login after 15 minutes");
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      axios(API_BASE_URL + `/user/activities/activities-list`, config);
-      setTimeout(() => {
-        logout();
-      }, 20000);
+  const importData = async () => {
+    const token = Cookies.get("token");
+    setMessage("Please come back and login after 15 minutes");
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
     };
-  
-    /**
-     * @function logout
-     * @return void
-     * remove token
-     * calls logout function on server
-     */
-    const logout = () => {
-      setAuth(false);
-      setMessage("");
-      Cookies.remove("token");
-      axios.get(API_BASE_URL + "/auth/logout");
-      window.location.href = "/";
-      if (window.location.pathname === "/") {
-        window.location.reload();
-      }
-    };
-  
+    axios(API_BASE_URL + `/user/activities/activities-list`, config);
+    setTimeout(() => {
+      logout();
+    }, 20000);
+  };
+
+  /**
+   * @function logout
+   * @return void
+   * remove token
+   * calls logout function on server
+   */
+  const logout = () => {
+    setAuth(false);
+    setMessage("");
+    Cookies.remove("token");
+    axios.get(API_BASE_URL + "/auth/logout");
+    window.location.href = "/";
+    if (window.location.pathname === "/") {
+      window.location.reload();
+    }
+  };
+
   /*
    * Useffect function runs when page loads,
    * return the oauth link to authorise the user
    */
   useEffect(() => {
-    if(!link.length){
+    if (!link.length) {
       axios
         .get(API_BASE_URL + "/auth/link")
         .then((res) => setLink(res.data.link))
         .catch((err) => {
           console.log(err);
         });
-      }
+    }
   }, [link]);
 
   // this useffect function - gets the main athlete data from /user/athlete/
@@ -143,8 +141,8 @@ function App() {
             console.log(userData.data.error);
             return;
           }
-          if(dataSet.data.error){
-            console.log(dataSet.data.error)
+          if (dataSet.data.error) {
+            console.log(dataSet.data.error);
             return;
           }
           // set boolean flag as fetched
@@ -155,7 +153,7 @@ function App() {
           setAthlete(userData.data.profile);
           const userRecordsInfo = _.omit(userData.data.user, "activities");
           setUserRecords(userRecordsInfo);
-         
+
           setUseractivities(userData.data.user.activities);
           setLatest(
             userData.data.user.activities[
@@ -163,13 +161,13 @@ function App() {
             ]["start_date"]
           );
           setDatasets({
-            marathon:  dataSet.data.marathon,
+            marathon: dataSet.data.marathon,
             half: dataSet.data.half,
             alpe: dataSet.data.alpe,
             box: dataSet.data.box,
             hardknott: dataSet.data.hardknott,
-            scotland: dataSet.data.scotland
-          })
+            scotland: dataSet.data.scotland,
+          });
         })
         .catch(console.error);
     }
@@ -188,7 +186,6 @@ function App() {
       getLatestData(config);
     }
   }, [auth, latest, userActivities, getLatestData, latestFetched]);
-
 
   // define weight variable for cycling page
   let weight;

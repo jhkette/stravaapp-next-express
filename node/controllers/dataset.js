@@ -16,7 +16,7 @@ exports.dataSet = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).send({
-      error: `Something went wrong fetching activities. ${err.message} `,
+      error: `Something went wrong fetching datasets. ${err.message} `,
     });
   }
 };
