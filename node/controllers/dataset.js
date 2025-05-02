@@ -21,7 +21,7 @@ exports.dataSet = async (req, res) => {
   }
 };
 
-/// this is a demo route used for writing datasets to mongodb
+/// this is a demo route used for writing datasets to a json file
 // exports.dataSetWrite = async (req, res) => {
 //   try {
 //     const marathon = await RunDataSet.find({ name: "marathon" });
