@@ -42,6 +42,10 @@ function App() {
   const fetchAthleteData = async (config) => {
     const userData = await axios.get(API_BASE_URL + "/user/athlete", config);
     const dataSet = await axios.get(API_BASE_URL + "/data/datasets", config);
+    // set boolean flag as fetched
+    if (userData.data.user.activities && dataSet.data.marathon) {
+      setFetched(true);
+    }
     return { userData, dataSet };
   };
   /**
@@ -145,10 +149,7 @@ function App() {
             console.log(dataSet.data.error);
             return;
           }
-          // set boolean flag as fetched
-          if (userData.data.user.activities && dataSet.data.marathon) {
-            setFetched(true);
-          }
+
           // set the state values with response
           setAthlete(userData.data.profile);
           const userRecordsInfo = _.omit(userData.data.user, "activities");

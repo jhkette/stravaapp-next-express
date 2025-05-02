@@ -30,12 +30,7 @@ exports.getAthlete = async (req, res) => {
       headers: { Authorization: token },
     });
     const finalid = response.data.id;
-    const athleteStats = await axios.get(
-      `https://www.strava.com/api/v3/athletes/${finalid}/stats`,
-      {
-        headers: { Authorization: token },
-      }
-    );
+
     const foundUserActs = await UserActivities.findOne({
       athlete_id: finalid,
     });
@@ -44,7 +39,6 @@ exports.getAthlete = async (req, res) => {
       return res.send({
         profile: response.data,
         user: foundUserActs,
-        stats: athleteStats.data,
       });
     }
 
@@ -54,7 +48,6 @@ exports.getAthlete = async (req, res) => {
     return res.send({
       profile: response.data,
       user: userToSave,
-      stats: athleteStats.data,
     });
   } catch (err) {
     console.log(err);
@@ -75,7 +68,6 @@ exports.getAthlete = async (req, res) => {
 
 exports.importActivities = async (req, res) => {
   const token = req.headers.authorization;
-  console.log(token);
   if (!token) {
     return res.send({ errors: "Permission not granted" });
   }
@@ -266,7 +258,7 @@ exports.getLatestActivities = async (req, res) => {
     const existingActivityIds = new Set(
       allActs.activities.map((act) => act.id)
     );
-    // filter new activities from api to see if they are in set. 
+    // filter new activities from api to see if they are in set.
     // only those not in set will be in new array.
     const newActivities = data_list.filter(
       (act) => !existingActivityIds.has(act.id)

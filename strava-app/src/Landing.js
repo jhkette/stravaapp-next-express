@@ -42,7 +42,7 @@ export default function Landing({
         </main>
       )}
 
-      {auth && !userActivities.length && fetched ? (
+      {auth && !userActivities.length && fetched && (
         <div className="flex flex-row justify-start items-center py-16">
           <div className="w-10"></div>
           <div className="p-6 my-6">
@@ -60,9 +60,9 @@ export default function Landing({
             </button>
           </div>
         </div>
-      ) : null}
+      )}
 
-      {!!userActivities.length && (
+      {auth && !!userActivities.length && (
         <main className="min-h-screen">
           <div className="px-24 py-16">
             <EventCalendar userActivities={userActivities} />
