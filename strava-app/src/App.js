@@ -186,7 +186,7 @@ function App() {
     if (auth && userActivities.length && !latestFetched) {
       getLatestData(config);
     }
-  }, [auth, latest, userActivities, getLatestData, latestFetched]);
+  }, [auth, userActivities, getLatestData, latestFetched]);
 
   // define weight variable for cycling page
   let weight;
