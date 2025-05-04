@@ -43,4 +43,11 @@ docker compose build
 docker compose up
 ```
 
+Unit tests are in both the node and strava-app folders. To run the tests run:
 
+```
+npm run test
+```
+
+
+To run the cypress end to end tests run ```npm run test``` in the root of the whole project.
