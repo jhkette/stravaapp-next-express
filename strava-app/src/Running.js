@@ -19,7 +19,7 @@ export default function Running({ userRecords, mardataset, halfdataset }) {
       {userRecords.runningpbs && (
         <>
           <section className="w-full">
-            <h1 className="py-8">Pace chart: minutes per km </h1>
+            <h1 className="py-8">Pace chart: minutes per km</h1>
             <RunChart data={userRecords} />
             <p className="pt-8 text-lg">
               This is a pace chart of your best performances for different

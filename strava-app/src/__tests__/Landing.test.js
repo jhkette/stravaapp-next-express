@@ -1,17 +1,17 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Landing from "./Landing";
+import Landing from "../Landing";
 
 // Create a mock function for useAuth
 const mockUseAuth = jest.fn();
 
 // Replace the useAuth implementation with the mock
-jest.mock("./context/AuthContext", () => ({
+jest.mock("../context/AuthContext", () => ({
   useAuth: () => mockUseAuth(),
 }));
 
 // Mock the calendar component
-jest.mock("./components/Calender", () => () => <div>Mocked Calendar</div>);
+jest.mock("../components/Calender", () => () => <div>Mocked Calendar</div>);
 
 describe("Landing Component", () => {
   afterEach(() => {
