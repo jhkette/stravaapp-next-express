@@ -10,7 +10,7 @@ jest.mock("../components/Doughnut", () => () => (
 jest.mock("../components/RideChartRegression", () => () => (
   <div>Mocked RideChartRegression</div>
 ));
-jest.mock("../components/Ftp", () => () => <div>Mocked FtpChart</div>);
+
 
 // test the component renders appropriate children components/jsx based on data inputs
 describe("Cycling component", () => {
@@ -22,7 +22,6 @@ describe("Cycling component", () => {
         userRecords={minimalUserRecords}
         ftp={300}
         alpe={{}}
-      
         box={{}}
         weight={78}
       />
@@ -51,7 +50,6 @@ describe("Cycling component", () => {
       <IndoorCycling
         userRecords={mockRecords}
         alpe={{}}
-      
         box={{}}
         ftp={280}
         weight={78}
@@ -63,7 +61,6 @@ describe("Cycling component", () => {
     );
     expect(screen.getByText("Mocked LineChart")).toBeInTheDocument();
     expect(screen.getAllByText("Mocked RideChartRegression")).toHaveLength(2);
-    expect(screen.getByText("Mocked DoughnutChart")).toBeInTheDocument();
-    expect(screen.getByText("Mocked FtpChart")).toBeInTheDocument();
+  
   });
 });

@@ -41,11 +41,11 @@ export default function DoughnutChart({ ftp }) {
   // returns zones table
   return (
     <div className="bg-white p-4">
-    <table class="border-collapse table-fixed w-full text-sm ">
+    <table className="border-collapse table-fixed w-full text-sm ">
       <thead>
       <tr className="shadow-xl">
-        <th class="border-b border-slate-600  pl-4  pb-4 text-left">Zone</th>
-        <th class="border-b border-slate-600   pb-4 pl-4   text-left">Watts</th>
+        <th className="border-b border-slate-600  pl-4  pb-4 text-left">Zone</th>
+        <th className="border-b border-slate-600   pb-4 pl-4   text-left">Watts</th>
     
       </tr>
     </thead>
