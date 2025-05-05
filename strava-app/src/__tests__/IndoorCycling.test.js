@@ -1,10 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Cycling from "../Cycling";
+import IndoorCycling from "../Cycling";
 
 // Mock chart components
 jest.mock("../components/LineChart", () => () => <div>Mocked LineChart</div>);
-jest.mock("../components/Doughnut", () => () => <div>Mocked DoughnutChart</div>);
+jest.mock("../components/Doughnut", () => () => (
+  <div>Mocked DoughnutChart</div>
+));
 jest.mock("../components/RideChartRegression", () => () => (
   <div>Mocked RideChartRegression</div>
 ));
@@ -16,12 +18,13 @@ describe("Cycling component", () => {
     const minimalUserRecords = { cyclingpbs: {}, bikeHrZones: {} };
 
     render(
-      <Cycling
+      <IndoorCycling
         userRecords={minimalUserRecords}
-        hardknott={{}}
-        scotland={{}}
-        ftp={250}
-        weight={70}
+        ftp={300}
+        alpe={{}}
+      
+        box={{}}
+        weight={78}
       />
     );
 
@@ -45,16 +48,19 @@ describe("Cycling component", () => {
     };
 
     render(
-      <Cycling
+      <IndoorCycling
         userRecords={mockRecords}
-        hardknott={{}} 
-        scotland={{}}
+        alpe={{}}
+      
+        box={{}}
         ftp={280}
         weight={78}
       />
     );
 
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe("Power Chart");
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Power Chart"
+    );
     expect(screen.getByText("Mocked LineChart")).toBeInTheDocument();
     expect(screen.getAllByText("Mocked RideChartRegression")).toHaveLength(2);
     expect(screen.getByText("Mocked DoughnutChart")).toBeInTheDocument();
